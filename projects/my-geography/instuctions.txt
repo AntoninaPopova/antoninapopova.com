@@ -1,0 +1,707 @@
+WHERE HAVE I SPENT MY LIFE?
+
+Technical & Methodological Note
+
+1. Project overview
+
+Where Have I Spent My Life? is an interactive personal geography built as a data-visualisation and information-design project.
+
+The project combines a structured dataset of places and periods with a geographic map, quantitative visual encoding, filtering, interactive chapters and an accompanying narrative layer.
+
+The central design principle is to distinguish between:
+
+* what can be measured — location, duration, category and companionship;
+* what can be represented visually — geographic distribution, relative duration and grouping;
+* what requires narrative context — personal experience, chronology, changing meaning and retrospective interpretation.
+
+The map therefore functions both as a visualisation of the underlying data and as the structural framework for a personal narrative.
+
+⸻
+
+2. Technical architecture
+
+The project is implemented as a lightweight client-side web visualisation.
+
+Technologies
+
+* HTML — document structure and semantic content
+* CSS — visual system, layout and responsive behaviour
+* JavaScript — interaction logic and application state
+* D3.js v7 — data loading, scales, SVG rendering, transitions and interaction
+* TopoJSON — geographic data representation
+* World Atlas — country boundaries
+* CSV — structured project dataset
+
+The project does not require a backend or database. The dataset is loaded client-side and transformed into the visual representation in the browser.
+
+File structure
+
+my-geography/
+├── index.html
+├── style.css
+├── script.js
+└── data/
+    └── places.csv
+
+The separation between data, presentation and behaviour is intentional:
+
+* places.csv contains the observations;
+* style.css defines the visual system and responsive layout;
+* script.js contains the data transformation, rendering and interaction logic;
+* index.html defines the narrative and semantic structure.
+
+⸻
+
+3. Data model
+
+The fundamental unit of the dataset is an observation of a place in a particular context or period, rather than simply a geographical location.
+
+A city may therefore occur more than once.
+
+For example, two observations can have identical geographic coordinates but represent different periods, experiences or chapters. Treating them as separate observations preserves information that would otherwise be lost by aggregating everything to the city level.
+
+Core fields
+
+The dataset includes:
+
+id
+country
+city
+latitude
+longitude
+days
+type
+life_stage
+companion
+date_type
+year
+date_apx
+start_date
+end_date
+tooltip
+chapter_1
+chapter_2
+chapter_3
+chapter_4
+chapter_5
+chapter_6
+chapter_7
+chapter_8
+
+Variable semantics
+
+Geographic variables
+
+* country
+* city
+* latitude
+* longitude
+
+identify the geographical position of an observation.
+
+Duration
+
+days represents the estimated number of days associated with the observation and provides the quantitative basis for the duration encoding.
+
+It is primarily a visual measure of relative duration, rather than a claim of exact calendar-day accounting.
+
+Place type
+
+type groups observations into three analytical categories:
+
+* home
+* purpose
+* leisure
+
+These distinguish between places associated with living, professional/educational purposes and travel/leisure.
+
+Companion
+
+companion records the social context:
+
+* alone
+* with family
+* with friends
+
+Temporal information
+
+The dataset can contain exact or approximate temporal information through:
+
+* start_date
+* end_date
+* year
+* date_apx
+* date_type
+
+Dates are exact where records were available and approximate otherwise.
+
+Narrative classification
+
+chapter_1 through chapter_8 are binary membership variables connecting observations to the eight narrative chapters.
+
+This allows the geographical data and narrative structure to remain separate while still being interactively connected.
+
+⸻
+
+4. Geographic representation
+
+The geographic layer is rendered using D3.js and TopoJSON.
+
+A Natural Earth projection is used:
+
+d3.geoNaturalEarth1()
+
+The projection converts longitude/latitude coordinates into SVG coordinates.
+
+Country boundaries are loaded from World Atlas and converted from TopoJSON to GeoJSON features before rendering.
+
+The geographic layer is deliberately simplified. Country boundaries provide spatial context rather than being treated as a dataset in themselves.
+
+The primary analytical objects are the place observations.
+
+⸻
+
+5. Visual encoding
+
+The project uses a deliberately limited visual vocabulary.
+
+Each observation is represented by a circle.
+
+The three main visual variables are:
+
+Visual variable	Data variable	Meaning
+Position	latitude / longitude	Where the observation occurred
+Circle radius	days	Relative duration
+Opacity	days	Additional duration encoding
+Colour	companion	Social context
+
+This creates a direct relationship between the dataset and the visual representation.
+
+No decorative visual variable is introduced without a corresponding informational role.
+
+⸻
+
+6. Duration scaling
+
+Duration is the main quantitative dimension of the map.
+
+The dataset contains observations ranging from very short stays to periods lasting several years. A linear scale would allow the longest periods to dominate the visual representation and make shorter observations difficult to distinguish.
+
+The project therefore provides two transformations.
+
+Logarithmic scale
+
+The default scale uses a logarithmic transformation:
+
+d3.scaleLog()
+
+Radius:
+
+domain = observed minimum → observed maximum
+range  = 0.8 → 10 px
+
+Opacity:
+
+domain = observed minimum → observed maximum
+range  = 0.90 → 0.18
+
+The logarithmic transformation compresses the numerical range and keeps short and long observations simultaneously visible.
+
+Power scale
+
+An alternative power transformation is provided:
+
+d3.scalePow()
+
+Radius:
+
+exponent = 0.5
+range    = 0.8 → 10 px
+
+Opacity:
+
+exponent = 0.35
+range    = 0.90 → 0.18
+
+The two options allow the viewer to inspect the same observations through different transformations rather than presenting one transformation as visually neutral.
+
+The scale switch therefore has an analytical purpose, not merely a stylistic one.
+
+⸻
+
+7. Companion encoding
+
+Colour represents the social context of each observation.
+
+Alone         #C9ADA7
+With family   #9A8C98
+With friends  #22223B
+
+The colours are deliberately muted and maintain a restrained editorial aesthetic.
+
+Unlike duration, companion status is categorical rather than quantitative. It is therefore encoded through hue rather than size.
+
+This prevents the visual system from implying a numerical hierarchy between the three categories.
+
+⸻
+
+8. Repeated geographic locations
+
+Multiple observations can share identical coordinates.
+
+Rather than merging them, the project preserves them as separate observations and applies a small positional offset.
+
+The offset is:
+
+2.5 SVG pixels
+
+For observations sharing the same coordinates, the points are distributed around the original geographic position using evenly spaced angles.
+
+This is a visual separation technique rather than a geographic correction: the original coordinates remain the underlying geographic reference.
+
+The purpose is to make repeated experiences in the same location individually inspectable.
+
+⸻
+
+9. Interaction model
+
+The map contains four principal interaction systems:
+
+1. place filtering;
+2. duration-scale switching;
+3. chapter filtering;
+4. geographic zoom.
+
+The interaction model is designed so that each control changes an identifiable aspect of the data rather than acting as decoration.
+
+⸻
+
+Place-type filters
+
+The main filters are:
+
+* All
+* Home
+* Purpose
+* Leisure
+
+The selected category determines which observations remain visible.
+
+Filtering affects both:
+
+* visual opacity;
+* pointer interaction.
+
+Filtered observations receive:
+
+opacity: 0
+pointer-events: none
+
+This is intentional. A visually hidden observation should not remain interactable or generate a tooltip.
+
+⸻
+
+10. Narrative chapters
+
+The map is accompanied by eight narrative chapters.
+
+The chapters provide a second structure for interpreting the same observations.
+
+They are not geographical regions and do not represent additional quantitative variables. Instead, they provide a temporal/narrative grouping layered on top of the geographical dataset.
+
+Each observation can belong to one or more chapters through:
+
+chapter_1 ... chapter_8
+
+This allows the same place to participate in different parts of the narrative where appropriate.
+
+Chapter structure
+
+01  Kazan, for a start
+02  Learning to live alone
+03  The search for somewhere
+04  First year abroad
+05  Seven years later
+06  Maybe this isn’t it
+07  A slight detour to Gran Canaria
+08  The French experiment
+
+The chapter titles use sentence case deliberately, maintaining a more editorial and personal tone rather than presenting the chapters as formal report headings.
+
+⸻
+
+11. Chapter interaction behaviour
+
+The chapter timeline operates as both navigation and filtering.
+
+Neutral state
+
+When no chapter is selected:
+
+* all observations are visible;
+* the chapter text area contains the general introductory message;
+* no chapter is visually active.
+
+The number in the general message is hidden using:
+
+visibility: hidden;
+
+rather than removed from the layout, preserving the alignment of the title structure.
+
+Hover state
+
+Hovering over a chapter temporarily displays its title beneath the corresponding timeline node.
+
+This provides a lightweight navigation cue without permanently displaying all eight titles.
+
+Selected state
+
+Clicking a chapter:
+
+* activates the corresponding timeline node;
+* filters the map to observations belonging to that chapter;
+* displays the chapter number, title and text;
+* removes the temporary annotation from the timeline node.
+
+Clicking the currently selected chapter again returns the interface to the neutral state.
+
+This creates a reversible interaction rather than forcing the viewer through a linear narrative.
+
+⸻
+
+12. Tooltip system
+
+Place-level tooltips provide contextual detail without permanently increasing the visual density of the map.
+
+The hierarchy is:
+
+PLACE + DATE
+
+The location is shown first, with the year where available.
+
+STORY
+
+The tooltip field contains the personal contextual description.
+
+DETAILS
+
+The lower metadata line provides:
+
+* number of days;
+* place type;
+* companion category.
+
+The hierarchy reflects the intended reading order:
+
+where → what happened → quantitative/contextual details.
+
+The tooltip is positioned dynamically relative to the pointer and checks the browser viewport boundaries to avoid being rendered outside the visible area.
+
+⸻
+
+13. Geographic zoom
+
+The map uses D3’s zoom behaviour:
+
+d3.zoom()
+    .scaleExtent([1, 20])
+
+The initial view is intentionally zoomed and translated rather than showing the entire world at equal visual weight.
+
+Current initial transform:
+
+translate(-800, -250)
+scale(2.7)
+
+This establishes a useful starting composition while preserving the ability to zoom out to the complete geographic context.
+
+The user can:
+
+* zoom in;
+* zoom out;
+* reset the map;
+* navigate through the map using the standard zoom interaction.
+
+⸻
+
+14. Information panel
+
+The About This Map panel documents the methodological assumptions behind the visualisation.
+
+It is deliberately separated from the main visual field so that methodological information does not compete with the map during the primary reading experience.
+
+The panel contains three levels of information:
+
+About this map
+
+Defines the scope of the dataset and clarifies that the visualisation is a reconstruction of remembered places rather than a complete geographical record.
+
+How to read it
+
+Explains the relationship between:
+
+* size;
+* duration;
+* colour;
+* companion category;
+* place type;
+* narrative chapters.
+
+Data & method
+
+Documents uncertainty, approximate dates, repeated observations and the interpretation of duration.
+
+This separation allows the main visualisation to remain relatively clean while keeping the methodological assumptions transparent.
+
+⸻
+
+15. Data limitations and uncertainty
+
+The project intentionally distinguishes between data precision and visual usefulness.
+
+The dataset is reconstructed from personal records and memory rather than generated from a continuous location-tracking system.
+
+Consequently:
+
+* dates may be exact or approximate;
+* duration is sometimes estimated;
+* not every location visited is represented;
+* observations are selected according to whether they remain memorable or relevant to the narrative;
+* repeated observations may represent different periods or experiences in the same place.
+
+The map should therefore be understood as a structured reconstruction, not a complete database of a person’s movements.
+
+This distinction is important because the visual precision of a map can otherwise imply a level of empirical precision that the underlying data does not possess.
+
+⸻
+
+16. Narrative methodology
+
+The narrative layer intentionally does not attempt to convert every observation into a story.
+
+The map contains many observations, while the chapter structure identifies a smaller number of broader periods.
+
+This creates two levels of interpretation:
+
+Observation level
+
+A specific place, duration and context.
+
+Chapter level
+
+A broader period or transition in the person’s life.
+
+The distinction prevents the narrative from simply repeating the map’s data points.
+
+The chapters instead provide a higher-level interpretation of the sequence that emerges when the observations are viewed retrospectively.
+
+⸻
+
+17. Design system
+
+The visual language is intentionally restrained.
+
+Typography
+
+The project combines:
+
+* a serif display typeface for the main title and selected editorial elements;
+* Arial/sans-serif typography for interface controls, metadata and explanatory text.
+
+This establishes a distinction between the personal/editorial layer and the functional/data layer.
+
+Colour
+
+The palette is muted rather than highly saturated.
+
+The strongest dark colour is reserved primarily for:
+
+* active states;
+* selected elements;
+* the “with friends” category.
+
+This creates hierarchy without introducing a large number of competing colours.
+
+Geometry
+
+The map uses circles as the primary mark because they can simultaneously encode:
+
+* point location;
+* relative magnitude;
+* opacity;
+* categorical colour.
+
+The project avoids additional decorative graphics where they do not contribute information.
+
+⸻
+
+18. Responsive design
+
+The desktop and mobile versions use the same underlying data and interaction model but adapt their presentation to different spatial constraints.
+
+Desktop
+
+The map is presented as the primary visual field, with:
+
+* external legend;
+* information controls;
+* chapter timeline;
+* multi-column final essay.
+
+Mobile
+
+The layout changes structurally rather than simply shrinking the desktop interface.
+
+The mobile version:
+
+* moves controls into a centred vertical arrangement;
+* hides the desktop map legend;
+* places equivalent legend information inside the information panel;
+* adapts the map dimensions;
+* changes the chapter timeline spacing;
+* switches the final essay to a single column;
+* adjusts tooltip dimensions;
+* adapts chapter annotations at the beginning and end of the timeline to avoid viewport overflow.
+
+Landscape mobile layouts receive additional map-height and timeline adjustments because the limiting dimension becomes vertical rather than horizontal.
+
+⸻
+
+19. Visual hierarchy
+
+The project is organised into three successive levels:
+
+1. Exploration
+
+The map allows the viewer to explore geography, duration and categories.
+
+2. Interpretation
+
+The chapter timeline provides a different way of grouping the same observations.
+
+3. Reflection
+
+The final essay discusses what the quantitative map can and cannot represent.
+
+This structure intentionally moves from data → interpretation → reflection.
+
+The narrative therefore does not simply explain the map; it also examines the limitations introduced when a continuous personal experience is converted into a structured visual dataset.
+
+⸻
+
+20. Information-design principles
+
+Several principles guide the implementation.
+
+Every visual variable has a defined meaning
+
+Size, opacity, colour and position correspond to identifiable properties of the dataset.
+
+Transformations are explicit
+
+The project exposes the duration transformation rather than hiding the effect of scaling.
+
+Aggregation is avoided where it removes information
+
+Repeated locations remain separate when they represent different periods or experiences.
+
+Uncertainty is documented
+
+Approximate information is not presented as exact simply because it appears on a precise geographic map.
+
+Interaction changes interpretation
+
+Filters and chapter selection modify the visible dataset or its narrative grouping. They are not decorative interactions.
+
+Narrative and data remain distinguishable
+
+The chapter texts interpret the observations but are not treated as additional quantitative evidence.
+
+Visual simplicity is intentional
+
+The project uses a small number of visual variables and a restrained palette so that the viewer can identify relationships without first learning a complex visual language.
+
+⸻
+
+21. Implementation and maintenance principles
+
+Changes to the project should preserve the relationship between the data model and the visual encoding.
+
+In particular:
+
+* changes to CSV fields should be reflected in the JavaScript data preparation;
+* new categorical values should have corresponding display labels where necessary;
+* changes to duration scaling should preserve the intended visibility of both short and long observations;
+* filtered observations should remain non-interactive;
+* repeated locations should not be accidentally aggregated;
+* chapter membership should remain independent from geographic location;
+* responsive changes should not alter the underlying data or analytical logic;
+* methodological assumptions should be updated when the dataset structure changes.
+
+Content changes and technical changes should remain conceptually separate wherever possible.
+
+⸻
+
+22. Quality assurance
+
+Before publication, the project should be checked for:
+
+Data
+
+* valid coordinates;
+* numeric days values;
+* consistent categorical values;
+* valid chapter membership;
+* correct approximate/exact date labelling;
+* intentional handling of repeated locations.
+
+Visualisation
+
+* short and long stays remain visible;
+* colour categories remain distinguishable;
+* repeated locations can be individually identified;
+* legends correspond to the actual encoding;
+* tooltip information matches the selected observation.
+
+Interaction
+
+* filters correctly update the map;
+* filtered observations cannot trigger tooltips;
+* chapter selection correctly filters observations;
+* clicking an active chapter returns to the neutral state;
+* scale switching updates both radius and opacity;
+* zoom controls work independently of filtering and chapter selection;
+* the information panel correctly reflects its open/closed state.
+
+Responsive behaviour
+
+* no horizontal page overflow;
+* controls remain centred and usable;
+* map remains legible;
+* tooltips remain within the viewport;
+* chapter annotations do not clip at the edges;
+* desktop-only and mobile-only legends do not appear simultaneously.
+
+⸻
+
+23. Overall technical rationale
+
+The project is deliberately implemented as a relatively small system rather than a complex application.
+
+Its technical complexity lies less in the amount of code than in the relationship between:
+
+data structure → transformation → visual encoding → interaction → narrative.
+
+The purpose of the implementation is therefore not simply to place personal travel data on a map.
+
+It creates a controlled visual system in which measurable properties of the dataset can be explored first, while the limitations of those measurements become part of the subsequent narrative.
+
+The map measures geography and duration.
+
+The interaction exposes different ways of grouping that information.
+
+The chapter structure introduces a retrospective interpretation.
+
+The final text makes explicit where the visual representation stops being sufficient.
+
+Together, these layers allow the project to function simultaneously as a personal visualisation, a small data-journalism experiment and an example of information design built around explicit analytical choices.

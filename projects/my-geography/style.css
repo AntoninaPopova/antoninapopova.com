@@ -1,0 +1,1846 @@
+* {
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   PAGE
+   ========================= */
+
+html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: hidden;
+
+    background: #f7f7f5;
+    color: #22223B;
+
+    font-family: Arial, sans-serif;
+}
+
+main {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 30px 0;
+    padding: 0 30px;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+header {
+    margin-bottom: 0;
+
+    text-align: center;
+}
+
+h1 {
+
+    margin: 70px 0 40px 0;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 60px;
+
+    font-weight: 400;
+
+    font-style: italic;
+
+    line-height: 0.95;
+
+    letter-spacing: -0.015em;
+
+    color: #22223B;
+
+}
+
+.subtitle {
+
+    max-width: 580px;
+
+    margin: 60px auto 60px auto;
+
+    padding: 0 10px;
+
+    text-align: center;
+
+    font-family: Arial, sans-serif;
+
+    /* HARMONISED */
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    line-height: 1.6;
+
+    color: #555;
+
+}
+
+
+/* =========================
+   CONTROLS
+   ========================= */
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 55px;
+
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    min-height: 34px;
+
+    padding-right: 15px;
+}
+
+.controls-left {
+    display: flex;
+    align-items: center;
+
+    gap: 55px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+
+    gap: 3px;
+
+    white-space: nowrap;
+}
+
+.control-label {
+    margin-right: 7px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: #22223B;
+}
+
+
+/* =========================
+   FILTER / SCALE BUTTONS
+   Editorial navigation style:
+   no boxes, no filled states.
+   Selection is expressed through
+   size + colour.
+   ========================= */
+
+.filter-btn,
+.scale-btn {
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: none;
+    border-radius: 0;
+    outline: none;
+
+    background: transparent;
+
+    padding: 6px 10px;
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: normal;
+
+    color: #777;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.filter-btn:hover,
+.scale-btn:hover {
+    background: transparent;
+
+    color: #22223B;
+
+    transform: scale(1.05);
+}
+
+.filter-btn.active,
+.scale-btn.active {
+    background: transparent;
+
+    color: #22223B;
+
+    transform: scale(1.05);
+}
+
+.filter-btn:focus,
+.scale-btn:focus {
+    outline: none;
+}
+
+
+/* =========================
+   INFORMATION BUTTON
+   ========================= */
+
+.info-button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 4px 0;
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: 1;
+
+    color: #777;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.info-button:hover {
+    color: #22223B;
+}
+
+.info-button:focus {
+    outline: none;
+}
+
+.info-button.active {
+
+    color: #22223B;
+
+}
+
+
+/* =========================
+   INFORMATION PANEL
+   ========================= */
+
+.info-panel {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: min(420px, 100%);
+    height: 100vh;
+
+    background: #f7f7f5;
+
+    box-shadow: -4px 0 18px rgba(0, 0, 0, 0.06);
+
+    z-index: 2000;
+
+    transform: translateX(100%);
+
+    transition: transform 0.3s ease;
+}
+
+.info-panel.open {
+    transform: translateX(0);
+}
+
+.info-panel-inner {
+    position: relative;
+
+    height: 100%;
+
+    overflow-y: auto;
+
+    padding: 55px 45px 50px 35px;
+}
+
+
+/* =========================
+   INFORMATION CLOSE BUTTON
+   ========================= */
+
+.info-close {
+    appearance: none;
+    -webkit-appearance: none;
+
+    position: absolute;
+
+    top: 20px;
+    right: 25px;
+
+    z-index: 10;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 8px;
+
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 300;
+
+    line-height: 1;
+
+    color: #777;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.info-close:hover {
+    color: #22223B;
+}
+
+.info-close:focus {
+    outline: none;
+}
+
+
+/* =========================
+   INFORMATION TYPOGRAPHY
+   ========================= */
+
+.info-panel h2 {
+    margin: 0 0 25px 0;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: #22223B;
+}
+
+.info-panel h3 {
+    margin: 30px 0 10px 0;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: #777;
+}
+
+.info-panel p {
+    margin: 0 0 15px 0;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: 1.6;
+
+    color: #22223B;
+}
+
+
+/* =========================
+   MOBILE-ONLY LEGEND
+   ========================= */
+
+.info-mobile-legend {
+    display: none;
+}
+
+.info-legend {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.info-time-legend {
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+.info-mobile-legend .legend-item {
+    margin-bottom: 6px;
+}
+
+
+/* =========================
+   MAP AREA
+   ========================= */
+
+.map-area {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+}
+
+
+/* =========================
+   MAP
+   ========================= */
+
+.map-container {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+
+    height: calc(100vh - 300px);
+
+    min-height: 0;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+}
+
+svg {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =========================
+   COUNTRIES
+   ========================= */
+
+.country {
+    fill: #e5e5e1;
+
+    stroke: #ffffff;
+    stroke-width: 0.5px;
+}
+
+
+/* =========================
+   PLACES
+   ========================= */
+
+.place {
+    cursor: pointer;
+
+    stroke: none;
+}
+
+.place:hover {
+    stroke: #22223B;
+    stroke-width: 1px;
+}
+
+
+/* =========================
+   LEGEND
+   ========================= */
+
+.legend {
+    position: absolute;
+
+    top: 25px;
+    right: 15px;
+
+    width: 145px;
+
+    padding: 15px;
+
+    background: rgba(247, 247, 245, 0.94);
+
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+.legend h3 {
+    margin: 0 0 10px 0;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: #22223B;
+}
+
+.legend-section + .legend-section {
+    margin-top: 22px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+    font-weight: 400;
+}
+
+
+/* =========================
+   COMPANION DOTS
+   ========================= */
+
+.legend-dot {
+    display: inline-block;
+
+    width: 9px;
+    height: 9px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+.legend-dot.alone {
+    background: #C9ADA7;
+}
+
+.legend-dot.family {
+    background: #9A8C98;
+}
+
+.legend-dot.friends {
+    background: #22223B;
+}
+
+
+/* =========================
+   TIME LEGEND
+   ========================= */
+
+.time-legend {
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+.time-item {
+    display: flex;
+    align-items: center;
+}
+
+.time-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+}
+
+.time-circle::before {
+    content: "";
+
+    display: block;
+
+    border-radius: 50%;
+
+    background: #22223B;
+}
+
+.time-short::before {
+    width: 7px;
+    height: 7px;
+
+    opacity: 0.9;
+}
+
+.time-long::before {
+    width: 18px;
+    height: 18px;
+
+    opacity: 0.2;
+}
+
+.time-description {
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 10px;
+
+    gap: 2px;
+}
+
+.time-title {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+
+/* =========================
+   ZOOM CONTROLS
+   ========================= */
+
+.zoom-controls {
+    position: absolute;
+
+    right: 15px;
+    bottom: 20px;
+
+    display: flex;
+
+    gap: 4px;
+
+    z-index: 10;
+}
+
+.zoom-controls button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: none;
+    border-radius: 0;
+    outline: none;
+
+    background: rgba(247, 247, 245, 0.94);
+
+    padding: 7px 10px;
+
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+
+    color: #22223B;
+
+    cursor: pointer;
+}
+
+.zoom-controls button:hover {
+    background: #e9e9e5;
+}
+
+.zoom-controls button:focus {
+    outline: none;
+}
+
+
+/* =========================
+   TOOLTIP
+   ========================= */
+
+#tooltip {
+    position: fixed;
+
+    display: none;
+
+    max-width: 300px;
+
+    padding: 14px 16px;
+
+    background: #f7f7f5;
+
+    pointer-events: none;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    /* HARMONISED */
+
+    line-height: 1.6;
+
+    color: #22223B;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    z-index: 1000;
+}
+
+.tooltip-place {
+    margin-bottom: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.tooltip-date {
+    font-family: Arial, sans-serif;
+
+    /* HARMONISED */
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #22223B;
+
+    text-transform: none;
+
+    letter-spacing: normal;
+}
+
+.tooltip-story {
+    margin-bottom: 9px;
+
+    /* HARMONISED */
+
+    line-height: 1.6;
+
+    color: #555;
+}
+
+.tooltip-meta {
+    font-size: 11px;
+
+    color: #777;
+}
+
+
+/* =========================
+   LIFE IN CHAPTERS
+   ========================= */
+
+.chapters {
+    width: 100%;
+    max-width: 100%;
+
+    font-family: inherit;
+
+    margin-top: 40px;
+    margin-bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* =========================
+   CHAPTER HEADING
+   ========================= */
+
+.chapters-label {
+    margin-bottom: 13px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: #22223B;
+}
+
+
+/* =========================
+   CHAPTER TIMELINE
+   ========================= */
+
+.chapter-timeline {
+    width: min(900px, 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 60px;
+}
+
+
+/* =========================
+   CONNECTING TIMELINE LINE
+   ========================= */
+
+.chapter-line {
+    flex: 1;
+
+    height: 1px;
+
+    background: #d4d4d0;
+}
+
+
+/* =========================
+   CHAPTER NODE
+   ========================= */
+
+.chapter-node {
+    appearance: none;
+    -webkit-appearance: none;
+
+    font-family: inherit;
+
+    position: relative;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #d4d4d0;
+
+    color: #777;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.chapter-node:hover {
+    background: #9a9a96;
+
+    color: #f7f7f5;
+}
+
+.chapter-node.active {
+    background: #22223B;
+
+    color: #f7f7f5;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   CHAPTER NUMBER
+   ========================= */
+
+.chapter-number {
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 0.03em;
+}
+
+
+/* =========================
+   CHAPTER ANNOTATION
+   Hidden by default.
+   Appears on hover or when selected.
+   ========================= */
+
+.chapter-annotation {
+    position: absolute;
+
+    top: 30px;
+    left: 50%;
+
+    width: max-content;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition: opacity 0.18s ease;
+}
+
+
+/* =========================
+   TINY CONNECTING LINE
+   ========================= */
+
+.chapter-connector {
+    display: block;
+
+    width: 1px;
+    height: 18px;
+
+    background: #cfcfca;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   CHAPTER TITLE
+   Same typography as filters
+   ========================= */
+
+.chapter-title {
+    margin-top: 8px;
+
+    max-width: 180px;
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: normal;
+
+    color: #777 !important;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================
+   SHOW TITLE ON HOVER
+   Unselected chapter = grey
+   ========================= */
+
+.chapter-node:hover .chapter-annotation,
+.chapter-node.show-title .chapter-annotation {
+    opacity: 1;
+}
+
+
+/* =========================
+   SELECTED CHAPTER
+   Blue + slightly larger
+   ========================= */
+
+.chapter-node.active .chapter-title {
+    color: #22223B !important;
+
+   /* transform: scale(1.05); */
+}
+
+
+/* =========================
+   SELECTED CHAPTER ANNOTATION
+   Always visible while selected
+   ========================= */
+
+.chapter-node:hover .chapter-annotation,
+
+.chapter-node.show-title .chapter-annotation {
+
+    opacity: 1;
+
+}
+
+
+/* =========================
+   SELECTED CHAPTER TEXT
+   ========================= */
+
+.chapter-text {
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 70px;
+    margin-bottom: 0;
+
+    display: flex;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.chapter-text[hidden] {
+    display: none;
+}
+
+.chapter-text-inner {
+    width: min(560px, 90%);
+
+    padding: 5px 20px 0 20px;
+}
+
+.chapter-text-number {
+    margin-bottom: 8px;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+
+    color: #777;
+}
+
+.chapter-text-title {
+    margin: 0 0 12px 0;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    /* HARMONISED */
+
+    font-weight: 600;
+
+    /* HARMONISED */
+
+    line-height: 1.3;
+
+    color: #22223B;
+}
+
+.chapter-text-body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: 1.6;
+
+    color: #555;
+}
+
+
+/* =========================
+   FINAL ESSAY
+   ========================= */
+
+.final-essay {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 90px auto 0 auto;
+
+    padding: 0 20px;
+}
+
+.final-essay-header {
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    border-top: 1px solid #d4d4d0;
+
+    padding-top: 12px;
+}
+
+.final-essay-label {
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: #22223B;
+}
+
+
+.final-essay-columns {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    column-gap: 55px;
+}
+
+
+.final-essay-column {
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    /* HARMONISED */
+
+    line-height: 1.6;
+
+    /* HARMONISED */
+
+    color: #555;
+}
+
+
+.final-essay-column p {
+    margin: 0 0 18px 0;
+}
+
+
+.final-essay-column p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================
+   CREDIT
+   ========================= */
+
+.credit {
+    margin-top: 130px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding-right: 15px;
+
+    text-align: center;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: #777;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    main {
+        width: 100%;
+        max-width: 100%;
+
+        margin: 20px 0;
+        padding: 0 15px;
+
+        overflow-x: hidden;
+    }
+
+
+    /* =========================
+       HEADER
+       ========================= */
+
+    header {
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 40px;
+
+        /* HARMONISED WITH DESKTOP */
+
+        font-family: "Cormorant Garamond", serif;
+
+        font-size: 30px;
+        font-weight: 400;
+        font-style: italic;
+
+        line-height: 1.05;
+
+        letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+        width: min(600px, 100%);
+
+        margin: 16px auto 40px auto;
+
+        font-family: Arial, sans-serif;
+
+        /* HARMONISED */
+
+        font-size: 13px;
+
+        line-height: 1.6;
+
+        text-align: center;
+
+        color: #555;
+    }
+
+
+    /* =========================
+       CONTROLS
+       ========================= */
+
+   .controls {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 15px;
+
+    margin-bottom: 8px;
+
+    min-height: 0;
+
+    padding-right: 0;
+
+}
+
+.controls-left {
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 2px;
+
+    width: 100%;
+
+}
+
+.info-button {
+
+    position: absolute;
+    right: 0;
+    
+
+    /*top: 2px;*/
+
+    font-size: 13px;
+
+}
+
+    .control-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+
+        margin-bottom: 4px;
+
+        gap: 2px;
+
+        white-space: nowrap;
+    }
+
+    .control-label {
+        flex-shrink: 0;
+
+        margin-right: 5px;
+
+        font-size: 9px;
+    }
+
+    .filter-btn,
+    .scale-btn {
+        padding: 5px 7px;
+
+        font-size: 12px;
+    }
+
+
+    /* =====================================================
+       MOBILE MAP
+       ===================================================== */
+
+    .map-area {
+        position: relative;
+
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .map-container {
+        position: relative;
+
+        width: 100%;
+        max-width: 100%;
+
+        height: auto;
+
+        min-height: 0;
+
+        overflow: hidden;
+    }
+
+    #map {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+    }
+
+    #map svg {
+        display: block;
+
+        width: 100%;
+        height: auto;
+
+        max-width: 100%;
+    }
+
+
+    /* =====================================================
+       MOBILE LEGEND
+       ===================================================== */
+
+    .map-area > .legend {
+        display: none !important;
+    }
+
+    .info-mobile-legend {
+        display: block;
+    }
+
+
+    /* =====================================================
+       MOBILE INFO PANEL
+       ===================================================== */
+
+    .info-panel {
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    .info-panel-inner {
+        width: 100%;
+        max-width: 100%;
+
+        padding: 50px 25px 40px 20px;
+    }
+
+
+    /* =====================================================
+       MOBILE ZOOM
+       ===================================================== */
+
+    .zoom-controls {
+        position: absolute;
+
+        right: 12px;
+        bottom: 12px;
+
+        left: auto;
+
+        display: flex;
+
+        gap: 4px;
+
+        z-index: 10;
+    }
+
+    .zoom-controls button {
+        padding: 6px 9px;
+
+        font-size: 12px;
+    }
+
+
+    /* =====================================================
+       TOOLTIP
+       ===================================================== */
+
+    #tooltip {
+        max-width: 250px;
+
+        padding: 12px 14px;
+
+        /* HARMONISED */
+
+        font-size: 12px;
+
+        line-height: 1.6;
+    }
+
+    #tooltip strong {
+        font-size: 13px;
+    }
+
+    .tooltip-meta {
+        font-size: 10px;
+    }
+
+    .tooltip-date {
+        font-size: 11px;
+    }
+
+
+    /* =====================================================
+       CHAPTERS
+       ===================================================== */
+
+    .chapters {
+        width: 100%;
+        max-width: 100%;
+
+        margin-top: 40px;
+        margin-bottom: 40px;
+
+        overflow: visible;
+    }
+
+    .chapters-label {
+        margin-bottom: 18px;
+    }
+
+    .chapter-timeline {
+        width: 100%;
+        max-width: 100%;
+
+        overflow: visible;
+
+        justify-content: center;
+
+        padding: 5px 0 15px 0;
+
+        min-height: 95px;
+    }
+
+    .chapter-line {
+        min-width: 0;
+
+        flex: 1 1 auto;
+    }
+
+    .chapter-node {
+        width: 30px;
+        height: 30px;
+
+        flex-shrink: 0;
+    }
+
+    .chapter-title {
+        max-width: 150px;
+
+        font-size: 11px;
+
+        white-space: normal;
+    }
+
+
+    /* =====================================================
+       FIRST / LAST CHAPTER TITLES
+       ===================================================== */
+
+    .chapter-node:first-child .chapter-annotation {
+        left: 0;
+
+        transform: none;
+
+        align-items: flex-start;
+    }
+
+    .chapter-node:last-child .chapter-annotation {
+        left: auto;
+
+        right: 0;
+
+        transform: none;
+
+        align-items: flex-end;
+    }
+
+    .chapter-node:first-child .chapter-title {
+        text-align: left;
+    }
+
+    .chapter-node:last-child .chapter-title {
+        text-align: right;
+    }
+
+    .chapter-connector {
+        height: 14px;
+    }
+
+
+    .credit {
+        margin-top: 80px;
+    }
+
+    /* =====================================================
+       MOBILE CHAPTER TEXT
+       ===================================================== */
+
+    .chapter-text {
+        margin-top: 5px;
+    }
+
+    .chapter-text-inner {
+        width: 90%;
+
+        padding: 5px 10px 0 10px;
+    }
+
+    .chapter-text-title {
+        font-size: 13px;
+    }
+
+    .chapter-text-body {
+
+        /* HARMONISED */
+
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       MOBILE FINAL ESSAY
+       ===================================================== */
+
+    .final-essay {
+        width: 100%;
+
+        margin-top: 65px;
+
+        padding: 0 5px;
+    }
+
+    .final-essay-columns {
+        grid-template-columns: 1fr;
+
+        row-gap: 0;
+    }
+
+    .final-essay-column {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .final-essay-column + .final-essay-column {
+        margin-top: 0;
+    }
+
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .filter-btn,
+    .scale-btn {
+        padding: 5px 6px;
+
+        font-size: 11px;
+    }
+
+    .control-label {
+        font-size: 8px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE LANDSCAPE
+   ========================================================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    .map-container {
+        width: 100%;
+        max-width: 100%;
+
+        height: 60vh;
+        min-height: 280px;
+
+        overflow: hidden;
+    }
+
+    #map,
+    #map svg {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+    }
+
+
+    .map-area > .legend {
+        display: none !important;
+    }
+
+
+    .info-panel {
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    .info-panel-inner {
+        padding: 35px 25px 30px 20px;
+    }
+
+
+    /* =====================================================
+       LANDSCAPE TIMELINE
+       ===================================================== */
+
+    .chapter-timeline {
+        width: 90%;
+
+        max-width: 810px;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        padding-left: 0;
+        padding-right: 0;
+
+        justify-content: center;
+
+        overflow: visible;
+
+        min-height: 105px;
+    }
+
+    .chapter-line {
+        min-width: 0;
+
+        flex: 1 1 auto;
+    }
+
+
+    /* -----------------------------------------
+       Chapter titles
+       ----------------------------------------- */
+
+ .chapter-title {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    line-height: normal;
+
+    color: #777;
+
+}
+
+
+    /* First title */
+
+    .chapter-node:first-child .chapter-annotation {
+        left: 0;
+
+        transform: none;
+
+        align-items: flex-start;
+    }
+
+    .chapter-node:first-child .chapter-title {
+        width: 125px;
+
+        text-align: left;
+    }
+
+
+    /* Last title */
+
+    .chapter-node:last-child .chapter-annotation {
+        left: auto;
+
+        right: 0;
+
+        transform: none;
+
+        align-items: flex-end;
+    }
+
+    .chapter-node:last-child .chapter-title {
+        width: 125px;
+
+        text-align: right;
+    }
+
+
+    .credit {
+        margin-top: 80px;
+    }
+}
+
+
+/* =========================================================
+   VERY SHORT LANDSCAPE SCREENS
+   ========================================================= */
+
+@media (max-width: 900px)
+       and (orientation: landscape)
+       and (max-height: 500px) {
+
+    .map-container {
+        height: 60vh;
+
+        min-height: 280px;
+    }
+
+    #map,
+    #map svg {
+        height: 100%;
+    }
+
+    .info-panel-inner {
+        padding-top: 30px;
+        padding-bottom: 25px;
+    }
+
+    .chapter-timeline {
+        width: 90%;
+
+        min-height: 100px;
+    }
+}
+
+
+/* =========================================================
+   LARGE IPHONES IN LANDSCAPE
+   ========================================================= */
+
+@media (max-width: 1000px)
+       and (orientation: landscape)
+       and (max-height: 600px) {
+
+    .map-area > .legend {
+        display: none !important;
+    }
+
+    .info-mobile-legend {
+        display: block;
+    }
+
+
+    .map-container {
+        width: 100%;
+        max-width: 100%;
+
+        height: 70vh;
+        min-height: 300px;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+    }
+
+    #map svg {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+    }
+
+
+    .chapter-timeline {
+        width: 90%;
+        max-width: 810px;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        overflow: visible;
+
+        justify-content: center;
+
+        padding-left: 0;
+        padding-right: 0;
+
+        min-height: 105px;
+    }
+
+    .chapter-line {
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+
+    /* -----------------------------------------
+       Chapter titles
+       ----------------------------------------- */
+
+    .chapter-title {
+        max-width: 130px;
+
+        font-size: 13px;
+
+        line-height: 1.25;
+
+        white-space: normal;
+    }
+
+
+    /* First title opens toward the centre */
+
+    .chapter-node:first-child .chapter-annotation {
+        left: 0;
+        transform: none;
+        align-items: flex-start;
+    }
+
+    .chapter-node:first-child .chapter-title {
+        width: 125px;
+        text-align: left;
+    }
+
+
+    /* Last title opens toward the centre */
+
+    .chapter-node:last-child .chapter-annotation {
+        left: auto;
+        right: 0;
+        transform: none;
+        align-items: flex-end;
+    }
+
+    .chapter-node:last-child .chapter-title {
+        width: 125px;
+        text-align: right;
+    }
+}

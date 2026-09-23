@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Where Have I Spent My Life?</title>
+
+    <meta
+        name="description"
+        content="An interactive map visualizing where I have lived, studied, worked and travelled, and how much time I have spent in each place.">
+
+    <meta
+        name="robots"
+        content="index, follow">
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+</head>
+
+
+<body>
+
+    <main>
+
+        <!-- =========================
+             HEADER
+             ========================= -->
+
+        <header>
+
+            <h1>
+                Where Have I Spent My Life?
+            </h1>
+
+            <p class="subtitle">
+                A life is distributed across cities, countries and continents: some places take up years, others only a moment. But the amount of time we spend somewhere tells only part of the story. The same place can contain completely different lives.
+
+            This map traces mine through the places I’ve lived, studied, worked and travelled. Looking at it now, the dots begin to form a sequence — chapters that were not necessarily visible while I was living them.
+            </p>
+
+        </header>
+
+
+        <!-- =========================
+             CONTROLS
+             ========================= -->
+
+        <div class="controls">
+
+            <div class="controls-left">
+
+                <div class="control-group">
+
+                    <span class="control-label">
+                        TYPE
+                    </span>
+
+                    <button
+                        class="filter-btn active"
+                        data-filter="all">
+
+                        All
+
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-filter="home">
+
+                        Home
+
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-filter="purpose">
+
+                        Purpose
+
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-filter="leisure">
+
+                        Leisure
+
+                    </button>
+
+                </div>
+
+
+                <div class="control-group">
+
+                    <span class="control-label">
+                        TIME SCALE
+                    </span>
+
+                    <button
+                        class="scale-btn"
+                        data-scale="power">
+
+                        Power
+
+                    </button>
+
+                    <button
+                        class="scale-btn active"
+                        data-scale="log">
+
+                        Logarithmic
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 PROJECT INFORMATION
+                 ========================= -->
+
+            <button
+                class="info-button"
+                id="info-button"
+                aria-label="About this map"
+                aria-controls="info-panel"
+                aria-expanded="false">
+
+                ⓘ
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             INFORMATION PANEL
+             ========================= -->
+
+        <div
+            class="info-panel"
+            id="info-panel"
+            aria-hidden="true">
+
+            <div class="info-panel-inner">
+
+                <button
+                    class="info-close"
+                    id="info-close"
+                    aria-label="Close information">
+
+                    ×
+
+                </button>
+
+
+                <h2>
+                    ABOUT THIS MAP
+                </h2>
+
+
+                <p>
+                This is a personal geography of the places where I have lived, studied, worked and travelled over 35 years. 
+                Each circle represents a place in my life that I remember for something.
+                </p>
+
+                <p>
+                The map is not a complete record of every place I have ever been. 
+                I have left out purely logistical stops and places that did not leave me with anything in particular to remember.
+                </p>
+
+                <h3>
+                    HOW TO READ IT
+                </h3>
+
+
+                <p>
+                Circle size represents the amount of time spent in a place. 
+                </p>
+
+                <div class="info-panel-time-legend">
+
+                    <div class="time-item">
+
+                        <span class="time-circle time-short"></span>
+
+                        <span class="time-title">&nbsp;Short stay</span>
+
+                    </div>
+
+                    <div class="time-item">
+
+                        <span class="time-circle time-long"></span>
+
+                        <span class="time-title">&nbsp;Long stay</span>
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <p>
+                The map uses a logarithmic scale by default, so that both short stays and long periods remain visible.
+                A power scale (exponent 0.5) is also available as an alternative.
+                </p>
+
+                <p>
+                Circle colour shows who I was with: alone, with family, or with friends. 
+                </p>
+
+                <div class="info-panel-companion-legend">
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot alone"></span>
+
+                        <span>Alone</span>
+
+                    </div>
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot family"></span>
+
+                        <span>With family</span>
+
+                    </div>
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot friends"></span>
+
+                        <span>With friends</span>
+
+                    </div>
+
+                </div>
+                
+                <br>
+
+                <p>
+                The filters allow you to look at different types of places — home, purpose (work, studies, conferences and other professional activities), and leisure (holidays, trips and visits).
+                </p>
+
+                <p>
+                The chapters below the map provide another way of reading the same geography: not by location or duration, but by periods of my life.
+                </p>
+
+                <h3>
+                    DATA &amp; METHOD
+                </h3>
+
+
+                <p>
+                Dates are exact where records were available and approximate otherwise. 
+                Days are a visual measure of duration, not a precise count.
+                </p>
+
+
+                <p>
+                A place can appear more than once when different periods had different experiences or belonged to different chapters.
+                </p>
+
+                <p>
+                The map is therefore a reconstruction rather than a complete database of my life — a way of organising the places, periods and experiences that have stayed in my memory when I look back at them now.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             MAP AREA
+             ========================= -->
+
+        <div class="map-area">
+
+            <div class="map-container">
+
+                <div id="map"></div>
+
+
+                <!-- =====================
+                     ZOOM CONTROLS
+                     ===================== -->
+
+                <div class="zoom-controls">
+
+                    <button
+                        id="zoom-in"
+                        aria-label="Zoom in">
+
+                        +
+
+                    </button>
+
+                    <button
+                        id="zoom-out"
+                        aria-label="Zoom out">
+
+                        −
+
+                    </button>
+
+                    <button
+                        id="zoom-reset"
+                        aria-label="Reset map zoom">
+
+                        Reset
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 DESKTOP LEGEND
+                 ========================= -->
+
+            <div class="legend">
+
+                <div class="legend-section">
+
+                    <h3>
+                        WITH WHOM
+                    </h3>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot alone"></span>
+
+                        <span>
+                            Alone
+                        </span>
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot family"></span>
+
+                        <span>
+                            With family
+                        </span>
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot friends"></span>
+
+                        <span>
+                            With friends
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="legend-section">
+
+                    <h3>
+                        TIME SPENT
+                    </h3>
+
+
+                    <div class="time-legend">
+
+                        <div class="time-item">
+
+                            <span class="time-circle time-short"></span>
+
+                            <span class="time-description">
+
+                                <span class="time-title">
+                                    Short stay
+                                </span>
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="time-item">
+
+                            <span class="time-circle time-long"></span>
+
+                            <span class="time-description">
+
+                                <span class="time-title">
+                                    Long stay
+                                </span>
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             LIFE IN CHAPTERS
+             ========================= -->
+
+        <section
+            class="chapters"
+            aria-label="Life in Chapters">
+
+            <div class="chapters-label">
+                LIFE IN CHAPTERS
+            </div>
+
+
+            <div class="chapter-timeline">
+
+                <!-- 01 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="1"
+                    aria-label="Kazan, for a Start"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        01
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            Kazan, for a start
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div class="chapter-line"></div>
+
+
+                <!-- 02 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="2"
+                    aria-label="Learning to Live Alone"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        02
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            Learning to live alone
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div class="chapter-line"></div>
+
+
+                <!-- 03 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="3"
+                    aria-label="The Search for Somewhere"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        03
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            The search for somewhere
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div class="chapter-line"></div>
+
+
+                <!-- 04 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="4"
+                    aria-label="First Year Abroad"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        04
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            First year abroad
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div class="chapter-line"></div>
+
+
+                <!-- 05 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="5"
+                    aria-label="Seven Years Later"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        05
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            Seven years later
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div class="chapter-line"></div>
+
+
+                <!-- 06 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="6"
+                    aria-label="Maybe This Isn’t It"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        06
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            Maybe this isn’t it
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div class="chapter-line"></div>
+
+
+                <!-- 07 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="7"
+                    aria-label="A Slight Detour to Gran Canaria"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        07
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            A slight detour to Gran Canaria
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div class="chapter-line"></div>
+
+
+                <!-- 08 -->
+
+                <button
+                    class="chapter-node"
+                    data-chapter="8"
+                    aria-label="The French Experiment"
+                    aria-pressed="false">
+
+                    <span class="chapter-number">
+                        08
+                    </span>
+
+                    <span class="chapter-annotation">
+
+                        <span class="chapter-connector"></span>
+
+                        <span class="chapter-title">
+                            The French experiment
+                        </span>
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SELECTED CHAPTER TEXT
+             ========================= -->
+
+        <section
+            class="chapter-text"
+            id="chapter-text"
+            aria-live="polite"
+            hidden>
+
+            <div class="chapter-text-inner">
+
+                <div
+                    class="chapter-text-number"
+                    id="chapter-text-number">
+                </div>
+
+                <h2
+                    class="chapter-text-title"
+                    id="chapter-text-title">
+                </h2>
+
+                <p
+                    class="chapter-text-body"
+                    id="chapter-text-body">
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FINAL ESSAY
+             ========================= -->
+
+        <section
+            class="final-essay"
+            aria-label="Final reflection">
+
+            <div class="final-essay-header">
+
+                <div class="final-essay-label">
+                    WHAT THE MAP DOESN’T SHOW
+                </div>
+
+            </div>
+
+
+            <div class="final-essay-columns">
+
+                <div class="final-essay-column">
+
+                    <!-- WRITE FIRST HALF OF FINAL ESSAY HERE -->
+                    <p>
+                     There is something strange about seeing a life reduced to dots.   
+                    </p>
+
+                    <p>
+                    Some are large because I spent years there. Others are barely visible because I stayed for only a few days. On the map, this makes perfect sense: the longer I stayed, the larger the dot.
+                    </p>
+                    
+                    <p>
+                    But duration is a poor measure of significance.  
+                    </p>
+                   
+                    <p>
+                    The amount of time I spent somewhere tells me how long I was there, but not what that period became in the context of my life. Years in one place can blur into one continuous stretch. A few days somewhere else can remain distinct for years. Time measures duration, not importance.   
+                    </p>
+
+                    <p>
+                    The same city can also contain several different versions of the same person. What I experienced in Geneva the first time I visited it was not the same as what I experienced there several years later, even though the map records both as the same location. The city stayed in the same place; I did not.   
+                    </p>
+
+
+                </div>
+
+
+                <div class="final-essay-column">
+
+                    <!-- WRITE SECOND HALF OF FINAL ESSAY HERE -->
+                    <p>
+                    And places can affect each other in ways that only become visible later. A short trip can influence a decision about work. A temporary choice can turn into seven years. An event that seemed insignificant can become important once we know what followed.
+                    </p>
+
+                    <p>
+                    Looking back, we also tend to connect these events into a story. We divide our lives into chapters, identify turning points, and give earlier decisions a significance they may not have had at the time. What looks like a clear sequence in retrospect may have felt like a series of unrelated choices while it was happening.
+                    </p>
+
+                    <p>
+                    This is where the map reaches its limit. It can show where I lived, studied and travelled, and roughly how long I spent in each place. It can reveal the geography of my life.
+                    </p>
+
+                    <p>
+                    But it cannot show what each place meant, how that meaning changed, or whether the connections between them were really there — or were created later, when I started looking back.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+
+
+        <!-- =========================
+             TOOLTIP
+             ========================= -->
+
+        <div id="tooltip"></div>
+
+
+        <!-- =========================
+             CREDIT
+             ========================= -->
+
+        <div class="credit">
+            ANTONINA POPOVA · 2026
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         LIBRARIES
+         ========================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
