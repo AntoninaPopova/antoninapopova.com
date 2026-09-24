@@ -171,31 +171,74 @@ main {
 /* --------------------------------------------------
    VISUALISATIONS
 -------------------------------------------------- */
-
 .visualisation {
+
     width: 100vw;
 
-    margin-top: 70px;
-    margin-bottom: 70px;
+    margin-top: 45px;
 
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-}
+    margin-bottom: 45px;
 
-.visualisation > div {
-    width: 100%;
-    min-height: 500px;
+    margin-left: 0;
+
+    margin-right: 0;
+
+    position: relative;
+
+    left: calc(
+
+        -1 * (
+
+            max(0px, (100vw - 1100px) / 2)
+
+            + 5vw
+
+            + 80px
+
+        )
+
+    );
+
 }
 
 .visualisation figcaption {
+
     max-width: var(--text-width);
-    margin: 18px 0 0
-        calc(50vw - (var(--text-width) / 2));
+
+    margin: 18px 0 0 calc(
+
+        max(0px, (100vw - 1100px) / 2)
+
+        + 5vw
+
+        + 80px
+
+    );
+
     padding: 0;
+
     color: #777;
+
     font-family: Arial, sans-serif;
+
     font-size: 0.72rem;
+
     line-height: 1.5;
+
+}
+
+.visualisation iframe {
+
+    display: block;
+
+    width: 100%;
+
+    height: 500px;
+
+    border: none;
+
+    display: block;
+
 }
 
 
@@ -538,6 +581,9 @@ main {
    VERY NARROW PHONES
 -------------------------------------------------- */
 
+
+
+
 @media screen and (max-width: 380px) {
 
     .site-header {
@@ -558,4 +604,61 @@ main {
     nav a {
         font-size: 0.6rem;
     }
+}
+
+
+@media screen and (max-width: 700px) {
+
+    .visualisation {
+
+        width: 100vw;
+
+        max-width: none;
+
+        margin-top: 50px;
+
+        margin-bottom: 25px;
+
+        margin-left: 0;
+
+        margin-right: 0;
+
+        position: relative;
+
+        left: calc(-1 * 6vw);
+
+    }
+
+    .visualisation iframe {
+
+        width: 100%;
+
+        height: 280px;
+
+    }
+
+    .visualisation figcaption {
+
+        max-width: none;
+
+        margin: 18px 6vw 0;
+
+    }
+
+}
+
+/* --------------------------------------------------
+
+   SMALL PHONE — LANDSCAPE
+
+-------------------------------------------------- */
+
+@media screen and (max-width: 700px) and (orientation: landscape) {
+
+    .visualisation iframe {
+
+        height: 330px;
+
+    }
+
 }

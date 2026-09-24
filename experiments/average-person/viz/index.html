@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<style>
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #f8f8f5;
+}
+
+#visualization {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* ============================================================
+   FULLSCREEN
+============================================================ */
+
+:fullscreen {
+
+    background: #f8f8f5;
+
+}
+
+html:fullscreen {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+html:fullscreen body {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+html:fullscreen #visualization {
+
+    width: 100%;
+
+    height: calc(100% - 50px);
+
+}
+
+html:fullscreen .controls {
+
+    position: fixed;
+
+    left: 0;
+
+    bottom: 0;
+
+    width: 100%;
+
+    height: 50px;
+
+    z-index: 101;
+
+    background: #f8f8f5;
+
+}
+
+
+/* ============================================================
+   SVG / CANVAS
+============================================================ */
+
+svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+    touch-action: none;
+    position: relative;
+    z-index: 2;
+}
+
+svg:active {
+    cursor: grabbing;
+}
+
+rect {
+    shape-rendering: crispEdges;
+}
+
+#individual-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+/* ============================================================
+   TOOLTIP
+============================================================ */
+
+.person-comment {
+    pointer-events: none;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+}
+
+
+/* ============================================================
+   CONTROLS
+============================================================ */
+
+.controls {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    padding-top: 0;
+    gap: 26px;
+    color: #777;
+    font-family: Arial, sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.01em;
+}
+
+.controls button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid transparent;
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.5;
+    cursor: pointer;
+    transition:
+        color 150ms ease,
+        border-color 150ms ease;
+}
+
+.controls button:hover {
+    color: #222;
+}
+
+.controls button:focus-visible {
+    outline: 1px solid #777;
+    outline-offset: 4px;
+}
+
+
+/* ------------------------------------------------------------
+   ZOOM CONTROLS
+------------------------------------------------------------ */
+
+#zoom-in,
+#zoom-out {
+    color: #555;
+}
+
+#zoom-in:hover,
+#zoom-out:hover {
+    color: #222;
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media screen and (max-width: 700px) {
+
+    #visualization {
+
+        height: min(300px, 57.2vw);
+
+    }
+
+    .controls {
+
+        gap: 17px;
+
+        font-size: 0.66rem;
+
+    }
+
+    body:fullscreen .controls {
+
+        padding-left: 6vw !important;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="visualization">
+
+    <svg id="svg"></svg>
+
+    <canvas id="individual-canvas"></canvas>
+
+</div>
+
+
+<div class="controls">
+
+    <button
+        type="button"
+        id="zoom-in"
+        aria-label="Zoom in">
+        Zoom in
+    </button>
+
+    <button
+        type="button"
+        id="zoom-out"
+        aria-label="Zoom out">
+        Zoom out
+    </button>
+
+    <button
+        type="button"
+        id="reset">
+        Reset
+    </button>
+
+    <button
+        type="button"
+        id="full-view"
+        aria-label="Expand visualisation"
+        aria-pressed="false">
+        Expand
+    </button>
+
+    <button
+        type="button"
+        id="meet-individual">
+        Meet an individual
+    </button>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   SETUP
+============================================================ */
+
+const svg =
+    d3.select("#svg");
+
+const container =
+    document.getElementById("visualization");
+
+const canvas =
+    document.getElementById("individual-canvas");
+
+const canvasContext =
+    canvas.getContext("2d");
+
+let width =
+    container.clientWidth;
+
+let height =
+    container.clientHeight;
+
+
+/* ============================================================
+   HIERARCHY
+============================================================ */
+
+const GRID = 16;
+const TOTAL = GRID ** 4;
+
+
+/*
+   Level 0 = 1 block
+   Level 1 = 16 blocks
+   Level 2 = 256 blocks
+   Level 3 = 4,096 blocks
+   Level 4 = 65,536 individuals
+*/
+
+const LEVEL_THRESHOLDS = [
+    1,
+    1.5,
+    2.5,
+    4,
+    6.5
+];
+
+
+/* ============================================================
+   COLOUR PALETTE
+============================================================ */
+
+const palette = [
+
+    "#8DA7BE",
+    "#554640",
+    "#CDE6F5",
+    "#87919e",
+    "#707078"
+
+];
+
+
+/* ============================================================
+   TOP-LEVEL GROUP COLOURS
+============================================================ */
+
+const groupColours =
+    d3.range(16).map(i => {
+
+        const position =
+            i / 15;
+
+        const scaledPosition =
+            position *
+            (palette.length - 1);
+
+        const index =
+            Math.floor(
+                scaledPosition
+            );
+
+        const fraction =
+            scaledPosition -
+            index;
+
+        const colourA =
+            palette[
+                Math.min(
+                    index,
+                    palette.length - 1
+                )
+            ];
+
+        const colourB =
+            palette[
+                Math.min(
+                    index + 1,
+                    palette.length - 1
+                )
+            ];
+
+        return d3.interpolateRgb(
+            colourA,
+            colourB
+        )(fraction);
+
+    });
+
+
+/* ============================================================
+   DETERMINISTIC RANDOM NUMBER
+============================================================ */
+
+function pseudoRandom(value) {
+
+    const x =
+        Math.sin(
+            value * 12.9898
+        ) *
+        43758.5453;
+
+    return (
+        x -
+        Math.floor(x)
+    );
+
+}
+
+
+/* ============================================================
+   INDIVIDUAL COLOUR
+============================================================ */
+
+function individualColour(
+    groupIndex,
+    personIndex
+) {
+
+    const baseColour =
+        d3.rgb(
+            groupColours[groupIndex]
+        );
+
+    const variation =
+        (
+            pseudoRandom(
+                personIndex + 1
+            ) -
+            0.5
+        ) * 14;
+
+    const redVariation =
+        (
+            pseudoRandom(
+                personIndex + 1000
+            ) -
+            0.5
+        ) * 3;
+
+    const greenVariation =
+        (
+            pseudoRandom(
+                personIndex + 2000
+            ) -
+            0.5
+        ) * 3;
+
+    const blueVariation =
+        (
+            pseudoRandom(
+                personIndex + 3000
+            ) -
+            0.5
+        ) * 3;
+
+    return d3.rgb(
+
+        baseColour.r +
+        variation +
+        redVariation,
+
+        baseColour.g +
+        variation +
+        greenVariation,
+
+        baseColour.b +
+        variation +
+        blueVariation
+
+    ).formatHex();
+
+}
+
+
+/* ============================================================
+   INDIVIDUAL COLOUR CACHE
+============================================================ */
+
+const colourCache =
+    new Array(TOTAL);
+
+const rgbCache =
+    new Array(TOTAL);
+
+
+function getIndividualColour(
+    personIndex
+) {
+
+    if (
+        colourCache[personIndex]
+    ) {
+
+        return colourCache[
+            personIndex
+        ];
+
+    }
+
+    const groupIndex =
+        Math.floor(
+            personIndex /
+            (GRID ** 3)
+        );
+
+    const colour =
+        individualColour(
+            groupIndex,
+            personIndex
+        );
+
+    const rgb =
+        d3.rgb(colour);
+
+    colourCache[
+        personIndex
+    ] = colour;
+
+    rgbCache[
+        personIndex
+    ] = {
+
+        r: rgb.r,
+        g: rgb.g,
+        b: rgb.b
+
+    };
+
+    return colour;
+
+}
+
+
+/* ============================================================
+   AVERAGE COLOUR
+============================================================ */
+
+function averageColourRange(
+    start,
+    count
+) {
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    const end =
+        start + count;
+
+    for (
+        let i = start;
+        i < end;
+        i++
+    ) {
+
+        if (!rgbCache[i]) {
+            getIndividualColour(i);
+        }
+
+        const rgb =
+            rgbCache[i];
+
+        r += rgb.r;
+        g += rgb.g;
+        b += rgb.b;
+
+    }
+
+    return d3.rgb(
+
+        r / count,
+        g / count,
+        b / count
+
+    ).formatHex();
+
+}
+
+
+/* ============================================================
+   BUILD HIERARCHY
+============================================================ */
+
+const levels = [];
+
+levels[4] = {
+    count: TOTAL
+};
+
+
+for (
+    let level = 3;
+    level >= 0;
+    level--
+) {
+
+    const nodeCount =
+        GRID ** level;
+
+    const peoplePerNode =
+        GRID ** (4 - level);
+
+    const nodes = [];
+
+    for (
+        let i = 0;
+        i < nodeCount;
+        i++
+    ) {
+
+        const start =
+            i *
+            peoplePerNode;
+
+        nodes.push({
+
+            start,
+
+            count:
+                peoplePerNode,
+
+            colour:
+                averageColourRange(
+                    start,
+                    peoplePerNode
+                )
+
+        });
+
+    }
+
+    levels[level] =
+        nodes;
+
+}
+
+
+/* ============================================================
+   VIEWPORT
+============================================================ */
+
+const viewport =
+    svg.append("g");
+
+
+/* ============================================================
+   VISUAL DIMENSIONS
+============================================================ */
+
+let startX;
+let startY;
+
+let visualWidth;
+let visualHeight;
+
+const individualColumns =
+    GRID ** 2;
+
+const individualRows =
+    GRID ** 2;
+
+let individualCellWidth;
+let individualCellHeight;
+
+const individualGridStartX =
+    () => startX;
+
+
+/* ============================================================
+   CONTROLS ALIGNMENT
+============================================================ */
+
+const controls =
+    document.querySelector(
+        ".controls"
+    );
+
+
+/* ============================================================
+   LAYOUT
+============================================================ */
+
+function calculateLayout() {
+
+    width =
+        container.clientWidth;
+
+    height =
+        container.clientHeight;
+
+    const isFullscreen =
+        Boolean(
+            document.fullscreenElement
+        );
+
+
+    /* ========================================================
+       FULLSCREEN
+    ======================================================== */
+
+    if (isFullscreen) {
+
+        if (width <= 700) {
+
+            startX =
+                width * 0.06;
+
+            visualWidth =
+                width * 0.88;
+
+        } else {
+
+            startX =
+                width * 0.05;
+
+            visualWidth =
+                width * 0.90;
+
+        }
+
+
+        visualHeight =
+            Math.min(
+                height - 70,
+                visualWidth * 0.65
+            );
+
+
+        visualHeight =
+            Math.max(
+                260,
+                visualHeight
+            );
+
+
+        startY =
+            Math.max(
+                0,
+                (
+                    height -
+                    visualHeight
+                ) / 2
+            );
+
+    }
+
+
+    /* ========================================================
+       NORMAL EMBEDDED VIEW
+    ======================================================== */
+
+    else {
+
+        if (
+            width <= 700
+        ) {
+
+            startX =
+                width * 0.06;
+
+        } else {
+
+            const textLeft =
+                Math.max(
+                    0,
+                    (
+                        width - 1100
+                    ) / 2
+                )
+                +
+                width * 0.05
+                +
+                80;
+
+            startX =
+                textLeft;
+
+        }
+
+
+        visualWidth =
+
+            width <= 700
+
+                ? width * 0.88
+
+                : Math.min(
+                    680,
+                    width - startX
+                );
+
+
+        visualHeight =
+
+            width <= 700
+
+                ? Math.min(
+                    300,
+                    visualWidth * 0.65
+                )
+
+                : Math.min(
+                    480,
+                    visualWidth * 0.65
+                );
+
+
+        startY = 0;
+
+    }
+
+
+    /* ========================================================
+       INDIVIDUAL GRID
+    ======================================================== */
+
+    individualCellWidth =
+        visualWidth /
+        individualColumns;
+
+    individualCellHeight =
+        visualHeight /
+        individualRows;
+
+
+    /* ========================================================
+       ALIGN CONTROLS
+    ======================================================== */
+
+    controls.style.paddingLeft =
+        `${startX}px`;
+
+}
+
+
+/* ============================================================
+   COMMENT TEXT
+============================================================ */
+
+const comments = [
+
+    person =>
+        `Person #${person.id.toLocaleString()}.<br>One individual.`,
+
+    person =>
+        `Person #${person.id.toLocaleString()}.<br>Not the average.<br>They have their own story.`,
+
+    person =>
+        `Person #${person.id.toLocaleString()}.<br>One of 65,536.<br>Each one is different.`,
+
+    person =>
+        `Person #${person.id.toLocaleString()}.<br>Part of the whole.<br>Not the whole.`,
+
+    person =>
+        `Person #${person.id.toLocaleString()}.<br>Counted in the average.<br>Not represented by it.`,
+
+    person =>
+        `Person #${person.id.toLocaleString()}.<br>One individual among thousands.<br>One story among many.`
+
+];
+
+
+/* ============================================================
+   COMMENT LAYER
+============================================================ */
+
+const commentGroup =
+    svg.append("g")
+        .style(
+            "display",
+            "none"
+        );
+
+
+/* ============================================================
+   TOOLTIP COLOUR
+============================================================ */
+
+function tooltipColour(
+    backgroundColour
+) {
+
+    const colour =
+        d3.rgb(
+            backgroundColour
+        );
+
+    const brightness =
+
+        0.299 * colour.r +
+        0.587 * colour.g +
+        0.114 * colour.b;
+
+    return brightness < 150
+        ? "#d8d8d3"
+        : "#222";
+
+}
+
+
+/* ============================================================
+   SHOW PERSON COMMENT
+============================================================ */
+
+let hoveredPersonIndex = null;
+
+
+function showPersonComment(
+    personIndex,
+    mouseX,
+    mouseY
+) {
+
+    const person = {
+
+        id:
+            personIndex + 1
+
+    };
+
+
+    if (
+        hoveredPersonIndex !==
+        personIndex
+    ) {
+
+        hoveredPersonIndex =
+            personIndex;
+
+
+        const comment =
+            comments[
+                person.id %
+                comments.length
+            ](person);
+
+
+        commentGroup
+            .selectAll(
+                ".comment-text"
+            )
+            .remove();
+
+
+        const text =
+            commentGroup
+                .append("text")
+                .attr(
+                    "class",
+                    "person-comment comment-text"
+                )
+                .attr(
+                    "x",
+                    0
+                )
+                .attr(
+                    "y",
+                    0
+                )
+                .style(
+                    "fill",
+                    tooltipColour(
+                        getIndividualColour(
+                            personIndex
+                        )
+                    )
+                );
+
+
+        const lines =
+            comment.split("<br>");
+
+
+        lines.forEach(
+            (line, i) => {
+
+                text
+                    .append("tspan")
+                    .attr(
+                        "x",
+                        0
+                    )
+                    .attr(
+                        "dy",
+                        i === 0
+                            ? 0
+                            : "1.35em"
+                    )
+                    .text(
+                        line
+                    );
+
+            }
+        );
+
+    }
+
+
+    const text =
+        commentGroup
+            .select(".comment-text");
+
+
+    const bbox =
+        text.node()
+            .getBBox();
+
+
+    let commentX =
+        mouseX + 18;
+
+
+    let commentY =
+        mouseY -
+        bbox.height -
+        18;
+
+
+    if (
+        commentX +
+        bbox.width >
+        width - 20
+    ) {
+
+        commentX =
+            mouseX -
+            bbox.width -
+            18;
+
+    }
+
+
+    if (
+        commentX < 20
+    ) {
+
+        commentX = 20;
+
+    }
+
+
+    commentY =
+        Math.max(
+            20,
+            Math.min(
+                height -
+                bbox.height -
+                20,
+                commentY
+            )
+        );
+
+
+    commentGroup
+        .attr(
+            "transform",
+            `translate(${commentX},${commentY})`
+        )
+        .style(
+            "display",
+            null
+        );
+
+}
+
+
+/* ============================================================
+   HIDE COMMENT
+============================================================ */
+
+function hidePersonComment() {
+
+    hoveredPersonIndex =
+        null;
+
+    commentGroup
+        .style(
+            "display",
+            "none"
+        );
+
+}
+
+
+/* ============================================================
+   CANVAS SIZE
+============================================================ */
+
+function resizeCanvas() {
+
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+    canvas.width =
+        width * dpr;
+
+    canvas.height =
+        height * dpr;
+
+    canvasContext.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+}
+
+
+/* ============================================================
+   DRAW INDIVIDUALS
+============================================================ */
+
+function drawIndividuals(
+    transform
+) {
+
+    canvasContext.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    const topLeft =
+        transform.invert([
+            0,
+            0
+        ]);
+
+    const bottomRight =
+        transform.invert([
+            width,
+            height
+        ]);
+
+
+    const minX =
+        Math.min(
+            topLeft[0],
+            bottomRight[0]
+        );
+
+    const maxX =
+        Math.max(
+            topLeft[0],
+            bottomRight[0]
+        );
+
+    const minY =
+        Math.min(
+            topLeft[1],
+            bottomRight[1]
+        );
+
+    const maxY =
+        Math.max(
+            topLeft[1],
+            bottomRight[1]
+        );
+
+
+    let startColumn =
+        Math.floor(
+            (
+                minX -
+                individualGridStartX()
+            ) /
+            individualCellWidth
+        );
+
+    let endColumn =
+        Math.ceil(
+            (
+                maxX -
+                individualGridStartX()
+            ) /
+            individualCellWidth
+        );
+
+
+    let startRow =
+        Math.floor(
+            (
+                minY -
+                startY
+            ) /
+            individualCellHeight
+        );
+
+    let endRow =
+        Math.ceil(
+            (
+                maxY -
+                startY
+            ) /
+            individualCellHeight
+        );
+
+
+    startColumn =
+        Math.max(
+            0,
+            startColumn
+        );
+
+    endColumn =
+        Math.min(
+            individualColumns,
+            endColumn
+        );
+
+    startRow =
+        Math.max(
+            0,
+            startRow
+        );
+
+    endRow =
+        Math.min(
+            individualRows,
+            endRow
+        );
+
+
+    canvasContext.save();
+
+    canvasContext.translate(
+        transform.x,
+        transform.y
+    );
+
+    canvasContext.scale(
+        transform.k,
+        transform.k
+    );
+
+
+    for (
+        let row = startRow;
+        row < endRow;
+        row++
+    ) {
+
+        const y =
+            startY +
+            row *
+            individualCellHeight;
+
+
+        for (
+            let column = startColumn;
+            column < endColumn;
+            column++
+        ) {
+
+            const personIndex =
+                row *
+                individualColumns +
+                column;
+
+
+            if (
+                personIndex >= TOTAL
+            ) {
+
+                continue;
+
+            }
+
+
+            const x =
+                individualGridStartX() +
+                column *
+                individualCellWidth;
+
+
+            canvasContext.fillStyle =
+                getIndividualColour(
+                    personIndex
+                );
+
+
+            canvasContext.fillRect(
+
+                x,
+                y,
+
+                individualCellWidth + 0.5,
+                individualCellHeight + 0.5
+
+            );
+
+        }
+
+    }
+
+
+    canvasContext.restore();
+
+}
+
+
+/* ============================================================
+   DRAW AGGREGATED LEVEL
+============================================================ */
+
+function drawAggregatedLevel(
+    level
+) {
+
+    const data =
+        levels[level];
+
+    const count =
+        data.length;
+
+    const columns =
+        Math.sqrt(count);
+
+    const rows =
+        Math.sqrt(count);
+
+    const cellWidth =
+        visualWidth /
+        columns;
+
+    const cellHeight =
+        visualHeight /
+        rows;
+
+
+    const selection =
+        viewport
+            .selectAll("rect")
+            .data(
+                data,
+                d => d.start
+            );
+
+
+    selection
+        .exit()
+        .remove();
+
+
+    const rects =
+        selection
+            .enter()
+            .append("rect")
+            .merge(selection);
+
+
+    rects
+        .attr(
+            "x",
+            (d, i) =>
+                startX +
+                (
+                    i %
+                    columns
+                ) *
+                cellWidth
+        )
+        .attr(
+            "y",
+            (d, i) =>
+                startY +
+                Math.floor(
+                    i /
+                    columns
+                ) *
+                cellHeight
+        )
+        .attr(
+            "width",
+            cellWidth + 0.5
+        )
+        .attr(
+            "height",
+            cellHeight + 0.5
+        )
+        .attr(
+            "fill",
+            d => d.colour
+        );
+
+}
+
+
+/* ============================================================
+   SHOW INDIVIDUAL LEVEL
+============================================================ */
+
+function showIndividualLevel() {
+
+    viewport
+        .selectAll("rect")
+        .remove();
+
+    canvas.style.display =
+        "block";
+
+    drawIndividuals(
+        currentTransform
+    );
+
+}
+
+
+/* ============================================================
+   HIDE INDIVIDUAL LEVEL
+============================================================ */
+
+function hideIndividualLevel() {
+
+    canvas.style.display =
+        "none";
+
+    canvasContext.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+}
+
+
+/* ============================================================
+   DRAW CURRENT LEVEL
+============================================================ */
+
+function drawLevel(
+    level
+) {
+
+    currentLevel =
+        level;
+
+    hidePersonComment();
+
+
+    if (
+        level === 4
+    ) {
+
+        showIndividualLevel();
+
+    } else {
+
+        hideIndividualLevel();
+
+        drawAggregatedLevel(
+            level
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   INITIAL STATE
+============================================================ */
+
+let currentLevel = 0;
+
+let currentTransform =
+    d3.zoomIdentity;
+
+
+calculateLayout();
+
+resizeCanvas();
+
+drawLevel(0);
+
+
+/* ============================================================
+   ZOOM
+============================================================ */
+
+const zoom =
+    d3.zoom()
+        .scaleExtent([
+            1,
+            80
+        ])
+        .filter(
+            event => {
+
+                return (
+                    !event.button ||
+                    event.type === "wheel"
+                );
+
+            }
+        )
+        .on(
+            "zoom",
+            function(event) {
+
+                currentTransform =
+                    event.transform;
+
+
+                viewport
+                    .attr(
+                        "transform",
+                        event.transform
+                    );
+
+
+                const k =
+                    event.transform.k;
+
+                let level = 0;
+
+
+                if (
+                    k >= LEVEL_THRESHOLDS[1]
+                ) {
+
+                    level = 1;
+
+                }
+
+
+                if (
+                    k >= LEVEL_THRESHOLDS[2]
+                ) {
+
+                    level = 2;
+
+                }
+
+
+                if (
+                    k >= LEVEL_THRESHOLDS[3]
+                ) {
+
+                    level = 3;
+
+                }
+
+
+                if (
+                    k >= LEVEL_THRESHOLDS[4]
+                ) {
+
+                    level = 4;
+
+                }
+
+
+                if (
+                    level !==
+                    currentLevel
+                ) {
+
+                    drawLevel(
+                        level
+                    );
+
+
+                    viewport
+                        .attr(
+                            "transform",
+                            event.transform
+                        );
+
+                }
+
+
+                if (
+                    level === 4
+                ) {
+
+                    drawIndividuals(
+                        event.transform
+                    );
+
+                }
+
+            }
+        );
+
+
+svg.call(zoom);
+
+
+/* ============================================================
+   INDIVIDUAL MOUSE POSITION
+============================================================ */
+
+svg.on(
+    "mousemove.individual",
+    function(event) {
+
+        if (
+            currentLevel !== 4
+        ) {
+
+            hidePersonComment();
+
+            return;
+
+        }
+
+
+        const mouse =
+            d3.pointer(
+                event,
+                svg.node()
+            );
+
+
+        const inverse =
+            currentTransform.invert(
+                mouse
+            );
+
+
+        const column =
+            Math.floor(
+                (
+                    inverse[0] -
+                    individualGridStartX()
+                ) /
+                individualCellWidth
+            );
+
+
+        const row =
+            Math.floor(
+                (
+                    inverse[1] -
+                    startY
+                ) /
+                individualCellHeight
+            );
+
+
+        if (
+            column < 0 ||
+            column >= individualColumns ||
+            row < 0 ||
+            row >= individualRows
+        ) {
+
+            hidePersonComment();
+
+            return;
+
+        }
+
+
+        const personIndex =
+            row *
+            individualColumns +
+            column;
+
+
+        if (
+            personIndex < 0 ||
+            personIndex >= TOTAL
+        ) {
+
+            hidePersonComment();
+
+            return;
+
+        }
+
+
+        showPersonComment(
+            personIndex,
+            mouse[0],
+            mouse[1]
+        );
+
+    }
+);
+
+
+/* ============================================================
+   MOUSE LEAVE
+============================================================ */
+
+svg.on(
+    "mouseleave.individual",
+    function() {
+
+        hidePersonComment();
+
+    }
+);
+
+
+/* ============================================================
+   ZOOM BUTTON HELPER
+============================================================ */
+
+function zoomToScale(
+    targetScale
+) {
+
+    targetScale =
+        Math.max(
+            1,
+            Math.min(
+                80,
+                targetScale
+            )
+        );
+
+
+    svg
+        .interrupt()
+        .transition()
+        .duration(250)
+        .call(
+            zoom.scaleTo,
+            targetScale
+        );
+
+}
+
+
+/* ============================================================
+   ZOOM IN
+============================================================ */
+
+document
+    .getElementById("zoom-in")
+    .addEventListener(
+        "click",
+        function() {
+
+            zoomToScale(
+                currentTransform.k * 1.7
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   ZOOM OUT
+============================================================ */
+
+document
+    .getElementById("zoom-out")
+    .addEventListener(
+        "click",
+        function() {
+
+            zoomToScale(
+                currentTransform.k / 1.7
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   RESET
+============================================================ */
+
+document
+    .getElementById("reset")
+    .addEventListener(
+        "click",
+        function() {
+
+            svg
+                .interrupt()
+                .transition()
+                .duration(500)
+                .call(
+                    zoom.transform,
+                    d3.zoomIdentity
+                );
+
+        }
+    );
+
+
+/* ============================================================
+   FULL VIEW
+============================================================ */
+
+const fullViewButton =
+    document.getElementById(
+        "full-view"
+    );
+
+
+function updateFullViewButton(
+    isFullView
+) {
+
+    fullViewButton.textContent =
+        isFullView
+            ? "Close"
+            : "Expand";
+
+    fullViewButton.setAttribute(
+        "aria-label",
+        isFullView
+            ? "Close full view"
+            : "Expand visualisation"
+    );
+
+    fullViewButton.setAttribute(
+        "aria-pressed",
+        isFullView
+            ? "true"
+            : "false"
+    );
+
+}
+
+
+async function enterFullView() {
+
+    try {
+
+        await document.documentElement.requestFullscreen();
+
+    } catch (error) {
+
+        console.warn(
+            "Fullscreen could not be entered.",
+            error
+        );
+
+        return;
+
+    }
+
+}
+
+
+async function exitFullView() {
+
+    if (
+        document.fullscreenElement
+    ) {
+
+        try {
+
+            await document.exitFullscreen();
+
+        } catch (error) {
+
+            console.warn(
+                "Fullscreen could not be exited.",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+fullViewButton.addEventListener(
+    "click",
+    function() {
+
+        if (
+            document.fullscreenElement
+        ) {
+
+            exitFullView();
+
+        } else {
+
+            enterFullView();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   FULLSCREEN CHANGE
+============================================================ */
+
+document.addEventListener(
+    "fullscreenchange",
+    function() {
+
+        const isFullView =
+            Boolean(
+                document.fullscreenElement
+            );
+
+
+        updateFullViewButton(
+            isFullView
+        );
+
+
+        requestAnimationFrame(
+            function() {
+
+                calculateLayout();
+
+                resizeCanvas();
+
+                drawLevel(
+                    currentLevel
+                );
+
+                viewport.attr(
+                    "transform",
+                    currentTransform
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* ============================================================
+   MEET AN INDIVIDUAL
+============================================================ */
+
+document
+    .getElementById("meet-individual")
+    .addEventListener(
+        "click",
+        function() {
+
+            const centerX =
+                startX +
+                visualWidth / 2;
+
+
+            const centerY =
+                startY +
+                visualHeight / 2;
+
+
+            const targetScale =
+                6.5;
+
+
+            const transform =
+                d3.zoomIdentity
+                    .translate(
+
+                        width / 2 -
+                        centerX *
+                        targetScale,
+
+                        height / 2 -
+                        centerY *
+                        targetScale
+
+                    )
+                    .scale(
+                        targetScale
+                    );
+
+
+            svg
+                .interrupt()
+                .transition()
+                .duration(700)
+                .call(
+                    zoom.transform,
+                    transform
+                );
+
+        }
+    );
+
+
+/* ============================================================
+   DOUBLE CLICK = RESET
+============================================================ */
+
+svg.on(
+    "dblclick.zoom",
+    null
+);
+
+svg.on(
+    "dblclick",
+    function() {
+
+        svg
+            .interrupt()
+            .transition()
+            .duration(500)
+            .call(
+                zoom.transform,
+                d3.zoomIdentity
+            );
+
+    }
+);
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        calculateLayout();
+
+        resizeCanvas();
+
+        drawLevel(
+            currentLevel
+        );
+
+        viewport.attr(
+            "transform",
+            currentTransform
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>

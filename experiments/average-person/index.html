@@ -20,68 +20,132 @@
 <!-- INTRODUCTION -->
 <header class="experiment-header">
     <p class="eyebrow">Experiment</p>
-    <h1>Experiment Title</h1>
+    <h1>The Person Who Does Not Exist</h1>
     <p class="subtitle">
-        A short sentence introducing the question or idea explored in this experiment.
+        What happens when millions of different people become a single statistical average?
     </p>
     <div class="experiment-meta">
         <span>September 2026</span>
-        <span>Data · Perception · Society</span>
+        <span>Statistics · Society · Individuals</span>
     </div>
 </header>
 <!-- ESSAY -->
 <article class="essay">
     <p class="lead">
-        This is the opening paragraph. It introduces the question and gives
-        the reader a reason to continue.
+        Let’s build a person from statistics.
     </p>
     <p>
-        The essay can continue here. Keep paragraphs relatively short and
-        allow the visualisation to interrupt the text rather than placing
-        everything before the first interaction.
+        Imagine a 43-year-old person living in France. 
+        They are employed and, if we make them a full-time private-sector employee, earn around €2,730 a month. 
+        They have 1.56 children. 
+        They can expect to live to around 83. 
+        The poverty rate is 15.4%.
+    </p>
+    <p>
+        Who is this person? 
+        They don’t exist.
+    </p>
+    <p>
+        Not because the numbers are wrong. 
+        Because they describe different populations, different distributions and sometimes even hypothetical people.
+    </p>
+    <p>
+        And yet, put them together and we get something that looks remarkably like a human being.
+    </p>
+    <p>
+        The average person is a statistical construction: a person assembled from the numbers of millions of other people, none of whom necessarily resembles them.
+    </p>
+    <p>
+        This is not a flaw.
+    </p>
+    <p>
+        We need averages. They allow us to see populations too large and complicated to understand one person at a time.
+    </p>
+
+    <p>
+        So we compress. And compression is useful because it makes the world legible.
+    </p>
+    <p>
+        But compression also means loss.
+    </p>
+
+    <h2>What disappears when we average?</h2>
+    <p>
+        At first, you see a single blue square.
+        It looks like one thing. 
+    </p>
+    <p>
+        But zoom in.
     </p>
     <!-- VISUALISATION 01 -->
     <figure class="visualisation">
-        <div id="visualisation-01"></div>
-        <figcaption>
-            Short explanation of what the reader is seeing.
-        </figcaption>
+        <iframe
+            src="viz/index.html"
+            title="The Person Who Does Not Exist — interactive visualisation"
+            loading="lazy"
+            allowfullscreen>
+        </iframe>
     </figure>
+    
     <p>
-        This paragraph explains what the first visualisation reveals and
-        introduces the next part of the argument.
-    </p>
-    <!-- OPTIONAL SECTION -->
-    <h2>A smaller question within the story</h2>
-    <p>
-        Not every experiment needs section headings. Use them when they
-        genuinely help structure the argument.
-    </p>
-    <!-- VISUALISATION 02 -->
-    <figure class="visualisation">
-        <div id="visualisation-02"></div>
-        <figcaption>
-            Another visualisation, interaction or visual experiment.
-        </figcaption>
-    </figure>
-    <p>
-        Continue the essay here.
+        It becomes 16 smaller squares, each a slightly different colour. 
+        Together, they produce the blue you saw before.
     </p>
     <p>
-        The final paragraphs can return to the original question and leave
-        the reader with an observation rather than necessarily providing
-        a definitive conclusion.
+        Zoom in again. The 16 become 256. Then 4,096. Then 65,536.
     </p>
+    <p>
+        The further you zoom in, the more variation you discover.
+    </p>
+    <p>
+        Eventually, there are individual squares. 
+        None of them is the blue you saw at the beginning. And yet, together, they produce it.
+    </p>    
+    <p>
+        This is what an average can do.
+        A population of millions of very different people can produce a number—or a colour—that belongs to nobody.
+        
+    </p>    
+    <p>
+        We can describe that population with a mean, a median, a standard deviation, percentiles.
+        We can measure inequality and variation. 
+        We can build increasingly sophisticated models of the distribution.
+    </p>    
+    <p>    
+        And still, something remains outside the numbers.
+    </p>    
+    <p> Why is this person poor?
+        Why did that child leave school?
+        Why did this family move?
+        Why did this business fail?
+    </p>    
+    <p>
+        A statistic can tell us how many people are in a situation. 
+        It cannot, by itself, tell us what it means to be one of them.
+    </p>    
+    <p>
+        The point is not that statistics are wrong.
+        The point is that a population and the people who make it up are two different things.
+    </p>    
+    <p>
+        The average lets us step back and see the whole. But when we step back far enough, the individuals disappear.
+    </p>      
+    <p>
+        The average is not the person. 
+        It is what we see when millions of people become one colour.
+    </p>
+
 </article>
+
 <!-- TECHNICAL NOTE -->
 <section class="technical">
     <p class="eyebrow">How it was made</p>
     <h2>Technical notes</h2>
     <p>
-        The visualisation was built with
-        <strong>D3.js</strong>.
-        Data was prepared in CSV format and the interaction was implemented
-        with JavaScript and SVG.
+        The visualisation was built with <strong>D3.js</strong>, using <strong>JavaScript</strong>, <strong>SVG</strong> and <strong>Canvas</strong>. 
+        The individual observations and colour variations were generated deterministically in JavaScript. 
+        Precomputed aggregates then represent the same population at increasingly compact levels as the reader zooms out, 
+        from 65,536 individual observations to a single colour.
     </p>
     <dl class="technical-details">
         <div>
@@ -94,11 +158,11 @@
         </div>
         <div>
             <dt>Format</dt>
-            <dd>SVG</dd>
+            <dd>SVG + Canvas</dd>
         </div>
         <div>
             <dt>Data</dt>
-            <dd>Public datasets / original analysis</dd>
+            <dd>Original analysis and generated observations</dd>
         </div>
     </dl>
 </section>
@@ -107,9 +171,9 @@
     <p class="eyebrow">Sources</p>
     <h2>Data & references</h2>
     <ul>
-        <li>Source or dataset name</li>
-        <li>Source or dataset name</li>
-        <li>Additional reading</li>
+        <li>INSEE — Population, employment, wages and poverty statistics</li>
+        <li>Adolphe Quetelet — Sur l’homme et le développement de ses facultés, ou Essai de physique sociale (1835)</li>
+        <li>Theodore M. Porter — Trust in Numbers: The Pursuit of Objectivity in Science and Public Life (1995)</li>
     </ul>
 </section>
 </main>
