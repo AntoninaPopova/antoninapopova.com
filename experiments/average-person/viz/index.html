@@ -32,51 +32,32 @@ body {
 ============================================================ */
 
 :fullscreen {
-
     background: #f8f8f5;
-
 }
 
 html:fullscreen {
-
     width: 100%;
-
     height: 100%;
-
 }
 
 html:fullscreen body {
-
     width: 100%;
-
     height: 100%;
-
 }
 
 html:fullscreen #visualization {
-
     width: 100%;
-
     height: calc(100% - 50px);
-
 }
 
 html:fullscreen .controls {
-
     position: fixed;
-
     left: 0;
-
     bottom: 0;
-
     width: 100%;
-
     height: 50px;
-
     z-index: 101;
-
     background: #f8f8f5;
-
 }
 
 
@@ -188,27 +169,18 @@ rect {
 ============================================================ */
 
 @media screen and (max-width: 700px) {
-
     #visualization {
-
         height: min(300px, 57.2vw);
-
     }
 
     .controls {
-
         gap: 17px;
-
         font-size: 0.66rem;
-
     }
 
     body:fullscreen .controls {
-
         padding-left: 6vw !important;
-
     }
-
 }
 
 </style>
@@ -671,43 +643,31 @@ const controls =
 ============================================================ */
 
 function calculateLayout() {
-
     width =
         container.clientWidth;
-
     height =
         container.clientHeight;
-
     const isFullscreen =
         Boolean(
             document.fullscreenElement
         );
-
 
     /* ========================================================
        FULLSCREEN
     ======================================================== */
 
     if (isFullscreen) {
-
         if (width <= 700) {
-
             startX =
                 width * 0.06;
-
             visualWidth =
                 width * 0.88;
-
         } else {
-
             startX =
                 width * 0.05;
-
             visualWidth =
                 width * 0.90;
-
         }
-
 
         visualHeight =
             Math.min(
@@ -715,13 +675,11 @@ function calculateLayout() {
                 visualWidth * 0.65
             );
 
-
         visualHeight =
             Math.max(
                 260,
                 visualHeight
             );
-
 
         startY =
             Math.max(
@@ -731,25 +689,19 @@ function calculateLayout() {
                     visualHeight
                 ) / 2
             );
-
     }
 
 
     /* ========================================================
        NORMAL EMBEDDED VIEW
     ======================================================== */
-
     else {
-
         if (
             width <= 700
         ) {
-
             startX =
                 width * 0.06;
-
         } else {
-
             const textLeft =
                 Math.max(
                     0,
@@ -761,42 +713,30 @@ function calculateLayout() {
                 width * 0.05
                 +
                 80;
-
             startX =
                 textLeft;
-
         }
 
-
         visualWidth =
-
             width <= 700
-
                 ? width * 0.88
-
                 : Math.min(
                     680,
                     width - startX
                 );
 
-
         visualHeight =
-
             width <= 700
-
                 ? Math.min(
                     300,
                     visualWidth * 0.65
                 )
-
                 : Math.min(
                     480,
                     visualWidth * 0.65
                 );
 
-
         startY = 0;
-
     }
 
 
@@ -812,14 +752,12 @@ function calculateLayout() {
         visualHeight /
         individualRows;
 
-
     /* ========================================================
        ALIGN CONTROLS
     ======================================================== */
 
     controls.style.paddingLeft =
         `${startX}px`;
-
 }
 
 
@@ -894,7 +832,6 @@ function tooltipColour(
 
 let hoveredPersonIndex = null;
 
-
 function showPersonComment(
     personIndex,
     mouseX,
@@ -902,12 +839,9 @@ function showPersonComment(
 ) {
 
     const person = {
-
         id:
             personIndex + 1
-
     };
-
 
     if (
         hoveredPersonIndex !==
@@ -917,20 +851,17 @@ function showPersonComment(
         hoveredPersonIndex =
             personIndex;
 
-
         const comment =
             comments[
                 person.id %
                 comments.length
             ](person);
 
-
         commentGroup
             .selectAll(
                 ".comment-text"
             )
             .remove();
-
 
         const text =
             commentGroup
@@ -956,14 +887,11 @@ function showPersonComment(
                     )
                 );
 
-
         const lines =
             comment.split("<br>");
 
-
         lines.forEach(
             (line, i) => {
-
                 text
                     .append("tspan")
                     .attr(
@@ -979,55 +907,42 @@ function showPersonComment(
                     .text(
                         line
                     );
-
             }
         );
-
     }
-
 
     const text =
         commentGroup
             .select(".comment-text");
 
-
     const bbox =
         text.node()
             .getBBox();
 
-
     let commentX =
         mouseX + 18;
-
 
     let commentY =
         mouseY -
         bbox.height -
         18;
 
-
     if (
         commentX +
         bbox.width >
         width - 20
     ) {
-
         commentX =
             mouseX -
             bbox.width -
             18;
-
     }
-
 
     if (
         commentX < 20
     ) {
-
         commentX = 20;
-
     }
-
 
     commentY =
         Math.max(
@@ -1040,7 +955,6 @@ function showPersonComment(
             )
         );
 
-
     commentGroup
         .attr(
             "transform",
@@ -1050,7 +964,6 @@ function showPersonComment(
             "display",
             null
         );
-
 }
 
 
@@ -1101,7 +1014,6 @@ function resizeCanvas() {
 
 }
 
-
 /* ============================================================
    DRAW INDIVIDUALS
 ============================================================ */
@@ -1109,14 +1021,12 @@ function resizeCanvas() {
 function drawIndividuals(
     transform
 ) {
-
     canvasContext.clearRect(
         0,
         0,
         width,
         height
     );
-
 
     const topLeft =
         transform.invert([
@@ -1129,7 +1039,6 @@ function drawIndividuals(
             width,
             height
         ]);
-
 
     const minX =
         Math.min(
@@ -1155,7 +1064,6 @@ function drawIndividuals(
             bottomRight[1]
         );
 
-
     let startColumn =
         Math.floor(
             (
@@ -1174,7 +1082,6 @@ function drawIndividuals(
             individualCellWidth
         );
 
-
     let startRow =
         Math.floor(
             (
@@ -1192,7 +1099,6 @@ function drawIndividuals(
             ) /
             individualCellHeight
         );
-
 
     startColumn =
         Math.max(
@@ -1218,7 +1124,6 @@ function drawIndividuals(
             endRow
         );
 
-
     canvasContext.save();
 
     canvasContext.translate(
@@ -1231,7 +1136,6 @@ function drawIndividuals(
         transform.k
     );
 
-
     for (
         let row = startRow;
         row < endRow;
@@ -1243,57 +1147,43 @@ function drawIndividuals(
             row *
             individualCellHeight;
 
-
         for (
             let column = startColumn;
             column < endColumn;
             column++
         ) {
-
             const personIndex =
                 row *
                 individualColumns +
                 column;
 
-
             if (
                 personIndex >= TOTAL
             ) {
-
                 continue;
-
             }
-
 
             const x =
                 individualGridStartX() +
                 column *
                 individualCellWidth;
 
-
             canvasContext.fillStyle =
                 getIndividualColour(
                     personIndex
                 );
 
-
             canvasContext.fillRect(
-
                 x,
                 y,
 
                 individualCellWidth + 0.5,
                 individualCellHeight + 0.5
-
             );
-
         }
-
     }
 
-
     canvasContext.restore();
-
 }
 
 
@@ -1325,7 +1215,6 @@ function drawAggregatedLevel(
         visualHeight /
         rows;
 
-
     const selection =
         viewport
             .selectAll("rect")
@@ -1333,7 +1222,6 @@ function drawAggregatedLevel(
                 data,
                 d => d.start
             );
-
 
     selection
         .exit()
@@ -1345,7 +1233,6 @@ function drawAggregatedLevel(
             .enter()
             .append("rect")
             .merge(selection);
-
 
     rects
         .attr(
@@ -1380,16 +1267,13 @@ function drawAggregatedLevel(
             "fill",
             d => d.colour
         );
-
 }
-
 
 /* ============================================================
    SHOW INDIVIDUAL LEVEL
 ============================================================ */
 
 function showIndividualLevel() {
-
     viewport
         .selectAll("rect")
         .remove();
@@ -1419,9 +1303,7 @@ function hideIndividualLevel() {
         width,
         height
     );
-
 }
-
 
 /* ============================================================
    DRAW CURRENT LEVEL
@@ -1430,29 +1312,21 @@ function hideIndividualLevel() {
 function drawLevel(
     level
 ) {
-
     currentLevel =
         level;
 
     hidePersonComment();
 
-
     if (
         level === 4
     ) {
-
         showIndividualLevel();
-
     } else {
-
         hideIndividualLevel();
-
         drawAggregatedLevel(
             level
         );
-
     }
-
 }
 
 
@@ -1490,95 +1364,69 @@ const zoom =
                     !event.button ||
                     event.type === "wheel"
                 );
-
             }
         )
         .on(
             "zoom",
             function(event) {
-
                 currentTransform =
                     event.transform;
-
-
                 viewport
                     .attr(
                         "transform",
                         event.transform
                     );
-
-
                 const k =
                     event.transform.k;
 
                 let level = 0;
 
-
                 if (
                     k >= LEVEL_THRESHOLDS[1]
                 ) {
-
                     level = 1;
-
                 }
-
 
                 if (
                     k >= LEVEL_THRESHOLDS[2]
                 ) {
-
                     level = 2;
-
                 }
-
 
                 if (
                     k >= LEVEL_THRESHOLDS[3]
                 ) {
-
                     level = 3;
-
                 }
-
 
                 if (
                     k >= LEVEL_THRESHOLDS[4]
                 ) {
-
                     level = 4;
-
                 }
-
 
                 if (
                     level !==
                     currentLevel
                 ) {
-
                     drawLevel(
                         level
                     );
-
 
                     viewport
                         .attr(
                             "transform",
                             event.transform
                         );
-
                 }
-
 
                 if (
                     level === 4
                 ) {
-
                     drawIndividuals(
                         event.transform
                     );
-
                 }
-
             }
         );
 
@@ -1593,17 +1441,12 @@ svg.call(zoom);
 svg.on(
     "mousemove.individual",
     function(event) {
-
         if (
             currentLevel !== 4
         ) {
-
             hidePersonComment();
-
             return;
-
         }
-
 
         const mouse =
             d3.pointer(
@@ -1611,12 +1454,10 @@ svg.on(
                 svg.node()
             );
 
-
         const inverse =
             currentTransform.invert(
                 mouse
             );
-
 
         const column =
             Math.floor(
@@ -1627,7 +1468,6 @@ svg.on(
                 individualCellWidth
             );
 
-
         const row =
             Math.floor(
                 (
@@ -1637,45 +1477,34 @@ svg.on(
                 individualCellHeight
             );
 
-
         if (
             column < 0 ||
             column >= individualColumns ||
             row < 0 ||
             row >= individualRows
         ) {
-
             hidePersonComment();
-
             return;
-
         }
-
 
         const personIndex =
             row *
             individualColumns +
             column;
 
-
         if (
             personIndex < 0 ||
             personIndex >= TOTAL
         ) {
-
             hidePersonComment();
-
             return;
-
         }
-
 
         showPersonComment(
             personIndex,
             mouse[0],
             mouse[1]
         );
-
     }
 );
 
@@ -1687,9 +1516,7 @@ svg.on(
 svg.on(
     "mouseleave.individual",
     function() {
-
         hidePersonComment();
-
     }
 );
 
@@ -1701,7 +1528,6 @@ svg.on(
 function zoomToScale(
     targetScale
 ) {
-
     targetScale =
         Math.max(
             1,
@@ -1711,7 +1537,6 @@ function zoomToScale(
             )
         );
 
-
     svg
         .interrupt()
         .transition()
@@ -1720,7 +1545,6 @@ function zoomToScale(
             zoom.scaleTo,
             targetScale
         );
-
 }
 
 
@@ -1733,11 +1557,9 @@ document
     .addEventListener(
         "click",
         function() {
-
             zoomToScale(
                 currentTransform.k * 1.7
             );
-
         }
     );
 
@@ -1751,11 +1573,9 @@ document
     .addEventListener(
         "click",
         function() {
-
             zoomToScale(
                 currentTransform.k / 1.7
             );
-
         }
     );
 
@@ -1769,7 +1589,6 @@ document
     .addEventListener(
         "click",
         function() {
-
             svg
                 .interrupt()
                 .transition()
@@ -1778,7 +1597,6 @@ document
                     zoom.transform,
                     d3.zoomIdentity
                 );
-
         }
     );
 
@@ -1792,11 +1610,9 @@ const fullViewButton =
         "full-view"
     );
 
-
 function updateFullViewButton(
     isFullView
 ) {
-
     fullViewButton.textContent =
         isFullView
             ? "Close"
@@ -1815,70 +1631,47 @@ function updateFullViewButton(
             ? "true"
             : "false"
     );
-
 }
 
-
 async function enterFullView() {
-
     try {
-
         await document.documentElement.requestFullscreen();
-
     } catch (error) {
-
         console.warn(
             "Fullscreen could not be entered.",
             error
         );
-
         return;
-
     }
-
 }
 
 
 async function exitFullView() {
-
     if (
         document.fullscreenElement
     ) {
-
         try {
-
             await document.exitFullscreen();
-
         } catch (error) {
-
             console.warn(
                 "Fullscreen could not be exited.",
                 error
             );
-
         }
-
     }
-
 }
 
 
 fullViewButton.addEventListener(
     "click",
     function() {
-
         if (
             document.fullscreenElement
         ) {
-
             exitFullView();
-
         } else {
-
             enterFullView();
-
         }
-
     }
 );
 
@@ -1890,37 +1683,26 @@ fullViewButton.addEventListener(
 document.addEventListener(
     "fullscreenchange",
     function() {
-
         const isFullView =
             Boolean(
                 document.fullscreenElement
             );
-
-
         updateFullViewButton(
             isFullView
         );
-
-
         requestAnimationFrame(
             function() {
-
                 calculateLayout();
-
                 resizeCanvas();
-
                 drawLevel(
                     currentLevel
                 );
-
                 viewport.attr(
                     "transform",
                     currentTransform
                 );
-
             }
         );
-
     }
 );
 
@@ -1934,25 +1716,17 @@ document
     .addEventListener(
         "click",
         function() {
-
             const centerX =
                 startX +
                 visualWidth / 2;
-
-
             const centerY =
                 startY +
                 visualHeight / 2;
-
-
             const targetScale =
                 6.5;
-
-
             const transform =
                 d3.zoomIdentity
                     .translate(
-
                         width / 2 -
                         centerX *
                         targetScale,
@@ -1960,13 +1734,10 @@ document
                         height / 2 -
                         centerY *
                         targetScale
-
                     )
                     .scale(
                         targetScale
                     );
-
-
             svg
                 .interrupt()
                 .transition()
@@ -1975,7 +1746,6 @@ document
                     zoom.transform,
                     transform
                 );
-
         }
     );
 
@@ -1992,7 +1762,6 @@ svg.on(
 svg.on(
     "dblclick",
     function() {
-
         svg
             .interrupt()
             .transition()
@@ -2001,7 +1770,6 @@ svg.on(
                 zoom.transform,
                 d3.zoomIdentity
             );
-
     }
 );
 
@@ -2013,20 +1781,15 @@ svg.on(
 window.addEventListener(
     "resize",
     function() {
-
         calculateLayout();
-
         resizeCanvas();
-
         drawLevel(
             currentLevel
         );
-
         viewport.attr(
             "transform",
             currentTransform
         );
-
     }
 );
 
