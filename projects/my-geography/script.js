@@ -390,7 +390,7 @@ const chapterTexts = {
         }
 
 
-        const offsetDistance = 2.5;
+        const offsetDistance = 2;
 
 
         group.forEach((d, i) => {
@@ -1057,7 +1057,7 @@ chapterNodes.on("click", function() {
 
     const zoom = d3.zoom()
 
-        .scaleExtent([1, 20])
+        .scaleExtent([1, 40])
 
         .on("zoom", event => {
 

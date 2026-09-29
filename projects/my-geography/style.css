@@ -54,7 +54,7 @@ h1 {
 
     font-family: "Cormorant Garamond", serif;
 
-    font-size: 60px;
+    font-size: 65px;
 
     font-weight: 400;
 
@@ -70,7 +70,7 @@ h1 {
 
 .subtitle {
 
-    max-width: 580px;
+    max-width: 590px;
 
     margin: 60px auto 60px auto;
 
@@ -82,7 +82,7 @@ h1 {
 
     /* HARMONISED */
 
-    font-size: 13px;
+    font-size: 14px; /* 13px - ? */
 
     font-weight: 400;
 
@@ -914,7 +914,7 @@ svg {
     max-width: 180px;
 
     font-family: Arial, sans-serif;
-    font-size: 13px;
+    font-size: 13px; /* 13px - ?*/
     font-weight: 400;
 
     line-height: normal;
@@ -1029,7 +1029,7 @@ svg {
 
     font-family: Arial, sans-serif;
 
-    font-size: 13px;
+    font-size: 14px; /*13px - ? */
     font-weight: 400;
 
     line-height: 1.6;
@@ -1062,6 +1062,7 @@ svg {
 }
 
 .final-essay-label {
+    font-family: Arial, sans-serif;
     font-size: 10px;
     font-weight: 600;
 
@@ -1086,7 +1087,7 @@ svg {
 .final-essay-column {
     font-family: Arial, sans-serif;
 
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
 
     /* HARMONISED */
@@ -1114,23 +1115,91 @@ svg {
    ========================= */
 
 .credit {
-    margin-top: 130px;
 
-    width: 100%;
+    margin-top: 90px;
+
+    width: 860px;
+
+    max-width: calc(100% - 40px);
 
     box-sizing: border-box;
 
-    padding-right: 15px;
+    margin-left: auto;
+
+    margin-right: auto;
+
+    padding-top: 40px;
+    padding-bottom: 40px;
 
     text-align: center;
 
     font-family: Arial, sans-serif;
 
-    font-size: 13px;
+    font-size: 12px;
 
     line-height: 1.5;
 
-    color: #777;
+    color: #555;
+
+    border-top: 1px solid #d4d4d0;
+
+}
+
+
+/* =========================
+   CREDIT LINKS
+   ========================= */
+
+.credit-name {
+    display: block;
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-size: 12px;
+}
+
+.credit-name:hover {
+    color: #22223B;
+}
+
+
+.credit-role {
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    color: #555;
+}
+
+
+.credit-link {
+
+    display: inline-block;
+
+    margin-top: 3px;
+
+    color: #555;
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+    transition:
+
+        color 0.2s ease,
+
+        transform 0.2s ease;
+
+}
+
+.credit-link:hover {
+
+    color: #22223B;
+
+    transform: scale(1.05);
+
 }
 
 
@@ -1499,6 +1568,7 @@ svg {
 
     .credit {
         margin-top: 80px;
+        padding-bottom: 40px;
     }
 
     /* =====================================================
@@ -1523,7 +1593,7 @@ svg {
 
         /* HARMONISED */
 
-        font-size: 13px;
+        font-size: 13px; 
 
         line-height: 1.6;
     }
@@ -1704,6 +1774,7 @@ svg {
 
     .credit {
         margin-top: 80px;
+        padding-bottom: 40px;
     }
 }
 
