@@ -60,6 +60,52 @@ html:fullscreen .controls {
     background: #f8f8f5;
 }
 
+/* ============================================================
+   FULLSCREEN FALLBACK
+   Used on browsers that do not support the Fullscreen API
+============================================================ */
+
+body.full-view-fallback {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #f8f8f5;
+    z-index: 9999;
+}
+
+body.full-view-fallback #visualization {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: hidden;
+}
+
+body.full-view-fallback .controls {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 10000;
+    background: #f8f8f5;
+}
+
+/* Mobile fallback */
+
+@media screen and (max-width: 700px) {
+
+    body.full-view-fallback #visualization {
+        height: calc(100% - 50px);
+    }
+
+    body.full-view-fallback .controls {
+        padding-left: 6vw !important;
+    }
+}
+
 
 /* ============================================================
    SVG / CANVAS
@@ -650,7 +696,8 @@ function calculateLayout() {
     const isFullscreen =
         Boolean(
             document.fullscreenElement
-        );
+        ) ||
+        usingFallbackFullView;
 
     /* ========================================================
        FULLSCREEN
@@ -1340,6 +1387,14 @@ let currentTransform =
     d3.zoomIdentity;
 
 
+/*
+   Full-view fallback state must be declared
+   before calculateLayout() is called.
+*/
+
+let usingFallbackFullView = false;
+
+
 calculateLayout();
 
 resizeCanvas();
@@ -1610,9 +1665,15 @@ const fullViewButton =
         "full-view"
     );
 
+
+/* ------------------------------------------------------------
+   BUTTON
+------------------------------------------------------------ */
+
 function updateFullViewButton(
     isFullView
 ) {
+
     fullViewButton.textContent =
         isFullView
             ? "Close"
@@ -1633,78 +1694,291 @@ function updateFullViewButton(
     );
 }
 
-async function enterFullView() {
-    try {
-        await document.documentElement.requestFullscreen();
-    } catch (error) {
-        console.warn(
-            "Fullscreen could not be entered.",
-            error
-        );
-        return;
-    }
+
+/* ------------------------------------------------------------
+   CHECK NATIVE FULLSCREEN SUPPORT
+------------------------------------------------------------ */
+
+function supportsNativeFullscreen() {
+
+    return Boolean(
+        document.documentElement.requestFullscreen
+    );
+
 }
 
 
+/* ------------------------------------------------------------
+   ENTER FALLBACK FULL VIEW
+------------------------------------------------------------ */
+
+function enterFallbackFullView() {
+
+    usingFallbackFullView =
+        true;
+
+    document.body.classList.add(
+        "full-view-fallback"
+    );
+
+    updateFullViewButton(
+        true
+    );
+
+    requestAnimationFrame(
+        function() {
+
+            calculateLayout();
+            resizeCanvas();
+
+            drawLevel(
+                currentLevel
+            );
+
+            viewport.attr(
+                "transform",
+                currentTransform
+            );
+
+        }
+    );
+
+}
+
+
+/* ------------------------------------------------------------
+   EXIT FALLBACK FULL VIEW
+------------------------------------------------------------ */
+
+function exitFallbackFullView() {
+
+    usingFallbackFullView =
+        false;
+
+    document.body.classList.remove(
+        "full-view-fallback"
+    );
+
+    updateFullViewButton(
+        false
+    );
+
+    requestAnimationFrame(
+        function() {
+
+            calculateLayout();
+            resizeCanvas();
+
+            drawLevel(
+                currentLevel
+            );
+
+            viewport.attr(
+                "transform",
+                currentTransform
+            );
+
+        }
+    );
+
+}
+
+
+/* ------------------------------------------------------------
+   ENTER NATIVE FULLSCREEN
+------------------------------------------------------------ */
+
+async function enterFullView() {
+
+    /*
+       Try the native Fullscreen API first.
+    */
+
+    if (
+        supportsNativeFullscreen()
+    ) {
+
+        try {
+
+            await document
+                .documentElement
+                .requestFullscreen();
+
+            return;
+
+        } catch (error) {
+
+            console.warn(
+                "Native fullscreen unavailable. Using fallback.",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+       If native fullscreen is unavailable
+       or rejected, use the CSS fallback.
+    */
+
+    enterFallbackFullView();
+
+}
+
+
+/* ------------------------------------------------------------
+   EXIT FULLSCREEN
+------------------------------------------------------------ */
+
 async function exitFullView() {
+
+    /*
+       CSS fallback
+    */
+
+    if (
+        usingFallbackFullView
+    ) {
+
+        exitFallbackFullView();
+
+        return;
+
+    }
+
+
+    /*
+       Native fullscreen
+    */
+
     if (
         document.fullscreenElement
     ) {
+
         try {
+
             await document.exitFullscreen();
+
         } catch (error) {
+
             console.warn(
                 "Fullscreen could not be exited.",
                 error
             );
+
         }
+
     }
+
 }
 
+
+/* ------------------------------------------------------------
+   BUTTON CLICK
+------------------------------------------------------------ */
 
 fullViewButton.addEventListener(
     "click",
     function() {
+
+        /*
+           If CSS fallback is active,
+           close it.
+        */
+
+        if (
+            usingFallbackFullView
+        ) {
+
+            exitFullView();
+
+            return;
+
+        }
+
+
+        /*
+           If native fullscreen is active,
+           close it.
+        */
+
         if (
             document.fullscreenElement
         ) {
+
             exitFullView();
-        } else {
-            enterFullView();
+
+            return;
+
         }
+
+
+        /*
+           Otherwise enter fullscreen.
+        */
+
+        enterFullView();
+
     }
 );
 
 
 /* ============================================================
-   FULLSCREEN CHANGE
+   NATIVE FULLSCREEN CHANGE
 ============================================================ */
 
 document.addEventListener(
     "fullscreenchange",
     function() {
+
+        /*
+           Ignore this event when using
+           the CSS fallback.
+        */
+
+        if (
+            usingFallbackFullView
+        ) {
+            return;
+        }
+
+
         const isFullView =
             Boolean(
                 document.fullscreenElement
             );
+
+
         updateFullViewButton(
             isFullView
         );
+
+
         requestAnimationFrame(
             function() {
+
                 calculateLayout();
                 resizeCanvas();
+
                 drawLevel(
                     currentLevel
                 );
+
                 viewport.attr(
                     "transform",
                     currentTransform
                 );
+
             }
         );
+
     }
 );
+
+
+
 
 
 /* ============================================================
