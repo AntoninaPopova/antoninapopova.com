@@ -62,20 +62,16 @@ html:fullscreen .controls {
 
 
 /* ============================================================
-   FULLSCREEN FALLBACK
-   Used when the native Fullscreen API is unavailable
+   FULL VIEW FALLBACK
 ============================================================ */
 
 body.full-view-fallback {
     overflow: hidden;
 }
 
-/* The visualization itself becomes the viewport */
-
 body.full-view-fallback #visualization {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
 
     width: 100vw;
 
@@ -92,8 +88,6 @@ body.full-view-fallback #visualization {
     background: #f8f8f5;
 }
 
-/* Controls stay above the visualization */
-
 body.full-view-fallback .controls {
     position: fixed;
 
@@ -107,21 +101,11 @@ body.full-view-fallback .controls {
     z-index: 10000;
 
     background: #f8f8f5;
+
+    padding-left: 0;
 }
 
-
-/* ============================================================
-   MOBILE FALLBACK
-============================================================ */
-
 @media screen and (max-width: 700px) {
-
-    body.full-view-fallback #visualization {
-        width: 100vw;
-
-        height: 100vh;
-        height: 100dvh;
-    }
 
     body.full-view-fallback .controls {
         padding-left: 6vw !important;
@@ -748,45 +732,25 @@ function calculateLayout() {
 
     if (isFullscreen) {
 
-        if (width <= 700) {
+    /*
+       FULL VIEW
 
-            startX =
-                width * 0.06;
+       Use the actual viewport dimensions.
+       The visualization occupies the available screen.
+    */
 
-            visualWidth =
-                width * 0.88;
+    startX = 0;
 
-        } else {
+    visualWidth = width;
 
-            startX =
-                width * 0.05;
+    visualHeight =
+        Math.max(
+            0,
+            height - 50
+        );
 
-            visualWidth =
-                width * 0.90;
-
-        }
-
-        visualHeight =
-            Math.min(
-                height - 70,
-                visualWidth * 0.65
-            );
-
-        visualHeight =
-            Math.max(
-                260,
-                visualHeight
-            );
-
-        startY =
-            Math.max(
-                0,
-                (
-                    height -
-                    visualHeight
-                ) / 2
-            );
-    }
+    startY = 0;
+}
 
 
     /* ========================================================
