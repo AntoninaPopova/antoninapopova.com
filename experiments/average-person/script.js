@@ -27,3 +27,91 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+/* ============================================================
+   VISUALISATION FULL VIEW
+============================================================ */
+
+const visualisation =
+    document.querySelector(".visualisation");
+
+const visualisationIframe =
+    visualisation?.querySelector("iframe");
+
+
+if (visualisation && visualisationIframe) {
+
+    window.addEventListener(
+        "message",
+        function (event) {
+
+            /*
+               Only accept messages from this page.
+            */
+
+            if (
+                event.origin !== window.location.origin
+            ) {
+                return;
+            }
+
+
+            /*
+               Only accept messages from
+               our visualisation iframe.
+            */
+
+            if (
+                event.source !==
+                visualisationIframe.contentWindow
+            ) {
+                return;
+            }
+
+
+            if (
+                !event.data ||
+                event.data.type !==
+                "visualisation-full-view"
+            ) {
+                return;
+            }
+
+
+            /* ENTER */
+
+            if (
+                event.data.action === "enter"
+            ) {
+
+                visualisation.classList.add(
+                    "full-view"
+                );
+
+                document.body.classList.add(
+                    "visualisation-full-view"
+                );
+
+            }
+
+
+            /* EXIT */
+
+            if (
+                event.data.action === "exit"
+            ) {
+
+                visualisation.classList.remove(
+                    "full-view"
+                );
+
+                document.body.classList.remove(
+                    "visualisation-full-view"
+                );
+
+            }
+
+        }
+    );
+
+}

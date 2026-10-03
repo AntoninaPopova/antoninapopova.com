@@ -653,3 +653,64 @@ main {
         height: 330px;
     }
 }
+
+/* ============================================================
+   VISUALISATION FULL VIEW
+============================================================ */
+
+.visualisation.full-view {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    left: 0;
+
+    z-index: 1000;
+
+    background: #f8f8f5;
+}
+
+.visualisation.full-view iframe {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    border: none;
+}
+
+
+/* Prevent the article behind the visualisation from scrolling */
+
+body.visualisation-full-view {
+    overflow: hidden;
+}
+
+
+/* Mobile */
+
+@media screen and (max-width: 700px) {
+
+    .visualisation.full-view {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .visualisation.full-view iframe {
+        width: 100%;
+        height: 100%;
+    }
+}

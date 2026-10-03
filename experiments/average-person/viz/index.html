@@ -70,20 +70,13 @@ body.full-view-fallback {
 }
 
 body.full-view-fallback #visualization {
-    position: fixed;
-    inset: 0;
-
-    width: 100vw;
-
-    height: 100vh;
-    height: 100dvh;
+    width: 100%;
+    height: calc(100dvh - 50px);
 
     margin: 0;
     padding: 0;
 
     overflow: hidden;
-
-    z-index: 9999;
 
     background: #f8f8f5;
 }
@@ -95,7 +88,6 @@ body.full-view-fallback .controls {
     bottom: 0;
 
     width: 100%;
-
     height: 50px;
 
     z-index: 10000;
@@ -108,6 +100,7 @@ body.full-view-fallback .controls {
 @media screen and (max-width: 700px) {
 
     body.full-view-fallback .controls {
+
         padding-left: 6vw !important;
 
         padding-bottom:
@@ -1720,11 +1713,14 @@ function updateFullViewButton(
 /* ------------------------------------------------------------
    CHECK NATIVE FULLSCREEN SUPPORT
 ------------------------------------------------------------ */
-
 function supportsNativeFullscreen() {
 
     return Boolean(
+
+        document.fullscreenEnabled &&
+
         document.documentElement.requestFullscreen
+
     );
 
 }
@@ -1736,42 +1732,48 @@ function supportsNativeFullscreen() {
 
 function enterFallbackFullView() {
 
-    usingFallbackFullView =
-        true;
+    usingFallbackFullView = true;
+
+    /*
+       Tell the parent page to make
+       the iframe full viewport.
+    */
+
+    window.parent.postMessage(
+        {
+            type: "visualisation-full-view",
+            action: "enter"
+        },
+        window.location.origin
+    );
 
     document.body.classList.add(
         "full-view-fallback"
     );
 
-    updateFullViewButton(
-        true
-    );
+    updateFullViewButton(true);
 
 
-    requestAnimationFrame(
-        function() {
+    requestAnimationFrame(function () {
 
-            requestAnimationFrame(
-                function() {
+        requestAnimationFrame(function () {
 
-                    calculateLayout();
+            calculateLayout();
+            resizeCanvas();
 
-                    resizeCanvas();
-
-                    drawLevel(
-                        currentLevel
-                    );
-
-                    viewport.attr(
-                        "transform",
-                        currentTransform
-                    );
-
-                }
+            drawLevel(
+                currentLevel
             );
 
-        }
-    );
+            viewport.attr(
+                "transform",
+                currentTransform
+            );
+
+        });
+
+    });
+
 }
 
 
@@ -1780,42 +1782,48 @@ function enterFallbackFullView() {
 ------------------------------------------------------------ */
 function exitFallbackFullView() {
 
-    usingFallbackFullView =
-        false;
+    usingFallbackFullView = false;
+
+    /*
+       Tell the parent page to restore
+       the normal iframe position.
+    */
+
+    window.parent.postMessage(
+        {
+            type: "visualisation-full-view",
+            action: "exit"
+        },
+        window.location.origin
+    );
 
     document.body.classList.remove(
         "full-view-fallback"
     );
 
-    updateFullViewButton(
-        false
-    );
+    updateFullViewButton(false);
 
 
-    requestAnimationFrame(
-        function() {
+    requestAnimationFrame(function () {
 
-            requestAnimationFrame(
-                function() {
+        requestAnimationFrame(function () {
 
-                    calculateLayout();
+            calculateLayout();
+            resizeCanvas();
 
-                    resizeCanvas();
-
-                    drawLevel(
-                        currentLevel
-                    );
-
-                    viewport.attr(
-                        "transform",
-                        currentTransform
-                    );
-
-                }
+            drawLevel(
+                currentLevel
             );
 
-        }
-    );
+            viewport.attr(
+                "transform",
+                currentTransform
+            );
+
+        });
+
+    });
+
 }
 
 /* ------------------------------------------------------------
@@ -1825,7 +1833,26 @@ function exitFallbackFullView() {
 async function enterFullView() {
 
     /*
-       Try the native Fullscreen API first.
+       When the visualisation is inside an iframe,
+       let the parent page control the full-view layout.
+
+       This is especially important on iPhone.
+    */
+
+    if (
+        window.self !== window.top
+    ) {
+
+        enterFallbackFullView();
+
+        return;
+
+    }
+
+
+    /*
+       Top-level page:
+       use native fullscreen when available.
     */
 
     if (
@@ -1851,11 +1878,6 @@ async function enterFullView() {
 
     }
 
-
-    /*
-       If native fullscreen is unavailable
-       or rejected, use the CSS fallback.
-    */
 
     enterFallbackFullView();
 
