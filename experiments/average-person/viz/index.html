@@ -94,7 +94,7 @@ body.full-view-fallback .controls {
 
     background: #f8f8f5;
 
-    padding-left: 0;
+    padding-left: 5vw;
 }
 
 @media screen and (max-width: 700px) {
@@ -817,11 +817,21 @@ function calculateLayout() {
        ALIGN CONTROLS
     ======================================================== */
 
+if (isFullscreen) {
+
     controls.style.paddingLeft =
+
+        "5vw";
+
+} else {
+
+    controls.style.paddingLeft =
+
         `${startX}px`;
 
 }
 
+}
 
 /* ============================================================
    COMMENT TEXT
