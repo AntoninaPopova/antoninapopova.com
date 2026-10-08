@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment Title — Antonina Popova</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <a href="../../index.html" class="site-name">Antonina Popova</a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="site-nav">
+        <a href="../../index.html#projects">Projects</a>
+        <a href="../../index.html#experiments">Experiments</a>
+        <a href="../../index.html#about">About</a>
+        <a href="../../index.html#work-with-me">Work With Me</a>
+        <a href="../../index.html#contact">Contact</a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- INTRODUCTION -->
+
+    <header class="experiment-header">
+        <p class="eyebrow">Experiment</p>
+
+        <h1>The Books on <br> My Shelf</h1>
+
+        <p class="subtitle">
+            A small experiment in looking at a personal collection as data.
+        </p>
+
+        <div class="experiment-meta">
+            <span>August 2026</span>
+            <span>Information Design · Data Modelling · Interaction</span>
+        </div>
+    </header>
+
+
+    <!-- ESSAY -->
+
+    <article class="essay">
+
+        <p class="lead">
+            A bookshelf is data before we call it data.
+        </p>
+
+        <p>
+            It contains information about what we read, what we are interested in,
+            what languages we use, what we choose to keep, and what we have bought or been given.
+        </p>
+
+        <p>
+            Usually, we simply see a collection of books.
+            I wanted to see what would happen if I started treating that collection as a dataset.
+        </p>
+
+        <h2>How does changing the way we look change what we see?</h2>
+
+        <p>
+            I recorded a set of attributes for each book: subject, language, owner, reading status,
+            how it was acquired, approximate size, and my own evaluation of it.
+        </p>
+
+        <p>
+            Once the books had been described in this way, the same collection could be reorganised
+            and viewed through different dimensions.
+        </p>
+
+        <p>
+            The process sounds simple, but it immediately involved choices.
+        </p>
+
+        <p>
+            What counts as a subject?
+            How should a book be classified? What does “read” mean?
+            How do you turn a personal judgement into a number?
+        </p>
+
+        <p>
+            Even a small dataset is shaped by the decisions made while creating it.
+        </p>
+
+    </article>
+
+
+    <!-- VISUALISATION -->
+
+    <figure class="visualisation">
+
+        <div class="visualisation-frame">
+
+            <iframe
+                src="viz/index.html"
+                title="The Books on My Shelf — interactive visualisation"
+                loading="lazy">
+            </iframe>
+
+        </div>
+
+    </figure>
+
+
+    <article class="essay">
+
+        <p>
+            Changing the view changes the patterns that become visible.
+        </p>
+
+        <p>
+            A shelf organised by ownership tells a different story from one organised by language,
+            reading status or subject.
+            The books remain the same, but the relationships between them become easier to notice.
+        </p>
+
+        <p>
+            This is what I find interesting about data: it does not always begin with a spreadsheet,
+            a survey or a large statistical database.
+        </p>
+
+        <p>
+            Sometimes it is already sitting in front of us, hidden in an ordinary collection of things.
+        </p>
+
+        <p>
+            The bookshelf was familiar to me before I recorded it.
+            But once I turned it into data, relationships that were difficult to see at a glance
+            became possible to explore.
+        </p>
+
+        <p>
+            The experiment is small, personal and inevitably subjective.
+            But that is precisely the point.
+        </p>
+
+        <p>
+            Data can be found almost anywhere.
+            The interesting part is deciding what to notice.
+        </p>
+
+    </article>
+
+
+    <!-- TECHNICAL NOTE -->
+
+    <section class="technical">
+
+        <p class="eyebrow">How it was made</p>
+
+        <h2>Technical notes</h2>
+
+        <p>
+            The visualisation was built with <strong>D3.js</strong>, using
+            <strong>JavaScript</strong>, <strong>HTML</strong> and <strong>CSS</strong>.
+            Each book is represented as a digital spine, with its properties encoded
+            through colour, opacity, markings and size.
+            The same books are then reorganised according to different dimensions
+            of the data, turning one collection into several ways of looking at it.
+        </p>
+
+        <dl class="technical-details">
+
+            <div>
+                <dt>Visualisation</dt>
+                <dd>D3.js</dd>
+            </div>
+
+            <div>
+                <dt>Language</dt>
+                <dd>JavaScript</dd>
+            </div>
+
+            <div>
+                <dt>Format</dt>
+                <dd>HTML + CSS</dd>
+            </div>
+
+            <div>
+                <dt>Data</dt>
+                <dd>Original dataset of books from a personal collection</dd>
+            </div>
+
+        </dl>
+
+    </section>
+
+
+    <!-- SOURCES -->
+
+    <section class="sources">
+
+        <p class="eyebrow">Sources</p>
+
+        <h2>Data & references</h2>
+
+        <ul>
+            <li>
+                Original dataset collected and structured by the author
+                from a personal book collection.
+            </li>
+        </ul>
+
+    </section>
+
+</main>
+
+
+<footer class="site-footer">
+    <p>© 2026 Antonina Popova</p>
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

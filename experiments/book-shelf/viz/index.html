@@ -1,0 +1,3428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>The Books on My Shelf</title>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+    background: #f8f8f5;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* =====================================================
+   CONTROLS
+===================================================== */
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 0 8px 20px;
+    justify-content: center;
+}
+
+
+.view-button {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: #dedbd3;
+    color: #555;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.view-button:hover {
+    transform: scale(1.04);
+    background: #c9c5bb;
+}
+
+
+.view-button.active {
+    background: #242424;
+    color: white;
+}
+
+
+/* =====================================================
+   SHELF AREA
+===================================================== */
+
+#shelf-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 330px;
+    margin: 80px auto 0;
+    overflow: hidden;
+}
+
+
+#shelf {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 330px;
+}
+
+
+/* =====================================================
+   SHELF BOARD
+===================================================== */
+
+.shelf-board {
+    position: absolute;
+    bottom: 45px;
+    height: 9px;
+    background: #b8b3a8;
+    border-radius: 2px;
+    box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.04);
+}
+
+
+/* =====================================================
+   BOOK
+===================================================== */
+
+.book {
+    position: absolute;
+    bottom: 54px;
+    cursor: pointer;
+    transform-origin: bottom center;
+    transition:
+        left 0.8s cubic-bezier(.2, .8, .2, 1),
+        bottom 0.8s cubic-bezier(.2, .8, .2, 1),
+        transform 0.2s ease;
+}
+
+
+.book:hover {
+    transform:
+        translateY(-10px)
+        scale(1.03);
+    z-index: 100;
+}
+
+
+/* =====================================================
+   SPINE
+===================================================== */
+
+.book-spine {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 2px 3px 3px 2px;
+    box-shadow:
+        inset -2px 0 rgba(0, 0, 0, 0.12),
+        inset 2px 0 rgba(255, 255, 255, 0.15),
+        2px 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =====================================================
+   BOOK SUBJECT
+===================================================== */
+
+.book-subject {
+    position: absolute;
+    left: 50%;
+    transform:
+        translate(-50%, 50%)
+        rotate(-90deg);
+    transform-origin: center center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 8px;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   OWNER MARK
+===================================================== */
+
+.owner-mark {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+
+.owner-mark.shared {
+    background: transparent;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.85);
+}
+
+
+/* =====================================================
+   ACQUISITION MARK
+===================================================== */
+
+.acquisition-mark {
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    bottom: 10px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+
+/* =====================================================
+   TOOLTIP
+===================================================== */
+
+#tooltip {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    width: 250px;
+    padding: 15px 16px;
+    border-radius: 5px;
+    background: #242424;
+    color: #f5f4ef;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+
+#tooltip.visible {
+    opacity: 1;
+}
+
+
+.tooltip-title {
+    margin-bottom: 4px;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+
+.tooltip-author {
+    margin-bottom: 12px;
+    color: #aaa8a2;
+    font-size: 11px;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+
+.tooltip-story {
+    color: #d2d0ca;
+    font-size: 11px;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+
+.tooltip-rating {
+    margin-top: 4px;
+    white-space: nowrap;
+}
+
+
+.rating-stars {
+    letter-spacing: 1.5px;
+    font-size: 12px;
+    color: #f3f1e9;
+}
+
+
+.rating-text {
+    margin-left: 5px;
+    color: inherit;
+    font-size: inherit;
+}
+
+
+/* =====================================================
+   ABOUT BUTTON
+===================================================== */
+
+.info-button {
+    background: transparent;
+    border:
+        1px solid
+        #c9c5bb;
+    color: #555;
+}
+
+
+.info-button:hover {
+    background: #dedbd3;
+    border-color: #c9c5bb;
+}
+
+
+/* =====================================================
+   ABOUT OVERLAY
+===================================================== */
+
+#legend-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: #f8f8f5;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+
+#legend-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+/* =====================================================
+   ABOUT PANEL
+===================================================== */
+
+#legend-panel {
+    position: relative;
+    width: min(1080px, 100%);
+    padding: 30px 42px 28px;
+    background: #242424;
+    color: #f5f4ef;
+    border-radius: 7px;
+    box-shadow: none;
+}
+
+
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
+
+#legend-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #aaa8a2;
+    font-family: Arial, sans-serif;
+    font-size: 27px;
+    font-weight: 300;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+
+#legend-close:hover {
+    color: #f5f4ef;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.legend-title {
+    margin-bottom: 7px;
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+
+.legend-intro {
+    max-width: 850px;
+    margin-bottom: 20px;
+    color: #aaa8a2;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+
+/* =====================================================
+   ALL SECTIONS
+===================================================== */
+
+.legend-section {
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top:
+        1px solid
+        rgba(255,255,255,0.12);
+}
+
+
+.legend-section-title {
+    margin-bottom: 12px;
+    color: #f5f4ef;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+
+/* =====================================================
+   WHAT THE BOOKS SHOW
+===================================================== */
+
+.legend-appearance {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    column-gap: 35px;
+    row-gap: 17px;
+}
+
+
+.legend-appearance
+.legend-section-title {
+    grid-column: 1 / -1;
+}
+
+
+/* =====================================================
+   INDIVIDUAL LEGEND ITEM
+===================================================== */
+
+.legend-item {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    gap: 13px;
+    align-items: center;
+    min-width: 0;
+}
+
+
+/* =====================================================
+   VISUAL AREA
+===================================================== */
+
+.legend-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+}
+
+
+/* =====================================================
+   BOOK SIZE
+===================================================== */
+
+.legend-book-size {
+    align-items: flex-end;
+    gap: 4px;
+}
+
+
+.legend-small-book,
+.legend-medium-book,
+.legend-large-book {
+    display: block;
+    width: 8px;
+    background: #929489;
+    border-radius:
+        1px 2px 2px 1px;
+}
+
+
+.legend-small-book {
+    height: 25px;
+}
+
+
+.legend-medium-book {
+    height: 36px;
+}
+
+
+.legend-large-book {
+    height: 47px;
+    width: 11px;
+}
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+.legend-language {
+    gap: 4px;
+}
+
+
+.language-swatch {
+    display: block;
+    width: 11px;
+    height: 36px;
+    border-radius: 2px;
+}
+
+
+/* =====================================================
+   READING STATUS
+===================================================== */
+
+.legend-reading {
+    align-items: flex-end;
+    gap: 5px;
+}
+
+
+.legend-reading-book {
+    display: block;
+    width: 10px;
+    height: 40px;
+    background: #929489;
+    border-radius:
+        1px 2px 2px 1px;
+}
+
+
+/* =====================================================
+   OWNERSHIP MARKS
+===================================================== */
+
+.legend-marks {
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+.legend-owner-filled,
+.legend-owner-empty {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+
+.legend-owner-filled {
+    background: #f5f4ef;
+}
+
+
+.legend-owner-empty {
+    border:
+        1px solid
+        #f5f4ef;
+}
+
+
+.legend-gift {
+    width: 28px;
+    height: 1px;
+    background: #f5f4ef;
+}
+
+
+/* =====================================================
+   SUBJECT
+===================================================== */
+
+.legend-subject {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+
+
+/* =====================================================
+   LEGEND TEXT
+===================================================== */
+
+.legend-label {
+    margin-bottom: 3px;
+    color: #f5f4ef;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+
+.legend-description {
+    color: #aaa8a2;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+
+.legend-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    margin-top: 5px;
+    color: #aaa8a2;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+
+.legend-values span {
+    white-space: nowrap;
+}
+
+
+.legend-values i {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 4px;
+    border-radius: 50%;
+}
+
+
+/* =====================================================
+   HOVER / TOOLTIP SECTION
+===================================================== */
+
+.legend-tooltip {
+    display: grid;
+    grid-template-columns:
+        190px 1fr 1fr;
+    column-gap: 30px;
+    align-items: center;
+}
+
+
+.legend-tooltip
+.legend-section-title {
+    margin-bottom: 0;
+}
+
+
+.legend-tooltip
+.legend-description {
+    margin: 0;
+}
+
+
+.legend-rating {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 5px;
+    color: #d2d0ca;
+    font-size: 11px;
+}
+
+
+.legend-stars {
+    letter-spacing: 1.5px;
+    color: #f3f1e9;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+.legend-filters {
+    display: grid;
+    grid-template-columns:
+        120px 1fr;
+    column-gap: 30px;
+    align-items: start;
+}
+
+
+.legend-filters
+.legend-section-title {
+    margin-bottom: 0;
+}
+
+
+.legend-controls {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 10px 30px;
+}
+
+
+.legend-controls div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+.legend-controls strong {
+    color: #f5f4ef;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+
+.legend-controls span {
+    color: #aaa8a2;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+
+/* =====================================================
+   NOTE
+===================================================== */
+
+.legend-note {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top:
+        1px solid
+        rgba(255,255,255,0.12);
+    color: #aaa8a2;
+    font-size: 10px;
+    line-height: 1.45;
+}
+
+
+/* =====================================================
+   MOBILE ABOUT
+===================================================== */
+
+@media
+(max-width: 700px),
+(orientation: landscape) and (max-width: 900px) and (max-height: 700px) {
+
+    #legend-overlay {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        align-items: stretch;
+        justify-content: stretch;
+        overflow: hidden;
+    }
+
+
+    #legend-panel {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 30px 22px 45px;
+        border-radius: 0;
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    #legend-close {
+        position: fixed;
+        top: 14px;
+        right: 16px;
+        z-index: 9999;
+    }
+
+
+    .legend-title {
+        padding-right: 35px;
+        font-size: 20px;
+    }
+
+
+    .legend-intro {
+        font-size: 12px;
+        line-height: 1.55;
+    }
+
+
+    .legend-appearance {
+        display: block;
+    }
+
+
+    .legend-appearance
+    .legend-section-title {
+        margin-bottom: 17px;
+    }
+
+
+    .legend-item {
+        grid-template-columns:
+            70px 1fr;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+
+    .legend-tooltip {
+        display: block;
+    }
+
+
+    .legend-tooltip
+    .legend-section-title {
+        margin-bottom: 12px;
+    }
+
+
+    .legend-tooltip
+    .legend-description {
+        margin-bottom: 12px;
+    }
+
+
+    .legend-filters {
+        display: block;
+    }
+
+
+    .legend-filters
+    .legend-section-title {
+        margin-bottom: 15px;
+    }
+
+
+    .legend-controls {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+
+    .legend-description {
+        font-size: 11px;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE SHELF
+===================================================== */
+
+/*
+   Mobile shelf heights are deliberately kept compact.
+
+   Portrait:
+       480px total
+
+   Landscape:
+       430px total
+
+   The landscape height is larger than before so each
+   shelf row has enough vertical space for the books
+   without forcing them to become very small.
+*/
+
+@media (max-width: 700px) and (orientation: portrait) {
+
+    html,
+    body {
+        height: auto;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+
+    .controls {
+        position: relative;
+        width: 100%;
+        min-height: 58px;
+        padding:
+            8px 4px 10px;
+        gap: 6px;
+        background: #f8f8f5;
+        overflow: hidden;
+    }
+
+
+    .view-button {
+        flex: 0 0 auto;
+        padding:
+            7px 11px;
+        font-size: 11px;
+    }
+
+
+    #shelf-container {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        height: 480px;
+        min-height: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+
+    #shelf {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        height: 480px;
+        overflow: hidden;
+    }
+
+
+    .mobile-shelf-row {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        overflow: visible;
+    }
+
+
+    .mobile-shelf-row.top {
+        top: 0;
+    }
+
+
+    .mobile-shelf-row.bottom {
+        top: 50%;
+    }
+
+
+    .shelf-board {
+        bottom: 8%;
+        height: 7px;
+    }
+
+
+    .book {
+        bottom: calc(8% + 7px);
+    }
+
+
+    .book-subject {
+        font-size: 5px;
+    }
+
+
+    #tooltip {
+        width: 220px;
+        max-width:
+            calc(100vw - 30px);
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE LANDSCAPE
+===================================================== */
+
+@media
+(orientation: landscape)
+and (max-width: 900px)
+and (max-height: 700px) {
+
+    html,
+    body {
+        height: auto;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+
+    .controls {
+        position: relative;
+        width: 100%;
+        min-height: 52px;
+        padding:
+            6px 4px 8px;
+        gap: 5px;
+        background: #f8f8f5;
+        overflow: hidden;
+    }
+
+
+    .view-button {
+        flex: 0 0 auto;
+        padding:
+            6px 10px;
+        font-size: 10px;
+    }
+
+
+    #shelf-container {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        height: 430px;
+        min-height: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+
+    #shelf {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        height: 430px;
+        overflow: hidden;
+    }
+
+
+    .mobile-shelf-row {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        overflow: visible;
+    }
+
+
+    .mobile-shelf-row.top {
+        top: 0;
+    }
+
+
+    .mobile-shelf-row.bottom {
+        top: 50%;
+    }
+
+
+    .shelf-board {
+        bottom: 7%;
+        height: 7px;
+    }
+
+
+    .book {
+        bottom: calc(7% + 7px);
+    }
+
+
+    .book-subject {
+        font-size: 4px;
+    }
+
+
+    #tooltip {
+        width: 220px;
+        max-width:
+            calc(100vw - 30px);
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SHELF
+===================================================== -->
+
+<div id="shelf-container">
+
+    <div id="shelf"></div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTROLS
+===================================================== -->
+
+<div class="controls">
+
+    <button
+        type="button"
+        class="view-button active"
+        data-view="shelf"
+    >
+        My shelf
+    </button>
+
+
+    <button
+        type="button"
+        class="view-button"
+        data-view="ownership"
+    >
+        Ownership
+    </button>
+
+
+    <button
+        type="button"
+        class="view-button"
+        data-view="reading_status"
+    >
+        Reading status
+    </button>
+
+
+    <button
+        type="button"
+        class="view-button"
+        data-view="language"
+    >
+        Language
+    </button>
+
+
+    <button
+        type="button"
+        class="view-button"
+        data-view="evaluation"
+    >
+        Rating
+    </button>
+
+
+    <button
+        type="button"
+        class="view-button"
+        data-view="acquisition"
+    >
+        Acquisition
+    </button>
+
+
+    <button
+        type="button"
+        class="view-button info-button"
+        id="legend-button"
+    >
+        About
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     TOOLTIP
+===================================================== -->
+
+<div id="tooltip"></div>
+
+
+<!-- =====================================================
+     ABOUT OVERLAY
+===================================================== -->
+
+<div id="legend-overlay">
+
+    <div id="legend-panel">
+
+        <button
+            type="button"
+            id="legend-close"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+
+        <div class="legend-title">
+            The Books on My Shelf
+        </div>
+
+
+        <div class="legend-intro">
+            Each book is from my collection.
+            Its appearance represents information about it,
+            while the controls above reorganise the collection
+            in different ways.
+        </div>
+
+
+        <div class="legend-section legend-appearance">
+
+            <div class="legend-section-title">
+                What the books show
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-visual legend-book-size">
+
+                    <span class="legend-small-book"></span>
+                    <span class="legend-medium-book"></span>
+                    <span class="legend-large-book"></span>
+
+                </div>
+
+
+                <div>
+
+                    <div class="legend-label">
+                        Physical size
+                    </div>
+
+                    <div class="legend-description">
+                        Book height and width represent its
+                        approximate physical dimensions.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-visual legend-language">
+
+                    <span
+                        class="language-swatch"
+                        style="background:#88352B"
+                    ></span>
+
+                    <span
+                        class="language-swatch"
+                        style="background:#929489"
+                    ></span>
+
+                    <span
+                        class="language-swatch"
+                        style="background:#D18F4D"
+                    ></span>
+
+                    <span
+                        class="language-swatch"
+                        style="background:#576169"
+                    ></span>
+
+                </div>
+
+
+                <div>
+
+                    <div class="legend-label">
+                        Language
+                    </div>
+
+                    <div class="legend-description">
+                        Colour represents the language
+                        of the book.
+                    </div>
+
+                    <div class="legend-values">
+
+                        <span>
+                            <i style="background:#88352B"></i>
+                            Russian
+                        </span>
+
+                        <span>
+                            <i style="background:#929489"></i>
+                            English
+                        </span>
+
+                        <span>
+                            <i style="background:#D18F4D"></i>
+                            Spanish
+                        </span>
+
+                        <span>
+                            <i style="background:#576169"></i>
+                            French
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-visual legend-reading">
+
+                    <span
+                        class="legend-reading-book"
+                        style="opacity:1"
+                    ></span>
+
+                    <span
+                        class="legend-reading-book"
+                        style="opacity:.75"
+                    ></span>
+
+                    <span
+                        class="legend-reading-book"
+                        style="opacity:.5"
+                    ></span>
+
+                </div>
+
+
+                <div>
+
+                    <div class="legend-label">
+                        Reading status
+                    </div>
+
+                    <div class="legend-description">
+                        Opacity shows how much of the book
+                        has been read.
+                    </div>
+
+                    <div class="legend-values">
+
+                        <span>
+                            Fully read
+                        </span>
+
+                        <span>
+                            Partly read
+                        </span>
+
+                        <span>
+                            Just opened once
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-visual legend-marks">
+
+                    <span class="legend-owner-filled"></span>
+                    <span class="legend-owner-empty"></span>
+                    <span class="legend-gift"></span>
+
+                </div>
+
+
+                <div>
+
+                    <div class="legend-label">
+                        Ownership & acquisition
+                    </div>
+
+                    <div class="legend-description">
+                        Small marks show who owns the book
+                        and how it was acquired.
+                    </div>
+
+                    <div class="legend-values">
+
+                        <span>
+                            ● My book
+                        </span>
+
+                        <span>
+                            ○ Shared book
+                        </span>
+
+                        <span>
+                            ─ Gift
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div
+                    class="legend-visual legend-subject"
+                >
+                    ART
+                </div>
+
+
+                <div>
+
+                    <div class="legend-label">
+                        Subject
+                    </div>
+
+                    <div class="legend-description">
+                        The word on the spine represents
+                        the broad subject assigned to the book.
+                    </div>
+
+                    <div class="legend-values">
+                        Art · Wine · Economics · Society ·
+                        Psychology · Languages · Craft ·
+                        Literature · History
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="legend-section legend-tooltip">
+
+            <div class="legend-section-title">
+                When you hover over a book
+            </div>
+
+
+            <div class="legend-description">
+                The tooltip shows the book title and author,
+                followed by ownership, acquisition, reading
+                status and rating.
+            </div>
+
+
+            <div>
+
+                <div class="legend-rating">
+
+                    <span class="legend-stars">
+                        ★★★★☆
+                    </span>
+
+                    <span>
+                        Very good
+                    </span>
+
+                </div>
+
+
+                <div class="legend-description">
+                    For books I have read, the rating is my
+                    evaluation. For books I have not read,
+                    it represents my expectations.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="legend-section legend-filters">
+
+            <div class="legend-section-title">
+                Filters
+            </div>
+
+
+            <div class="legend-controls">
+
+                <div>
+                    <strong>My shelf</strong>
+                    <span>
+                        Original order of the collection.
+                    </span>
+                </div>
+
+
+                <div>
+                    <strong>Ownership</strong>
+                    <span>
+                        Groups books by ownership.
+                    </span>
+                </div>
+
+
+                <div>
+                    <strong>Reading</strong>
+                    <span>
+                        Groups books by reading status.
+                    </span>
+                </div>
+
+
+                <div>
+                    <strong>Language</strong>
+                    <span>
+                        Groups books by language.
+                    </span>
+                </div>
+
+
+                <div>
+                    <strong>Rating</strong>
+                    <span>
+                        Groups books by evaluation
+                        or expectations.
+                    </span>
+                </div>
+
+
+                <div>
+                    <strong>Acquisition</strong>
+                    <span>
+                        Groups books by how they came
+                        into the collection.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   THE BOOKS ON MY SHELF
+===================================================== */
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+const languageColors = {
+
+    Russian: "#88352B",
+    English: "#929489",
+    Spanish: "#D18F4D",
+    French: "#576169"
+
+};
+
+
+const dimensions = {
+
+    A: {
+        height: 250,
+        width: 30
+    },
+
+    B: {
+        height: 220,
+        width: 24
+    },
+
+    C: {
+        height: 190,
+        width: 18
+    },
+
+    D: {
+        height: 160,
+        width: 12
+    }
+
+};
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let books = [];
+
+let currentView = "shelf";
+
+
+/* =====================================================
+   LOAD CSV
+===================================================== */
+
+d3.csv("./books.csv")
+
+    .then(data => {
+
+        books = data.map(
+            (book, index) => {
+
+                const dimension =
+                    dimensions[
+                        book.dimensions
+                    ]
+                    ||
+                    dimensions.A;
+
+
+                return {
+
+                    ...book,
+
+                    index: index,
+
+                    evaluation:
+                        parseInt(
+                            book.evaluation,
+                            10
+                        ) || 0,
+
+                    expectation:
+                        parseInt(
+                            book.expectation,
+                            10
+                        ) || 0,
+
+                    physicalHeight:
+                        dimension.height,
+
+                    physicalWidth:
+                        dimension.width
+
+                };
+
+            }
+        );
+
+
+        createShelf();
+
+        updateShelf("shelf");
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Could not load books.csv:",
+            error
+        );
+
+
+        document.querySelector(
+            "#shelf"
+        ).innerHTML = `
+
+            <div style="
+                padding:40px;
+                font-family:Arial,sans-serif;
+                color:#777;
+            ">
+
+                Could not load
+                <b>books.csv</b>.
+
+                <br><br>
+
+                If you opened
+                index.html directly
+                from your computer,
+                start a local server
+                instead.
+
+            </div>
+
+        `;
+
+    });
+
+
+/* =====================================================
+   CREATE SHELF
+===================================================== */
+
+function createShelf() {
+
+    const shelf =
+        d3.select("#shelf");
+
+
+    shelf
+
+        .selectAll(".book")
+
+        .data(
+            books,
+            d => d.index
+        )
+
+        .join("div")
+
+        .attr(
+            "class",
+            "book"
+        )
+
+        .attr(
+            "data-index",
+            d => d.index
+        )
+
+        .style(
+            "width",
+            d =>
+                `${d.physicalWidth}px`
+        )
+
+        .style(
+            "height",
+            d =>
+                `${d.physicalHeight}px`
+        )
+
+        .style(
+            "opacity",
+            d =>
+                readingOpacity(d)
+        )
+
+        .each(
+            function(d) {
+
+                const book =
+                    d3.select(this);
+
+
+                const spine =
+                    book
+
+                        .append("div")
+
+                        .attr(
+                            "class",
+                            "book-spine"
+                        )
+
+                        .style(
+                            "background",
+                            languageColors[
+                                d.language
+                            ]
+                            ||
+                            "#999"
+                        );
+
+
+                spine
+
+                    .append("div")
+
+                    .attr(
+                        "class",
+                        "book-subject"
+                    )
+
+                    .text(
+                        d.subject
+                    );
+
+
+                spine
+
+                    .append("div")
+
+                    .attr(
+                        "class",
+                        `owner-mark ${
+                            d.ownership !== "Antonina"
+                                ? "shared"
+                                : ""
+                        }`
+                    );
+
+
+                if (
+                    d.acquisition === "Gift"
+                ) {
+
+                    spine
+
+                        .append("div")
+
+                        .attr(
+                            "class",
+                            "acquisition-mark"
+                        );
+
+                }
+
+
+                book
+
+                    .on(
+                        "mouseenter",
+                        function(event) {
+
+                            showTooltip(
+                                event,
+                                d
+                            );
+
+                        }
+                    )
+
+                    .on(
+                        "mousemove",
+                        function(event) {
+
+                            moveTooltip(
+                                event
+                            );
+
+                        }
+                    )
+
+                    .on(
+                        "mouseleave",
+                        hideTooltip
+                    );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   READING STATUS → OPACITY
+===================================================== */
+
+function readingOpacity(book) {
+
+    if (
+        book.reading_status === "yes"
+    ) {
+
+        return 1;
+
+    }
+
+
+    if (
+        book.reading_status === "partly"
+    ) {
+
+        return 0.75;
+
+    }
+
+
+    return 0.5;
+
+}
+
+
+/* =====================================================
+   MOBILE LAYOUT DETECTION
+===================================================== */
+
+function isMobileLayout() {
+
+    return (
+
+        window.innerWidth <= 700 ||
+
+        (
+            window.innerWidth <= 900 &&
+            window.matchMedia(
+                "(orientation: landscape) and (max-height: 700px)"
+            ).matches
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE SHELF
+===================================================== */
+
+function updateShelf(view) {
+
+    currentView = view;
+
+
+    const orderedBooks =
+        getOrder(view);
+
+
+    const isMobile =
+        isMobileLayout();
+
+
+    const shelfElement =
+        document.querySelector(
+            "#shelf"
+        );
+
+
+    const shelfWidth =
+        shelfElement
+            .getBoundingClientRect()
+            .width;
+
+
+    const shelfMargin =
+        isMobile ? 12 : 25;
+
+
+    const bookMargin =
+        isMobile ? 8 : 20;
+
+
+/* =================================================
+   MOBILE
+   TWO SHELVES
+================================================= */
+
+if (isMobile) {
+
+    const shelf =
+        d3.select("#shelf");
+
+
+    shelf
+
+        .selectAll(".book")
+
+        .each(function() {
+
+            shelf
+                .node()
+                .appendChild(this);
+
+        });
+
+
+    shelf
+
+        .selectAll(".mobile-shelf-row")
+
+        .remove();
+
+
+    const topRow =
+        shelf
+
+            .append("div")
+
+            .attr(
+                "class",
+                "mobile-shelf-row top"
+            );
+
+
+    const bottomRow =
+        shelf
+
+            .append("div")
+
+            .attr(
+                "class",
+                "mobile-shelf-row bottom"
+            );
+
+
+    /* ---------------------------------------------
+       MOBILE SETTINGS
+    --------------------------------------------- */
+
+    const minimumGap = 2;
+
+    const shelfPadding = 12;
+
+    const availableWidth =
+        shelfWidth -
+        bookMargin * 2 -
+        shelfPadding * 2;
+
+
+    let scale = 1;
+
+    let rows = [
+        [],
+        []
+    ];
+
+    let gap = 2;
+
+
+    if (orderedBooks.length < 2) {
+
+        rows = [
+            orderedBooks,
+            []
+        ];
+
+    }
+
+
+    if (orderedBooks.length >= 2) {
+
+        let bestSplit = 1;
+
+        let bestWidth = Infinity;
+
+
+        for (
+            let split = 1;
+            split < orderedBooks.length;
+            split++
+        ) {
+
+            const firstRow =
+                orderedBooks.slice(
+                    0,
+                    split
+                );
+
+
+            const secondRow =
+                orderedBooks.slice(
+                    split
+                );
+
+
+            const firstWidth =
+                d3.sum(
+                    firstRow,
+                    d => d.physicalWidth
+                )
+                +
+                minimumGap *
+                Math.max(
+                    firstRow.length - 1,
+                    0
+                );
+
+
+            const secondWidth =
+                d3.sum(
+                    secondRow,
+                    d => d.physicalWidth
+                )
+                +
+                minimumGap *
+                Math.max(
+                    secondRow.length - 1,
+                    0
+                );
+
+
+            const widest =
+                Math.max(
+                    firstWidth,
+                    secondWidth
+                );
+
+
+            if (
+                widest < bestWidth
+            ) {
+
+                bestWidth = widest;
+
+                bestSplit = split;
+
+            }
+
+        }
+
+
+        rows = [
+
+            orderedBooks.slice(
+                0,
+                bestSplit
+            ),
+
+            orderedBooks.slice(
+                bestSplit
+            )
+
+        ];
+
+
+        const widestNaturalRow =
+            d3.max(
+                rows,
+                booksInRow => {
+
+                    return (
+
+                        d3.sum(
+                            booksInRow,
+                            d => d.physicalWidth
+                        )
+
+                        +
+
+                        minimumGap *
+                        Math.max(
+                            booksInRow.length - 1,
+                            0
+                        )
+
+                    );
+
+                }
+            );
+
+
+        scale =
+            Math.min(
+                1,
+                availableWidth /
+                widestNaturalRow
+            );
+
+    }
+
+
+    gap =
+        Math.max(
+            1.5,
+            minimumGap * scale
+        );
+
+
+    /* ---------------------------------------------
+       ROW HEIGHT
+    --------------------------------------------- */
+
+    const rowHeight =
+        shelfElement
+            .getBoundingClientRect()
+            .height / 2;
+
+
+    /*
+       Books must fit inside each row while leaving
+       a small amount of space around the shelf.
+    */
+
+    const usableBookHeight =
+        rowHeight * 0.76;
+
+
+    const tallestBook =
+        d3.max(
+            orderedBooks,
+            d => d.physicalHeight
+        );
+
+
+    if (
+        tallestBook > 0
+    ) {
+
+        scale =
+            Math.min(
+                scale,
+                usableBookHeight /
+                tallestBook
+            );
+
+    }
+
+
+    /* ---------------------------------------------
+       RECALCULATE GAP
+    --------------------------------------------- */
+
+    gap =
+        Math.max(
+            1.5,
+            minimumGap * scale
+        );
+
+
+    /* ---------------------------------------------
+       HORIZONTAL FIT
+    --------------------------------------------- */
+
+    for (
+        let attempt = 0;
+        attempt < 10;
+        attempt++
+    ) {
+
+        const rowWidths =
+            rows.map(
+                booksInRow => {
+
+                    return (
+
+                        d3.sum(
+                            booksInRow,
+                            d =>
+                                d.physicalWidth *
+                                scale
+                        )
+
+                        +
+
+                        gap *
+                        Math.max(
+                            booksInRow.length - 1,
+                            0
+                        )
+
+                    );
+
+                }
+            );
+
+
+        const widestRow =
+            d3.max(rowWidths);
+
+
+        if (
+            widestRow <= availableWidth
+        ) {
+
+            break;
+
+        }
+
+
+        scale *=
+            availableWidth /
+            widestRow;
+
+
+        gap =
+            Math.max(
+                1.5,
+                minimumGap * scale
+            );
+
+    }
+
+
+    const smallestBookHeight =
+        d3.min(
+            orderedBooks,
+            d => d.physicalHeight
+        ) * scale;
+
+
+    const subjectBottom =
+        smallestBookHeight / 2;
+
+
+    /* ---------------------------------------------
+       DRAW TWO SHELVES
+    --------------------------------------------- */
+
+    const rowElements = [
+        topRow,
+        bottomRow
+    ];
+
+
+    rowElements.forEach(
+        (row, rowIndex) => {
+
+            const booksInRow =
+                rows[rowIndex];
+
+
+            if (
+                booksInRow.length === 0
+            ) {
+
+                return;
+
+            }
+
+
+            const actualWidth =
+
+                d3.sum(
+                    booksInRow,
+                    d =>
+                        d.physicalWidth *
+                        scale
+                )
+
+                +
+
+                gap *
+                Math.max(
+                    booksInRow.length - 1,
+                    0
+                );
+
+
+            const shelfBoard =
+                row
+
+                    .append("div")
+
+                    .attr(
+                        "class",
+                        "shelf-board"
+                    );
+
+
+            const boardWidth =
+                actualWidth +
+                shelfPadding * 2;
+
+
+            const boardLeft =
+                (
+                    shelfWidth -
+                    boardWidth
+                ) / 2;
+
+
+            shelfBoard
+
+                .style(
+                    "left",
+                    `${boardLeft}px`
+                )
+
+                .style(
+                    "width",
+                    `${boardWidth}px`
+                );
+
+
+            let x =
+                (
+                    shelfWidth -
+                    actualWidth
+                ) / 2;
+
+
+            booksInRow.forEach(
+                book => {
+
+                    const bookElement =
+                        shelf.select(
+                            `.book[data-index="${book.index}"]`
+                        );
+
+
+                    const width =
+                        book.physicalWidth *
+                        scale;
+
+
+                    const height =
+                        book.physicalHeight *
+                        scale;
+
+
+                    row
+                        .node()
+                        .appendChild(
+                            bookElement.node()
+                        );
+
+
+                    const isLandscape =
+                        window.matchMedia(
+                            "(orientation: landscape)"
+                        ).matches;
+
+
+                    const boardBottom =
+                        isLandscape
+                            ? 7
+                            : 8;
+
+
+                    bookElement
+
+                        .style(
+                            "left",
+                            `${x}px`
+                        )
+
+                        .style(
+                            "bottom",
+                            `calc(${boardBottom}% + 7px)`
+                        )
+
+                        .style(
+                            "width",
+                            `${width}px`
+                        )
+
+                        .style(
+                            "height",
+                            `${height}px`
+                        );
+
+
+                    bookElement
+
+                        .select(
+                            ".book-subject"
+                        )
+
+                        .style(
+                            "bottom",
+                            `${subjectBottom}px`
+                        );
+
+
+                    x +=
+                        width +
+                        gap;
+
+                }
+
+            );
+
+        }
+
+    );
+
+
+    d3.selectAll(
+        ".view-button"
+    )
+
+        .classed(
+            "active",
+            function() {
+
+                return (
+                    this.dataset.view ===
+                    view
+                );
+
+            }
+        );
+
+
+    return;
+
+}
+
+
+/* =================================================
+   DESKTOP
+================================================= */
+
+const shelf =
+    d3.select("#shelf");
+
+
+shelf
+
+    .selectAll(".book")
+
+    .each(function() {
+
+        shelf
+            .node()
+            .appendChild(this);
+
+    });
+
+
+shelf
+
+    .selectAll(".mobile-shelf-row")
+
+    .remove();
+
+
+const availableWidth =
+    shelfWidth -
+    bookMargin * 2;
+
+
+const totalBookWidth =
+    d3.sum(
+        orderedBooks,
+        d => d.physicalWidth
+    );
+
+
+const minimumGap = 3;
+
+
+const totalGapWidth =
+    Math.max(
+        orderedBooks.length - 1,
+        0
+    ) * minimumGap;
+
+
+const naturalWidth =
+    totalBookWidth +
+    totalGapWidth;
+
+
+const scale =
+    Math.min(
+        1,
+        availableWidth /
+        naturalWidth
+    );
+
+
+const smallestBookHeight =
+    d3.min(
+        orderedBooks,
+        d => d.physicalHeight
+    ) * scale;
+
+
+const subjectBottom =
+    smallestBookHeight / 2;
+
+
+const scaledBooks =
+    orderedBooks.map(
+        book => ({
+
+            book: book,
+
+            width:
+                book.physicalWidth *
+                scale,
+
+            height:
+                book.physicalHeight *
+                scale
+
+        })
+    );
+
+
+const gap =
+    Math.max(
+        2,
+        minimumGap * scale
+    );
+
+
+const actualWidth =
+    d3.sum(
+        scaledBooks,
+        d => d.width
+    )
+
+    +
+
+    gap *
+    Math.max(
+        scaledBooks.length - 1,
+        0
+    );
+
+
+let x =
+    (
+        shelfWidth -
+        actualWidth
+    ) / 2;
+
+
+x =
+    Math.max(
+        bookMargin,
+        x
+    );
+
+
+shelf
+
+    .selectAll(".shelf-board")
+
+    .remove();
+
+
+shelf
+
+    .append("div")
+
+    .attr(
+        "class",
+        "shelf-board"
+    )
+
+    .style(
+        "left",
+        `${shelfMargin}px`
+    )
+
+    .style(
+        "right",
+        `${shelfMargin}px`
+    );
+
+
+const positions =
+    new Map();
+
+
+scaledBooks.forEach(
+    item => {
+
+        positions.set(
+            item.book.index,
+            {
+
+                left: x,
+
+                width:
+                    item.width,
+
+                height:
+                    item.height
+
+            }
+        );
+
+
+        x +=
+            item.width +
+            gap;
+
+    }
+);
+
+
+shelf
+
+    .selectAll(".book")
+
+    .data(
+        books,
+        d => d.index
+    )
+
+    .transition()
+
+    .duration(900)
+
+    .ease(
+        d3.easeCubicInOut
+    )
+
+    .style(
+        "left",
+        d => {
+
+            const position =
+                positions.get(
+                    d.index
+                );
+
+            return `${position.left}px`;
+
+        }
+    )
+
+    .style(
+        "bottom",
+        "54px"
+    )
+
+    .style(
+        "width",
+        d => {
+
+            const position =
+                positions.get(
+                    d.index
+                );
+
+            return `${position.width}px`;
+
+        }
+    )
+
+    .style(
+        "height",
+        d => {
+
+            const position =
+                positions.get(
+                    d.index
+                );
+
+            return `${position.height}px`;
+
+        }
+    )
+
+    .select(".book-subject")
+
+    .style(
+        "bottom",
+        `${subjectBottom}px`
+    );
+
+
+d3.selectAll(
+    ".view-button"
+)
+
+    .classed(
+        "active",
+        function() {
+
+            return (
+                this.dataset.view ===
+                view
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SORTING
+===================================================== */
+
+function getOrder(view) {
+
+    const result =
+        [...books];
+
+
+    if (
+        view === "shelf"
+    ) {
+
+        return result.sort(
+            (a, b) =>
+                a.index - b.index
+        );
+
+    }
+
+
+    if (
+        view === "ownership"
+    ) {
+
+        return result.sort(
+            (a, b) =>
+                d3.ascending(
+                    a.ownership,
+                    b.ownership
+                )
+        );
+
+    }
+
+
+    if (
+        view === "reading_status"
+    ) {
+
+        const order = {
+
+            yes: 0,
+            partly: 1,
+            no: 2
+
+        };
+
+
+        return result.sort(
+            (a, b) =>
+                order[
+                    a.reading_status
+                ]
+                -
+                order[
+                    b.reading_status
+                ]
+        );
+
+    }
+
+
+    if (
+        view === "language"
+    ) {
+
+        return result.sort(
+            (a, b) =>
+                d3.ascending(
+                    a.language,
+                    b.language
+                )
+        );
+
+    }
+
+
+    if (
+        view === "evaluation"
+    ) {
+
+        return result.sort(
+
+            (a, b) => {
+
+                const ratingA =
+
+                    a.reading_status === "no"
+                        ? a.expectation
+                        : a.evaluation;
+
+
+                const ratingB =
+
+                    b.reading_status === "no"
+                        ? b.expectation
+                        : b.evaluation;
+
+
+                return d3.descending(
+                    ratingA,
+                    ratingB
+                );
+
+            }
+
+        );
+
+    }
+
+
+    if (
+        view === "acquisition"
+    ) {
+
+        return result.sort(
+            (a, b) =>
+                d3.ascending(
+                    a.acquisition,
+                    b.acquisition
+                )
+        );
+
+    }
+
+
+    return result;
+
+}
+
+
+/* =====================================================
+   RATING TEXT
+===================================================== */
+
+function getRatingText(
+    rating,
+    isRead
+) {
+
+    const readTexts = {
+
+        5: "Loved it",
+        4: "Very good",
+        3: "Quite good",
+        2: "Not really for me",
+        1: "Disappointing"
+
+    };
+
+
+    const expectationTexts = {
+
+        5: "High expectations",
+        4: "Looking forward to it",
+        3: "Curious about it",
+        2: "Some reservations",
+        1: "Low expectations"
+
+    };
+
+
+    if (isRead) {
+
+        return readTexts[rating];
+
+    }
+
+
+    return expectationTexts[rating];
+
+}
+
+
+/* =====================================================
+   OWNERSHIP TEXT
+===================================================== */
+
+function getOwnershipText(book) {
+
+    if (
+        book.ownership === "Antonina"
+    ) {
+
+        return "My book";
+
+    }
+
+
+    return "Shared book";
+
+}
+
+
+/* =====================================================
+   SHOW TOOLTIP
+===================================================== */
+
+function showTooltip(
+    event,
+    book
+) {
+
+    const tooltip =
+        d3.select("#tooltip");
+
+
+    let reading;
+
+
+    if (
+        book.reading_status === "yes"
+    ) {
+
+        reading = "Fully read";
+
+    }
+
+    else if (
+        book.reading_status === "partly"
+    ) {
+
+        reading = "Partly read";
+
+    }
+
+    else {
+
+        reading = "Just opened once";
+
+    }
+
+
+    const isRead =
+        book.reading_status === "yes" ||
+        book.reading_status === "partly";
+
+
+    let rating;
+
+
+    if (isRead) {
+
+        rating =
+            book.evaluation;
+
+    }
+
+    else {
+
+        rating =
+            book.expectation;
+
+    }
+
+
+    rating =
+        Math.max(
+            0,
+            Math.min(
+                5,
+                Number(rating) || 0
+            )
+        );
+
+
+    const stars =
+        "★".repeat(rating) +
+        "☆".repeat(5 - rating);
+
+
+    const ratingText =
+        getRatingText(
+            rating,
+            isRead
+        );
+
+
+    const ownershipText =
+        getOwnershipText(book);
+
+
+    let acquisitionText;
+
+
+    if (
+        book.acquisition === "Gift"
+    ) {
+
+        acquisitionText =
+            "It was a gift";
+
+    }
+
+    else if (
+        book.acquisition === "Antonina"
+    ) {
+
+        acquisitionText =
+            "I bought it";
+
+    }
+
+    else if (
+        book.acquisition === "Someone else"
+    ) {
+
+        acquisitionText =
+            "Someone else bought it";
+
+    }
+
+    else {
+
+        acquisitionText = "";
+
+    }
+
+
+    tooltip
+
+        .html(`
+
+            <div class="tooltip-title">
+                ${book.topic}
+            </div>
+
+            <div class="tooltip-author">
+                ${book.author}
+            </div>
+
+            <div class="tooltip-story">
+
+                ${ownershipText} ·
+                ${acquisitionText}
+
+                <br>
+
+                <div>
+                    ${reading}
+                </div>
+
+                <div class="tooltip-rating">
+
+                    <span class="rating-stars">
+                        ${stars}
+                    </span>
+
+                    <span class="rating-text">
+                        ${ratingText}
+                    </span>
+
+                </div>
+
+            </div>
+
+        `)
+
+        .classed(
+            "visible",
+            true
+        );
+
+
+    moveTooltip(event);
+
+}
+
+
+/* =====================================================
+   TOOLTIP POSITION
+===================================================== */
+
+function moveTooltip(event) {
+
+    const tooltip =
+        document.querySelector("#tooltip");
+
+
+    const margin = 15;
+
+
+    const rect =
+        tooltip.getBoundingClientRect();
+
+
+    const viewportWidth =
+        window.innerWidth;
+
+
+    const viewportHeight =
+        window.innerHeight;
+
+
+    let x =
+        event.clientX + margin;
+
+
+    let y =
+        event.clientY + margin;
+
+
+    if (
+        x + rect.width >
+        viewportWidth - margin
+    ) {
+
+        x =
+            event.clientX -
+            rect.width -
+            margin;
+
+    }
+
+
+    if (
+        x < margin
+    ) {
+
+        x = margin;
+
+    }
+
+
+    if (
+        y + rect.height >
+        viewportHeight - margin
+    ) {
+
+        y =
+            event.clientY -
+            rect.height -
+            margin;
+
+    }
+
+
+    if (
+        y < margin
+    ) {
+
+        y = margin;
+
+    }
+
+
+    tooltip.style.left =
+        `${x}px`;
+
+
+    tooltip.style.top =
+        `${y}px`;
+
+}
+
+
+/* =====================================================
+   HIDE TOOLTIP
+===================================================== */
+
+function hideTooltip() {
+
+    d3.select("#tooltip")
+        .classed(
+            "visible",
+            false
+        );
+
+}
+
+
+/* =====================================================
+   VIEW BUTTONS
+===================================================== */
+
+d3.selectAll("[data-view]")
+    .on("click", function(event) {
+
+        event.preventDefault();
+
+        updateShelf(
+            this.dataset.view
+        );
+
+    });
+
+
+/* =====================================================
+   ABOUT BUTTON
+===================================================== */
+
+const legendOverlay =
+    document.querySelector(
+        "#legend-overlay"
+    );
+
+
+const legendButton =
+    document.querySelector(
+        "#legend-button"
+    );
+
+
+const legendClose =
+    document.querySelector(
+        "#legend-close"
+    );
+
+
+/* =====================================================
+   OPEN
+===================================================== */
+
+legendButton.addEventListener(
+
+    "click",
+
+    function(event) {
+
+        event.preventDefault();
+
+
+        if (
+            isMobileLayout() &&
+            window.parent !== window
+        ) {
+
+            window.parent.postMessage(
+                {
+                    type:
+                        "bookshelf-about-open"
+                },
+                "*"
+            );
+
+        }
+
+
+        legendOverlay.classList.add(
+            "visible"
+        );
+
+    }
+
+);
+
+
+/* =====================================================
+   CLOSE
+===================================================== */
+
+function closeAbout() {
+
+    legendOverlay.classList.remove(
+        "visible"
+    );
+
+
+    document.body.style.overflow = "";
+
+
+    if (
+        isMobileLayout() &&
+        window.parent !== window
+    ) {
+
+        window.parent.postMessage(
+            {
+                type:
+                    "bookshelf-about-close"
+            },
+            "*"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
+
+legendClose.addEventListener(
+
+    "click",
+
+    function(event) {
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        closeAbout();
+
+    }
+
+);
+
+
+/* =====================================================
+   CLOSE OUTSIDE
+===================================================== */
+
+legendOverlay.addEventListener(
+
+    "click",
+
+    function(event) {
+
+        if (
+            event.target ===
+            legendOverlay
+        ) {
+
+            closeAbout();
+
+        }
+
+    }
+
+);
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+document.addEventListener(
+
+    "keydown",
+
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeAbout();
+
+        }
+
+    }
+
+);
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+let resizeTimer;
+
+
+window.addEventListener(
+
+    "resize",
+
+    function() {
+
+        clearTimeout(
+            resizeTimer
+        );
+
+
+        resizeTimer =
+            setTimeout(
+
+                function() {
+
+                    if (
+                        books.length > 0
+                    ) {
+
+                        updateShelf(
+                            currentView
+                        );
+
+                    }
+
+                },
+
+                150
+
+            );
+
+    }
+
+);
+
+</script>
+
+</body>
+</html>

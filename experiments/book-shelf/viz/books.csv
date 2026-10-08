@@ -1,0 +1,51 @@
+shelf_position,topic,author,subject,ownership,reading_status,language,acquisition,dimensions,evaluation,expectation
+1,"100 Советов мэру","Илья Варламов & Максим Кац",Society,Antonina,no,Russian,Antonina,A,0,4
+2,"Contemporary Art of Africa","André Magnin & Jacques Soulillou",Art,Antonina,no,English,Gift,A,0,2
+3,"Understanding wines: Explaining Style and Quality (WSET Level 3)","Wine & Spirit Education Trust (WSET)",Wine,Antonina,yes,English,Antonina,B,3,0
+4,"Vines & Vinification","Sally Easton",Wine,Antonina,no,English,Antonina,B,0,4
+5,"Сказки Пушкина","Александр Сергеевич Пушкин",Literature,Someone else,no,Russian,Antonina,A,0,4
+6,"Grammaire Progressive du Français","Maïa Grégoire",Languages,Antonina,no,French,Gift,C,0,1
+7,"Investing in Liquid Assets: Uncorking Profits in Today's Global Wine Market","David Sokolin & Alexandra Bruce",Wine,Antonina,partly,English,Antonina,C,3,0
+8,"Счастливый город","Чарльз Монтгомери",Society,Antonina,no,Russian,Antonina,B,0,4
+9,"Wine Folly: A Visual Guide to the World of Wine","Madeline Puckette & Justin Hammack",Wine,Antonina,yes,English,Gift,B,5,0
+10,"Искусство счастья","Кристоф Андре",Psychology,Antonina,yes,Russian,Gift,B,4,0
+11,"Mascotas de Ganchillo","Emma Varnam",Craft,Antonina,partly,Spanish,Antonina,B,5,0
+12,"Adorables muñecos Amigurumi","Mari-Liis Lille",Craft,Antonina,partly,Spanish,Gift,B,5,0
+13,"Iniciación al Sketching","Simone Grünewald",Art,Antonina,partly,Spanish,Antonina,A,4,0
+14,"Claude Monet","Christoph Heinrich",Art,Antonina,no,Spanish,Antonina,A,0,5
+15,"Abstract Art","Dietmar Elger",Art,Antonina,no,English,Gift,A,0,5
+16,"The Quick Pose: A Compilation of Gestures and Thoughts on Figure Drawing","Erin Meads",Art,Antonina,yes,English,Antonina,A,5,0
+17,"Русский язык: 5 элементов","Татьяна Эсмантова",Languages,Someone else,yes,Russian,Someone else,A,4,0
+18,"L'ABCdaire de la Renaissance italienne","Michel Hochmann, Renaissance Temperini & Guillaume Cassegrain",History,Antonina,no,French,Antonina,C,0,4
+19,"Apprendre à lire les images","Susan Woodford",Art,Antonina,partly,French,Antonina,C,4,0
+20,"Petite histoire de l'Art","Susie Hodge",Art,Antonina,yes,French,Antonina,C,5,0
+21,"Arte moderno: Una historia desde el impresionismo hasta hoy","Hans Werner Holzwarth",Art,Antonina,partly,Spanish,Antonina,C,4,0
+22,"The Story of Art","Ernst Gombrich",Art,Antonina,yes,English,Gift,C,5,0
+23,"Los relatos de Belkin","Aleksandr Pushkin",Literature,Someone else,partly,Spanish,Someone else,D,3,0
+24,"Квадрант денежного потока","Роберт Кийосаки",Economics,Antonina,yes,Russian,Antonina,D,5,0
+25,"Gaudí: Una introducción a su arquitectura","Juan-Eduardo Cirlot",Art,Antonina,partly,Spanish,Antonina,D,4,0
+26,"La hija del capitán","Aleksandr Pushkin",Literature,Someone else,partly,Spanish,Someone else,D,3,0
+27,"Маленький принц","Антуан де Сент-Экзюпери",Literature,Antonina,yes,Russian,Antonina,D,5,0
+28,"Lo que no te enseñan en la escuela de arte","Kit White",Art,Antonina,yes,Spanish,Antonina,D,3,0
+29,"День, когда я научился жить","Лоран Гунель",Psychology,Antonina,yes,Russian,Gift,D,5,0
+30,"35 кило надежды","Анна Гавальда",Literature,Antonina,yes,Russian,Gift,D,5,0
+31,"Большая книга счастья","Ирина Семина",Psychology,Antonina,yes,Russian,Antonina,D,5,0
+32,"Сила вашего подсознания","Джозеф Мёрфи",Psychology,Antonina,yes,Russian,Antonina,D,4,0
+33,"Исцели себя сам","Луиза Хей",Psychology,Antonina,partly,Russian,Antonina,D,4,0
+34,"Оргуправленческое мышление","Георгий Щедровицкий",Society,Antonina,yes,Russian,Gift,C,4,0
+35,"Математическое невежество","Джон Аллен Паулос",Economics,Antonina,yes,Russian,Gift,C,4,0
+36,"Never eat alone","Keith Ferrazzi & Tahl Raz",Society,Antonina,partly,English,Antonina,D,3,0
+37,"Start with Why","Simon Sinek",Psychology,Antonina,yes,English,Antonina,D,5,0
+38,"Язык архитектуры","Елена Олейник",Art,Antonina,yes,Russian,Gift,C,5,0
+39,"El Señor de los Anillos","J.R.R. Tolkien",Literature,Someone else,no,Spanish,Someone else,C,0,5
+40,"Греческие и римские мифы. От Трои и Гомера до Пандоры и Аватара","Филипп Матышак",History,Antonina,partly,Russian,Gift,C,3,0
+41,"Приключения Шерлока Холмса","Артур Конан Дойл",Literature,Someone else,partly,Russian,Gift,D,3,0
+42,"Russian Course: A Complete Course for Beginners","Nicholas J. Brown",Languages,Someone else,yes,Russian,Someone else,D,3,0
+43,"Freakonomics","Steven D. Levitt & Stephen J. Dubner",Economics,Antonina,yes,English,Antonina,D,5,0
+44,"A Christmas Carol","Charles Dickens",Literature,Someone else,yes,English,Gift,D,4,0
+45,"La Potion Magique","Roald Dahl",Literature,Antonina,partly,French,Gift,D,4,0
+46,"Les Aventures de Tom Sawyer","Mark Twain",Literature,Antonina,no,French,Gift,D,0,2
+47,"La Porte du Ciel","Éric-Emmanuel Schmitt",Literature,Someone else,yes,French,Gift,D,5,0
+48,"City Planning: A Very Short Introduction","Carl Abbott",Society,Antonina,no,English,Antonina,D,0,3
+49,"Vraiment peindre","Gérard Garouste",Art,Antonina,partly,French,Antonina,D,4,0
+50,"La Tresse","Laetitia Colombani",Literature,Antonina,partly,French,Antonina,D,3,0
