@@ -931,7 +931,7 @@ body {
 
 
     .mobile-shelf-row.bottom {
-        top: 50%;
+        top: 45%;
     }
 
 
@@ -947,7 +947,7 @@ body {
 
 
     .book-subject {
-        font-size: 5px;
+        font-size: 8px;
     }
 
 
@@ -978,24 +978,33 @@ and (max-height: 700px) {
     }
 
 
-    .controls {
-        position: relative;
-        width: 100%;
-        min-height: 52px;
-        padding:
-            6px 4px 8px;
-        gap: 5px;
-        background: #f8f8f5;
-        overflow: hidden;
-    }
+  .controls {
 
+    position: relative;
 
-    .view-button {
-        flex: 0 0 auto;
-        padding:
-            6px 10px;
-        font-size: 10px;
-    }
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 4px 4px 6px;
+
+    gap: 5px;
+
+    background: #f8f8f5;
+
+    overflow: hidden;
+
+}
+
+.view-button {
+
+    flex: 0 0 auto;
+
+    padding: 0px 15px;
+
+    font-size: 11px;
+
+}
 
 
     #shelf-container {
@@ -1033,7 +1042,7 @@ and (max-height: 700px) {
 
 
     .mobile-shelf-row.bottom {
-        top: 50%;
+        top: 45%;
     }
 
 
@@ -1049,7 +1058,7 @@ and (max-height: 700px) {
 
 
     .book-subject {
-        font-size: 4px;
+        font-size: 8px;
     }
 
 
@@ -1058,6 +1067,7 @@ and (max-height: 700px) {
         max-width:
             calc(100vw - 30px);
     }
+
 
 }
 
@@ -1525,7 +1535,6 @@ and (max-height: 700px) {
 
 </div>
 
-
 <script>
 
 /* =====================================================
@@ -1908,12 +1917,38 @@ function updateShelf(view) {
             .width;
 
 
+    const isLandscapeMobile =
+
+        window.innerWidth <= 900 &&
+
+        window.matchMedia(
+            "(orientation: landscape) and (max-height: 700px)"
+        ).matches;
+
+
+    /*
+       Landscape books are allowed to become wider,
+       but their height is NOT increased.
+
+       The multiplier is applied only to width.
+    */
+
+    const maxLandscapeWidthMultiplier =
+        isLandscapeMobile ? 1.35 : 1;
+
+
     const shelfMargin =
-        isMobile ? 12 : 25;
+
+        isMobile
+            ? (isLandscapeMobile ? 4 : 12)
+            : 25;
 
 
     const bookMargin =
-        isMobile ? 8 : 20;
+
+        isMobile
+            ? (isLandscapeMobile ? 4 : 8)
+            : 20;
 
 
 /* =================================================
@@ -1921,7 +1956,605 @@ function updateShelf(view) {
    TWO SHELVES
 ================================================= */
 
-if (isMobile) {
+    if (isMobile) {
+
+        const shelf =
+            d3.select("#shelf");
+
+
+        /*
+           Move all books back directly under #shelf
+           before creating the two rows.
+        */
+
+        shelf
+
+            .selectAll(".book")
+
+            .each(function() {
+
+                shelf
+                    .node()
+                    .appendChild(this);
+
+            });
+
+
+        shelf
+
+            .selectAll(".mobile-shelf-row")
+
+            .remove();
+
+
+        const topRow =
+            shelf
+
+                .append("div")
+
+                .attr(
+                    "class",
+                    "mobile-shelf-row top"
+                );
+
+
+        const bottomRow =
+            shelf
+
+                .append("div")
+
+                .attr(
+                    "class",
+                    "mobile-shelf-row bottom"
+                );
+
+
+        /* ---------------------------------------------
+           MOBILE SETTINGS
+        --------------------------------------------- */
+
+        const minimumGap = 2;
+
+
+        const shelfPadding =
+
+            isLandscapeMobile
+                ? 6
+                : 12;
+
+
+        /*
+           Leave enough room for the board padding too.
+
+           This makes sure the wider landscape shelf
+           still stays completely inside the iframe.
+        */
+
+        const availableWidth =
+
+            isLandscapeMobile
+
+                ? shelfWidth -
+                  shelfPadding * 2
+
+                : shelfWidth -
+                  bookMargin * 2 -
+                  shelfPadding * 2;
+
+
+        let scale = 1;
+
+
+        let rows = [
+            [],
+            []
+        ];
+
+
+        let gap = 2;
+
+
+        /* ---------------------------------------------
+           SPLIT BOOKS INTO TWO ROWS
+        --------------------------------------------- */
+
+        if (
+            orderedBooks.length < 2
+        ) {
+
+            rows = [
+                orderedBooks,
+                []
+            ];
+
+        }
+
+
+        if (
+            orderedBooks.length >= 2
+        ) {
+
+            let bestSplit = 1;
+
+            let bestWidth = Infinity;
+
+
+            for (
+                let split = 1;
+                split < orderedBooks.length;
+                split++
+            ) {
+
+                const firstRow =
+                    orderedBooks.slice(
+                        0,
+                        split
+                    );
+
+
+                const secondRow =
+                    orderedBooks.slice(
+                        split
+                    );
+
+
+                const firstWidth =
+                    d3.sum(
+                        firstRow,
+                        d => d.physicalWidth
+                    )
+                    +
+                    minimumGap *
+                    Math.max(
+                        firstRow.length - 1,
+                        0
+                    );
+
+
+                const secondWidth =
+                    d3.sum(
+                        secondRow,
+                        d => d.physicalWidth
+                    )
+                    +
+                    minimumGap *
+                    Math.max(
+                        secondRow.length - 1,
+                        0
+                    );
+
+
+                const widest =
+                    Math.max(
+                        firstWidth,
+                        secondWidth
+                    );
+
+
+                if (
+                    widest < bestWidth
+                ) {
+
+                    bestWidth = widest;
+
+                    bestSplit = split;
+
+                }
+
+            }
+
+
+            rows = [
+
+                orderedBooks.slice(
+                    0,
+                    bestSplit
+                ),
+
+                orderedBooks.slice(
+                    bestSplit
+                )
+
+            ];
+
+
+            const widestNaturalRow =
+                d3.max(
+                    rows,
+                    booksInRow => {
+
+                        return (
+
+                            d3.sum(
+                                booksInRow,
+                                d => d.physicalWidth
+                            )
+
+                            +
+
+                            minimumGap *
+                            Math.max(
+                                booksInRow.length - 1,
+                                0
+                            )
+
+                        );
+
+                    }
+                );
+
+
+            scale =
+                Math.min(
+                    1,
+                    availableWidth /
+                    widestNaturalRow
+                );
+
+        }
+
+
+        gap =
+            Math.max(
+                1.5,
+                minimumGap * scale
+            );
+
+
+        /* ---------------------------------------------
+           ROW HEIGHT
+        --------------------------------------------- */
+
+        const rowHeight =
+            shelfElement
+                .getBoundingClientRect()
+                .height / 2;
+
+
+        /*
+           This controls BOOK HEIGHT.
+
+           IMPORTANT:
+           Landscape width changes below do NOT
+           modify this value.
+        */
+
+        const usableBookHeight =
+            rowHeight * 0.76;
+
+
+        const tallestBook =
+            d3.max(
+                orderedBooks,
+                d => d.physicalHeight
+            );
+
+
+        if (
+            tallestBook > 0
+        ) {
+
+            scale =
+                Math.min(
+                    scale,
+                    usableBookHeight /
+                    tallestBook
+                );
+
+        }
+
+
+        /* ---------------------------------------------
+           GAP
+        --------------------------------------------- */
+
+        gap =
+            Math.max(
+                1.5,
+                minimumGap * scale
+            );
+
+
+        /* ---------------------------------------------
+           LANDSCAPE WIDTH MULTIPLIER
+        --------------------------------------------- */
+
+        let widthMultiplier = 1;
+
+
+        if (
+            isLandscapeMobile
+        ) {
+
+            /*
+               First calculate how wide the rows are
+               with the current height-based scale.
+            */
+
+            const widestScaledRow =
+                d3.max(
+                    rows,
+                    booksInRow => {
+
+                        return (
+
+                            d3.sum(
+                                booksInRow,
+                                d =>
+                                    d.physicalWidth *
+                                    scale
+                            )
+
+                            +
+
+                            gap *
+                            Math.max(
+                                booksInRow.length - 1,
+                                0
+                            )
+
+                        );
+
+                    }
+                );
+
+
+            if (
+                widestScaledRow > 0
+            ) {
+
+                /*
+                   Increase width only when there is
+                   actually spare horizontal space.
+
+                   Maximum = 35% wider.
+
+                   The available width is also a hard
+                   limit, so the shelf can never overflow.
+                */
+
+                widthMultiplier =
+                    Math.min(
+                        maxLandscapeWidthMultiplier,
+                        availableWidth /
+                        widestScaledRow
+                    );
+
+            }
+
+        }
+
+
+        /* ---------------------------------------------
+           BOOK HEIGHT FOR SUBJECT POSITION
+        --------------------------------------------- */
+
+        const smallestBookHeight =
+            d3.min(
+                orderedBooks,
+                d => d.physicalHeight
+            ) * scale;
+
+
+        const subjectBottom =
+            smallestBookHeight / 2;
+
+
+        /* ---------------------------------------------
+           DRAW TWO SHELVES
+        --------------------------------------------- */
+
+        const rowElements = [
+            topRow,
+            bottomRow
+        ];
+
+
+        rowElements.forEach(
+            (row, rowIndex) => {
+
+                const booksInRow =
+                    rows[rowIndex];
+
+
+                if (
+                    booksInRow.length === 0
+                ) {
+
+                    return;
+
+                }
+
+
+                /*
+                   IMPORTANT:
+                   The board width and the book widths
+                   now use EXACTLY the same calculation.
+                */
+
+                const actualWidth =
+
+                    d3.sum(
+                        booksInRow,
+
+                        d =>
+                            d.physicalWidth *
+                            scale *
+                            widthMultiplier
+                    )
+
+                    +
+
+                    gap *
+                    Math.max(
+                        booksInRow.length - 1,
+                        0
+                    );
+
+
+                const shelfBoard =
+                    row
+
+                        .append("div")
+
+                        .attr(
+                            "class",
+                            "shelf-board"
+                        );
+
+
+                const boardWidth =
+                    actualWidth +
+                    shelfPadding * 2;
+
+
+                const boardLeft =
+                    (
+                        shelfWidth -
+                        boardWidth
+                    ) / 2;
+
+
+                shelfBoard
+
+                    .style(
+                        "left",
+                        `${boardLeft}px`
+                    )
+
+                    .style(
+                        "width",
+                        `${boardWidth}px`
+                    );
+
+
+                let x =
+                    (
+                        shelfWidth -
+                        actualWidth
+                    ) / 2;
+
+
+                booksInRow.forEach(
+                    book => {
+
+                        const bookElement =
+                            shelf.select(
+                                `.book[data-index="${book.index}"]`
+                            );
+
+
+                        /*
+                           WIDTH is stretched in landscape.
+
+                           HEIGHT is NOT.
+                        */
+
+                        const width =
+
+                            book.physicalWidth *
+                            scale *
+                            widthMultiplier;
+
+
+                        const height =
+
+                            book.physicalHeight *
+                            scale;
+
+
+                        row
+                            .node()
+                            .appendChild(
+                                bookElement.node()
+                            );
+
+
+                        const isLandscape =
+                            window.matchMedia(
+                                "(orientation: landscape)"
+                            ).matches;
+
+
+                        const boardBottom =
+                            isLandscape
+                                ? 7
+                                : 8;
+
+
+                        bookElement
+
+                            .style(
+                                "left",
+                                `${x}px`
+                            )
+
+                            .style(
+                                "bottom",
+                                `calc(${boardBottom}% + 7px)`
+                            )
+
+                            .style(
+                                "width",
+                                `${width}px`
+                            )
+
+                            .style(
+                                "height",
+                                `${height}px`
+                            );
+
+
+                        bookElement
+
+                            .select(
+                                ".book-subject"
+                            )
+
+                            .style(
+                                "bottom",
+                                `${subjectBottom}px`
+                            );
+
+
+                        x +=
+                            width +
+                            gap;
+
+                    }
+
+                );
+
+            }
+
+        );
+
+
+        d3.selectAll(
+            ".view-button"
+        )
+
+            .classed(
+                "active",
+                function() {
+
+                    return (
+                        this.dataset.view ===
+                        view
+                    );
+
+                }
+            );
+
+
+        return;
+
+    }
+
+
+/* =================================================
+   DESKTOP
+================================================= */
 
     const shelf =
         d3.select("#shelf");
@@ -1947,304 +2580,39 @@ if (isMobile) {
         .remove();
 
 
-    const topRow =
-        shelf
-
-            .append("div")
-
-            .attr(
-                "class",
-                "mobile-shelf-row top"
-            );
-
-
-    const bottomRow =
-        shelf
-
-            .append("div")
-
-            .attr(
-                "class",
-                "mobile-shelf-row bottom"
-            );
-
-
-    /* ---------------------------------------------
-       MOBILE SETTINGS
-    --------------------------------------------- */
-
-    const minimumGap = 2;
-
-    const shelfPadding = 12;
-
     const availableWidth =
         shelfWidth -
-        bookMargin * 2 -
-        shelfPadding * 2;
+        bookMargin * 2;
 
 
-    let scale = 1;
-
-    let rows = [
-        [],
-        []
-    ];
-
-    let gap = 2;
-
-
-    if (orderedBooks.length < 2) {
-
-        rows = [
+    const totalBookWidth =
+        d3.sum(
             orderedBooks,
-            []
-        ];
-
-    }
+            d => d.physicalWidth
+        );
 
 
-    if (orderedBooks.length >= 2) {
-
-        let bestSplit = 1;
-
-        let bestWidth = Infinity;
+    const minimumGap = 3;
 
 
-        for (
-            let split = 1;
-            split < orderedBooks.length;
-            split++
-        ) {
-
-            const firstRow =
-                orderedBooks.slice(
-                    0,
-                    split
-                );
-
-
-            const secondRow =
-                orderedBooks.slice(
-                    split
-                );
-
-
-            const firstWidth =
-                d3.sum(
-                    firstRow,
-                    d => d.physicalWidth
-                )
-                +
-                minimumGap *
-                Math.max(
-                    firstRow.length - 1,
-                    0
-                );
-
-
-            const secondWidth =
-                d3.sum(
-                    secondRow,
-                    d => d.physicalWidth
-                )
-                +
-                minimumGap *
-                Math.max(
-                    secondRow.length - 1,
-                    0
-                );
-
-
-            const widest =
-                Math.max(
-                    firstWidth,
-                    secondWidth
-                );
-
-
-            if (
-                widest < bestWidth
-            ) {
-
-                bestWidth = widest;
-
-                bestSplit = split;
-
-            }
-
-        }
-
-
-        rows = [
-
-            orderedBooks.slice(
-                0,
-                bestSplit
-            ),
-
-            orderedBooks.slice(
-                bestSplit
-            )
-
-        ];
-
-
-        const widestNaturalRow =
-            d3.max(
-                rows,
-                booksInRow => {
-
-                    return (
-
-                        d3.sum(
-                            booksInRow,
-                            d => d.physicalWidth
-                        )
-
-                        +
-
-                        minimumGap *
-                        Math.max(
-                            booksInRow.length - 1,
-                            0
-                        )
-
-                    );
-
-                }
-            );
-
-
-        scale =
-            Math.min(
-                1,
-                availableWidth /
-                widestNaturalRow
-            );
-
-    }
-
-
-    gap =
+    const totalGapWidth =
         Math.max(
-            1.5,
-            minimumGap * scale
-        );
+            orderedBooks.length - 1,
+            0
+        ) * minimumGap;
 
 
-    /* ---------------------------------------------
-       ROW HEIGHT
-    --------------------------------------------- */
-
-    const rowHeight =
-        shelfElement
-            .getBoundingClientRect()
-            .height / 2;
+    const naturalWidth =
+        totalBookWidth +
+        totalGapWidth;
 
 
-    /*
-       Books must fit inside each row while leaving
-       a small amount of space around the shelf.
-    */
-
-    const usableBookHeight =
-        rowHeight * 0.76;
-
-
-    const tallestBook =
-        d3.max(
-            orderedBooks,
-            d => d.physicalHeight
-        );
-
-
-    if (
-        tallestBook > 0
-    ) {
-
-        scale =
-            Math.min(
-                scale,
-                usableBookHeight /
-                tallestBook
-            );
-
-    }
-
-
-    /* ---------------------------------------------
-       RECALCULATE GAP
-    --------------------------------------------- */
-
-    gap =
-        Math.max(
-            1.5,
-            minimumGap * scale
-        );
-
-
-    /* ---------------------------------------------
-       HORIZONTAL FIT
-    --------------------------------------------- */
-
-    for (
-        let attempt = 0;
-        attempt < 10;
-        attempt++
-    ) {
-
-        const rowWidths =
-            rows.map(
-                booksInRow => {
-
-                    return (
-
-                        d3.sum(
-                            booksInRow,
-                            d =>
-                                d.physicalWidth *
-                                scale
-                        )
-
-                        +
-
-                        gap *
-                        Math.max(
-                            booksInRow.length - 1,
-                            0
-                        )
-
-                    );
-
-                }
-            );
-
-
-        const widestRow =
-            d3.max(rowWidths);
-
-
-        if (
-            widestRow <= availableWidth
-        ) {
-
-            break;
-
-        }
-
-
-        scale *=
+    const scale =
+        Math.min(
+            1,
             availableWidth /
-            widestRow;
-
-
-        gap =
-            Math.max(
-                1.5,
-                minimumGap * scale
-            );
-
-    }
+            naturalWidth
+        );
 
 
     const smallestBookHeight =
@@ -2258,177 +2626,197 @@ if (isMobile) {
         smallestBookHeight / 2;
 
 
-    /* ---------------------------------------------
-       DRAW TWO SHELVES
-    --------------------------------------------- */
+    const scaledBooks =
+        orderedBooks.map(
+            book => ({
 
-    const rowElements = [
-        topRow,
-        bottomRow
-    ];
+                book: book,
 
+                width:
+                    book.physicalWidth *
+                    scale,
 
-    rowElements.forEach(
-        (row, rowIndex) => {
+                height:
+                    book.physicalHeight *
+                    scale
 
-            const booksInRow =
-                rows[rowIndex];
-
-
-            if (
-                booksInRow.length === 0
-            ) {
-
-                return;
-
-            }
+            })
+        );
 
 
-            const actualWidth =
-
-                d3.sum(
-                    booksInRow,
-                    d =>
-                        d.physicalWidth *
-                        scale
-                )
-
-                +
-
-                gap *
-                Math.max(
-                    booksInRow.length - 1,
-                    0
-                );
+    const gap =
+        Math.max(
+            2,
+            minimumGap * scale
+        );
 
 
-            const shelfBoard =
-                row
+    /*
+       Desktop uses the complete ordered collection
+       on one shelf.
 
-                    .append("div")
+       This is intentionally independent from all
+       landscape-mobile width logic.
+    */
 
-                    .attr(
-                        "class",
-                        "shelf-board"
-                    );
+    const actualWidth =
 
+        d3.sum(
+            scaledBooks,
+            item => item.width
+        )
 
-            const boardWidth =
-                actualWidth +
-                shelfPadding * 2;
+        +
 
-
-            const boardLeft =
-                (
-                    shelfWidth -
-                    boardWidth
-                ) / 2;
-
-
-            shelfBoard
-
-                .style(
-                    "left",
-                    `${boardLeft}px`
-                )
-
-                .style(
-                    "width",
-                    `${boardWidth}px`
-                );
+        gap *
+        Math.max(
+            scaledBooks.length - 1,
+            0
+        );
 
 
-            let x =
-                (
-                    shelfWidth -
-                    actualWidth
-                ) / 2;
+    let x =
+        (
+            shelfWidth -
+            actualWidth
+        ) / 2;
 
 
-            booksInRow.forEach(
-                book => {
-
-                    const bookElement =
-                        shelf.select(
-                            `.book[data-index="${book.index}"]`
-                        );
+    x =
+        Math.max(
+            bookMargin,
+            x
+        );
 
 
-                    const width =
-                        book.physicalWidth *
-                        scale;
+    shelf
+
+        .selectAll(".shelf-board")
+
+        .remove();
 
 
-                    const height =
-                        book.physicalHeight *
-                        scale;
+    shelf
+
+        .append("div")
+
+        .attr(
+            "class",
+            "shelf-board"
+        )
+
+        .style(
+            "left",
+            `${shelfMargin}px`
+        )
+
+        .style(
+            "right",
+            `${shelfMargin}px`
+        );
 
 
-                    row
-                        .node()
-                        .appendChild(
-                            bookElement.node()
-                        );
+    const positions =
+        new Map();
 
 
-                    const isLandscape =
-                        window.matchMedia(
-                            "(orientation: landscape)"
-                        ).matches;
+    scaledBooks.forEach(
+        item => {
 
+            positions.set(
+                item.book.index,
+                {
 
-                    const boardBottom =
-                        isLandscape
-                            ? 7
-                            : 8;
+                    left: x,
 
+                    width:
+                        item.width,
 
-                    bookElement
-
-                        .style(
-                            "left",
-                            `${x}px`
-                        )
-
-                        .style(
-                            "bottom",
-                            `calc(${boardBottom}% + 7px)`
-                        )
-
-                        .style(
-                            "width",
-                            `${width}px`
-                        )
-
-                        .style(
-                            "height",
-                            `${height}px`
-                        );
-
-
-                    bookElement
-
-                        .select(
-                            ".book-subject"
-                        )
-
-                        .style(
-                            "bottom",
-                            `${subjectBottom}px`
-                        );
-
-
-                    x +=
-                        width +
-                        gap;
+                    height:
+                        item.height
 
                 }
-
             );
 
-        }
 
+            x +=
+                item.width +
+                gap;
+
+        }
     );
+
+
+    shelf
+
+        .selectAll(".book")
+
+        .data(
+            books,
+            d => d.index
+        )
+
+        .transition()
+
+        .duration(900)
+
+        .ease(
+            d3.easeCubicInOut
+        )
+
+        .style(
+            "left",
+            d => {
+
+                const position =
+                    positions.get(
+                        d.index
+                    );
+
+                return `${position.left}px`;
+
+            }
+        )
+
+        .style(
+            "bottom",
+            "54px"
+        )
+
+        .style(
+            "width",
+            d => {
+
+                const position =
+                    positions.get(
+                        d.index
+                    );
+
+                return `${position.width}px`;
+
+            }
+        )
+
+        .style(
+            "height",
+            d => {
+
+                const position =
+                    positions.get(
+                        d.index
+                    );
+
+                return `${position.height}px`;
+
+            }
+        )
+
+        .select(".book-subject")
+
+        .style(
+            "bottom",
+            `${subjectBottom}px`
+        );
 
 
     d3.selectAll(
@@ -2446,286 +2834,6 @@ if (isMobile) {
 
             }
         );
-
-
-    return;
-
-}
-
-
-/* =================================================
-   DESKTOP
-================================================= */
-
-const shelf =
-    d3.select("#shelf");
-
-
-shelf
-
-    .selectAll(".book")
-
-    .each(function() {
-
-        shelf
-            .node()
-            .appendChild(this);
-
-    });
-
-
-shelf
-
-    .selectAll(".mobile-shelf-row")
-
-    .remove();
-
-
-const availableWidth =
-    shelfWidth -
-    bookMargin * 2;
-
-
-const totalBookWidth =
-    d3.sum(
-        orderedBooks,
-        d => d.physicalWidth
-    );
-
-
-const minimumGap = 3;
-
-
-const totalGapWidth =
-    Math.max(
-        orderedBooks.length - 1,
-        0
-    ) * minimumGap;
-
-
-const naturalWidth =
-    totalBookWidth +
-    totalGapWidth;
-
-
-const scale =
-    Math.min(
-        1,
-        availableWidth /
-        naturalWidth
-    );
-
-
-const smallestBookHeight =
-    d3.min(
-        orderedBooks,
-        d => d.physicalHeight
-    ) * scale;
-
-
-const subjectBottom =
-    smallestBookHeight / 2;
-
-
-const scaledBooks =
-    orderedBooks.map(
-        book => ({
-
-            book: book,
-
-            width:
-                book.physicalWidth *
-                scale,
-
-            height:
-                book.physicalHeight *
-                scale
-
-        })
-    );
-
-
-const gap =
-    Math.max(
-        2,
-        minimumGap * scale
-    );
-
-
-const actualWidth =
-    d3.sum(
-        scaledBooks,
-        d => d.width
-    )
-
-    +
-
-    gap *
-    Math.max(
-        scaledBooks.length - 1,
-        0
-    );
-
-
-let x =
-    (
-        shelfWidth -
-        actualWidth
-    ) / 2;
-
-
-x =
-    Math.max(
-        bookMargin,
-        x
-    );
-
-
-shelf
-
-    .selectAll(".shelf-board")
-
-    .remove();
-
-
-shelf
-
-    .append("div")
-
-    .attr(
-        "class",
-        "shelf-board"
-    )
-
-    .style(
-        "left",
-        `${shelfMargin}px`
-    )
-
-    .style(
-        "right",
-        `${shelfMargin}px`
-    );
-
-
-const positions =
-    new Map();
-
-
-scaledBooks.forEach(
-    item => {
-
-        positions.set(
-            item.book.index,
-            {
-
-                left: x,
-
-                width:
-                    item.width,
-
-                height:
-                    item.height
-
-            }
-        );
-
-
-        x +=
-            item.width +
-            gap;
-
-    }
-);
-
-
-shelf
-
-    .selectAll(".book")
-
-    .data(
-        books,
-        d => d.index
-    )
-
-    .transition()
-
-    .duration(900)
-
-    .ease(
-        d3.easeCubicInOut
-    )
-
-    .style(
-        "left",
-        d => {
-
-            const position =
-                positions.get(
-                    d.index
-                );
-
-            return `${position.left}px`;
-
-        }
-    )
-
-    .style(
-        "bottom",
-        "54px"
-    )
-
-    .style(
-        "width",
-        d => {
-
-            const position =
-                positions.get(
-                    d.index
-                );
-
-            return `${position.width}px`;
-
-        }
-    )
-
-    .style(
-        "height",
-        d => {
-
-            const position =
-                positions.get(
-                    d.index
-                );
-
-            return `${position.height}px`;
-
-        }
-    )
-
-    .select(".book-subject")
-
-    .style(
-        "bottom",
-        `${subjectBottom}px`
-    );
-
-
-d3.selectAll(
-    ".view-button"
-)
-
-    .classed(
-        "active",
-        function() {
-
-            return (
-                this.dataset.view ===
-                view
-            );
-
-        }
-    );
 
 }
 
