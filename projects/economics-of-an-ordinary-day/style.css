@@ -1,0 +1,2692 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --ink: #151719;
+  --blue: #2448d8;
+  --paper: #fff;
+  --mist: #f2f3f6;
+  --line: #d7d9df;
+  --muted: #626873;
+  --paid: #2448d8;
+  --unpaid: #ee785d;
+  --care: #b5c0d6;
+  --leisure: #9abca8;
+  --other: #777f90;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+.wrap {
+  width: min(1440px, calc(100% - 9vw));
+  margin-inline: auto;
+}
+
+/* ACCESSIBILITY */
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -80px;
+  background: #fff;
+  padding: 12px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* MASTHEAD */
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 25px;
+  border-bottom: 1px solid var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.masthead-right {
+  font-weight: 500;
+}
+
+.masthead-right span {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* HERO */
+
+.hero {
+  min-height: min(840px, 92vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-index,
+.hero-bottom,
+.chapter-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.hero-index {
+  padding-top: 32px;
+}
+
+.hero-bottom {
+  padding: 26px 0;
+  border-top: 1px solid var(--ink);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 44% 56%;
+  align-items: center;
+  gap: 0;
+  padding: 70px 0 85px;
+}
+
+.hero-number {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: clamp(190px, 29vw, 490px);
+  line-height: .75;
+  letter-spacing: -.105em;
+  font-weight: 600;
+  color: var(--blue);
+  white-space: nowrap;
+}
+
+.hero-number-unit {
+  font-size: clamp(15px, 2vw, 27px);
+  letter-spacing: 0;
+  writing-mode: vertical-rl;
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 12px;
+  margin-top: 10px;
+}
+
+.hero-copy {
+  padding-left: 3vw;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  margin: 0 0 20px;
+}
+
+.hero h1,
+.chapter h2,
+.chapter-teaser h2,
+h3 {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  letter-spacing: -.065em;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-size: clamp(44px, 5.5vw, 92px);
+  line-height: 1.04;
+  margin: 0;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.hero-description {
+  max-width: 530px;
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.55;
+  margin: 35px 0 45px;
+}
+
+.text-link {
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+
+.text-link span {
+  margin-left: 45px;
+}
+
+/* SHARED CHAPTER STYLES */
+
+.chapter-topline {
+  border-top: 2px solid var(--ink);
+  padding-top: 18px;
+}
+
+.chapter-heading-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 8%;
+  padding: 90px 0 110px;
+}
+
+.chapter h2 {
+  font-size: clamp(60px, 8vw, 140px);
+  line-height: .98;
+  margin: 0;
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.chapter-aside {
+  align-self: end;
+  max-width: 470px;
+}
+
+.chapter-aside p:first-child {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: clamp(23px, 2.3vw, 36px);
+  letter-spacing: -.045em;
+  line-height: 1.18;
+}
+
+.chapter-aside p:last-child {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #454a52;
+}
+
+
+/* Shared result layout — Chapters 1, 2 and 3 */
+
+
+/* ============================================================
+   SHARED RESULT COMPONENT — CHAPTERS 1, 2 AND 3
+   ============================================================ */
+
+.chapter-result {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  grid-template-rows:
+    auto
+    auto
+    auto
+    1fr;
+
+  grid-template-areas:
+    "label ."
+    "value copy"
+    "unit  copy"
+    ".     copy";
+
+ column-gap: var(--result-column-gap, 8%);
+  row-gap: 0;
+
+  align-items: start;
+
+  padding: 40px 0 0;
+  border-top: 2px solid var(--ink);
+}
+
+/* Horizontal inset for grey chapters */
+
+.chapter-one .chapter-result,
+.chapter-three .chapter-result {
+  padding-left: 130px;
+}
+
+.chapter-two .chapter-result,
+.chapter-four .chapter-result {
+  --result-column-gap: 0%;
+}
+
+/* Result title */
+
+.result-label {
+  grid-area: label;
+
+  margin: 0 0 20px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .14em;
+
+  color: var(--ink);
+}
+
+/* Main blue number */
+
+.result-value {
+  grid-area: value;
+  align-self: start;
+
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(44px, 5.5vw, 90px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.075em;
+  font-variant-numeric: tabular-nums;
+
+  color: var(--blue);
+  overflow-wrap: anywhere;
+}
+
+/* Unit beneath the number */
+
+.result-unit {
+  grid-area: unit;
+
+  margin: 12px 0 0;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .15em;
+
+  color: var(--ink);
+}
+
+/* Explanatory insight */
+
+.result-copy {
+  grid-area: copy;
+  align-self: start;
+
+  max-width: 620px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -.02em;
+
+  color: var(--ink);
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .chapter-result {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(4, auto);
+
+    grid-template-areas:
+      "label"
+      "value"
+      "unit"
+      "copy";
+  }
+
+  .result-copy {
+    margin-top: 30px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .chapter-result {
+    padding-top: 35px;
+  }
+
+  .chapter-one .chapter-result,
+  .chapter-three .chapter-result {
+    padding-left: 0;
+  }
+
+  .result-value {
+    font-size: clamp(40px, 11vw, 66px);
+  }
+
+  .result-copy {
+    font-size: 18px;
+    margin-top: 25px;
+  }
+}
+
+
+
+
+
+/* CHAPTER 1 */
+
+.chapter-one {
+  background: var(--mist);
+  padding: 60px 0 120px;
+}
+
+.exploration {
+  border-top: 2px solid var(--ink);
+  padding-top: 35px;
+}
+
+.exploration-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.exploration h3 {
+  font-size: clamp(32px, 4vw, 60px);
+  line-height: 1.07;
+  margin: 0;
+}
+
+.country-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 220px;
+}
+
+.country-picker label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.country-picker select {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  border-radius: 0;
+  padding: 12px 28px 12px 0;
+  font: 600 17px 'Space Grotesk', sans-serif;
+  color: var(--ink);
+  max-width: 100%;
+}
+
+.country-picker select:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+
+/* CHAPTER 1 — TIME CHART */
+
+.chart-axis {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 15px 130px;
+  color: var(--muted);
+  font: 11px 'Space Grotesk', sans-serif;
+}
+
+.time-chart-container {
+  position: relative;
+}
+
+.time-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.time-row-label {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+
+.time-bar {
+  display: flex;
+  height: 74px;
+  overflow: visible;
+  background: #e4e6eb;
+}
+
+.time-segment {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  appearance: none;
+
+  cursor: pointer;
+  transition: filter .15s ease;
+}
+
+.time-segment + .time-segment {
+  border-left: 2px solid var(--mist);
+}
+
+.time-segment:hover {
+  filter: brightness(.96);
+}
+
+.time-segment.is-highlighted {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+.time-segment:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+  z-index: 3;
+}
+
+.time-segment:disabled {
+  cursor: default;
+}
+
+/* SUBTLE HOUR LABELS */
+
+.segment-hours-hover {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(11px, 1.1vw, 15px);
+  font-weight: 500;
+  letter-spacing: -.02em;
+  color: rgba(20, 25, 35, .46);
+
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+
+  transition: opacity .15s ease;
+}
+
+.time-segment.is-highlighted .segment-hours-hover {
+  opacity: 1;
+}
+
+.time-segment:first-child .segment-hours-hover {
+  color: rgba(255, 255, 255, .7);
+}
+
+/* FLOATING COMPARISON TOOLTIP */
+
+.activity-tooltip {
+  position: absolute;
+  z-index: 30;
+
+  width: 235px;
+  padding: 17px 19px;
+
+  background: #151719;
+  color: #fff;
+
+  pointer-events: none;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translate(-50%, calc(-100% - 14px));
+  transition: opacity .12s ease, visibility .12s ease;
+}
+
+.activity-tooltip.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.activity-tooltip-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 17px;
+}
+
+.tooltip-comparison {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: #bfc3ce;
+  margin-bottom: 6px;
+}
+
+.tooltip-difference {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -.055em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltip-explanation {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #bfc3ce;
+}
+
+/* LEGEND */
+
+.legend {
+  display: flex;
+  gap: 14px 27px;
+  flex-wrap: wrap;
+  padding: 35px 0 40px 130px;
+}
+
+.legend-item {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 12px;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  flex: none;
+}
+
+/* CHAPTER 1 — INSIGHT */
+
+.source-note {
+  max-width: 750px;
+  margin: 65px 0 0;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+
+  color: var(--muted);
+}
+
+.chapter-one .source-note,
+.chapter-three .source-note {
+  margin-left: 130px;
+}
+
+.error {
+  margin-top: 25px;
+  color: #b52d20;
+  font-weight: 600;
+}
+
+/* CHAPTER 2 — ACCUMULATION */
+
+.chapter-two,
+.chapter-four {
+  background: #fff;
+  padding: 70px 0 130px;
+}
+
+.accumulation {
+  border-top: 2px solid var(--ink);
+  padding-top: 40px;
+}
+
+.accumulation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 35px;
+  margin-bottom: 90px;
+}
+
+.accumulation h3 {
+  font-size: clamp(35px, 4.5vw, 66px);
+  line-height: 1.08;
+  margin: 0;
+}
+
+.accumulation-country {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 190px;
+}
+
+.accumulation-country > span,
+.period-heading label,
+.period-ticks,
+.working-days > span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+.accumulation-country strong {
+  font: 600 22px 'Space Grotesk', sans-serif;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 12px;
+}
+
+.change-country {
+  align-self: flex-start;
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-decoration: none;
+  color: var(--blue);
+}
+
+.change-country:hover {
+  text-decoration: underline;
+}
+
+/* PERIOD SLIDER */
+
+.period-control {
+  margin-bottom: 100px;
+}
+
+.period-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.period-value {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+#period-value,
+#opportunity-share-value {
+  font: 600 clamp(85px, 13vw, 190px)/.85
+    'Space Grotesk', sans-serif;
+  letter-spacing: -.09em;
+  color: var(--blue);
+}
+
+#period-unit {
+  font: 600 16px 'Space Grotesk', sans-serif;
+}
+
+#period-slider,
+#opportunity-slider {
+  display: block;
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #d7d9df;
+  cursor: pointer;
+}
+
+#period-slider::-webkit-slider-thumb,
+#opportunity-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 4px solid white;
+  box-shadow: 0 0 0 2px var(--blue);
+}
+
+#period-slider::-moz-range-thumb,
+#opportunity-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--blue);
+}
+
+#period-slider:focus-visible,
+#opportunity-slider:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 12px;
+}
+
+
+.period-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.period-description {
+  margin: 22px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ACCUMULATED HOURS CHART */
+
+.accumulation-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 55px;
+  margin-bottom: 90px;
+}
+
+.accumulation-row-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.accumulation-row-heading span {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.accumulation-row-heading strong {
+  font: 600 clamp(24px, 3vw, 40px)
+    'Space Grotesk', sans-serif;
+  letter-spacing: -.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.accumulation-track {
+  width: 100%;
+  height: 50px;
+  background: var(--mist);
+}
+
+.accumulation-fill {
+  height: 100%;
+  width: 0;
+  transition: width .35s ease;
+}
+
+.women-fill {
+  background: var(--unpaid);
+}
+
+.men-fill {
+  background: var(--blue);
+}
+
+/* ACCUMULATED DIFFERENCE */
+
+.working-days {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 25px;
+}
+
+.working-days strong {
+  font: 600 clamp(40px, 5vw, 70px)
+    'Space Grotesk', sans-serif;
+  letter-spacing: -.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ============================================================
+   CHAPTER 4 — OPPORTUNITY
+   ============================================================ */
+
+/* Inherited hourly earnings assumptions */
+
+.opportunity-assumptions {
+  margin-bottom: 55px;
+}
+
+.opportunity-wage-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.opportunity-wage-heading h4 {
+  margin: 0 0 6px;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.04em;
+
+  color: var(--ink);
+}
+
+.opportunity-wage-heading p {
+  margin: 0;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: var(--muted);
+}
+
+.opportunity-wage-heading .change-country {
+  align-self: flex-end;
+}
+
+/* White chapter chart background */
+
+.chapter-four .valuation-track {
+  background: var(--mist);
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+
+  .opportunity-assumptions {
+    margin-bottom: 45px;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .opportunity-assumptions {
+    margin-bottom: 35px;
+  }
+
+  .opportunity-wage-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .opportunity-wage-heading .change-country {
+    align-self: flex-start;
+  }
+
+}
+
+
+/* ============================================================
+   FINAL REFLECTION
+   ============================================================ */
+
+.conclusion {
+  background: var(--mist);
+  padding: 70px 0 110px;
+}
+
+/* Full-width editorial headline */
+
+.conclusion-heading {
+  padding: 90px 0 80px;
+}
+
+/* Editorial text */
+
+.conclusion-body {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 8%;
+  align-items: start;
+}
+
+.conclusion-lead {
+  margin: 0;
+  max-width: 620px;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(23px, 2.5vw, 36px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.035em;
+
+  color: var(--ink);
+}
+
+.conclusion-copy {
+  max-width: 620px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+
+  color: var(--ink);
+}
+
+.conclusion-copy p {
+  margin: 0 0 24px;
+}
+
+.conclusion-copy p:last-child {
+  margin-bottom: 0;
+}
+
+/* Closing statement */
+
+
+/* Tablet */
+
+@media (max-width: 900px) {
+
+  .conclusion-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 35px;
+  }
+
+  .conclusion-heading {
+    padding: 70px 0 60px;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .conclusion {
+    padding: 45px 0 75px;
+  }
+
+  .conclusion-heading {
+    padding: 65px 0 45px;
+  }
+
+}
+
+
+/* ============================================================
+   DATA & METHODOLOGY PAGE
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   PAGE
+   ------------------------------------------------------------ */
+
+.methodology-page {
+  background: #fff;
+  color: var(--ink);
+}
+
+.methodology-main {
+  padding-top: 45px;
+  padding-bottom: 100px;
+}
+
+
+/* ------------------------------------------------------------
+   HEADER
+   ------------------------------------------------------------ */
+
+.methodology-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  padding-bottom: 20px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .1em;
+}
+
+.methodology-intro {
+  border-top: 2px solid var(--ink);
+
+  padding: 65px 0 75px;
+}
+
+.methodology-intro h1 {
+  margin: 25px 0 30px;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(56px, 8vw, 115px);
+  font-weight: 600;
+  line-height: .98;
+  letter-spacing: -.075em;
+
+  color: var(--ink);
+}
+
+.methodology-description {
+  max-width: 650px;
+  margin: 0;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(17px, 1.6vw, 22px);
+  font-weight: 400;
+  line-height: 1.6;
+
+  color: var(--muted);
+}
+
+
+/* ------------------------------------------------------------
+   MAIN LAYOUT
+   ------------------------------------------------------------ */
+
+.methodology-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 240px)
+    minmax(0, 780px);
+
+  column-gap: 8%;
+  align-items: start;
+}
+
+.methodology-content {
+  min-width: 0;
+}
+
+
+/* ------------------------------------------------------------
+   TABLE OF CONTENTS
+   ------------------------------------------------------------ */
+
+.methodology-toc {
+  position: sticky;
+  top: 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  border-top: 2px solid var(--ink);
+  padding-top: 25px;
+}
+
+.methodology-toc .eyebrow {
+  margin: 0 0 25px;
+}
+
+.methodology-toc a {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr);
+  gap: 10px;
+
+  padding: 10px 0;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+
+  color: var(--ink);
+  text-decoration: none;
+
+  transition: color .2s ease;
+}
+
+.methodology-toc a span {
+  font-size: 11px;
+  font-weight: 700;
+
+  color: var(--muted);
+}
+
+.methodology-toc a:hover,
+.methodology-toc a:hover span {
+  color: var(--blue);
+}
+
+.methodology-toc a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
+
+/* ------------------------------------------------------------
+   RESEARCH SECTIONS
+   ------------------------------------------------------------ */
+
+.methodology-section {
+  border-top: 2px solid var(--ink);
+
+  padding-top: 25px;
+  margin-bottom: 70px;
+
+  scroll-margin-top: 35px;
+}
+
+.methodology-section > .eyebrow {
+  margin: 0 0 18px;
+}
+
+.methodology-section h2 {
+  margin: 0 0 30px;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 3.8vw, 52px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -.055em;
+
+  color: var(--ink);
+}
+
+.methodology-section h3 {
+  margin: 38px 0 18px;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.035em;
+
+  color: var(--ink);
+}
+
+.methodology-section h4 {
+  margin: 30px 0 15px;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -.02em;
+
+  color: var(--ink);
+}
+
+.methodology-section p:not(.eyebrow) {
+  margin: 0 0 18px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+
+  color: var(--ink);
+}
+
+.methodology-section p strong {
+  font-weight: 600;
+}
+
+
+/* ------------------------------------------------------------
+   LISTS
+   ------------------------------------------------------------ */
+
+.methodology-list {
+  margin: 20px 0 25px;
+  padding-left: 22px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.methodology-list li {
+  padding-left: 5px;
+  margin-bottom: 12px;
+}
+
+.methodology-list li::marker {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+
+/* ------------------------------------------------------------
+   DATASET DETAILS
+   ------------------------------------------------------------ */
+
+.methodology-data-details {
+  display: grid;
+
+  grid-template-columns:
+    minmax(110px, 150px)
+    minmax(0, 1fr);
+
+  column-gap: 25px;
+
+  margin: 25px 0 30px;
+
+  border-top: 1px solid var(--line);
+}
+
+.methodology-data-details dt,
+.methodology-data-details dd {
+  margin: 0;
+  padding: 13px 0;
+
+  border-bottom: 1px solid var(--line);
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.methodology-data-details dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.methodology-data-details dd {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+
+/* ------------------------------------------------------------
+   TABLES
+   ------------------------------------------------------------ */
+
+.methodology-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  margin: 25px 0 30px;
+}
+
+.methodology-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+
+  text-align: left;
+}
+
+.methodology-table th {
+  padding: 12px 20px 12px 0;
+
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.methodology-table td {
+  padding: 15px 20px 15px 0;
+
+  border-bottom: 1px solid var(--line);
+
+  vertical-align: top;
+}
+
+.methodology-table td:first-child {
+  width: 32%;
+  font-weight: 600;
+}
+
+.methodology-table th:last-child,
+.methodology-table td:last-child {
+  padding-right: 0;
+}
+
+
+/* ------------------------------------------------------------
+   EQUATIONS
+   ------------------------------------------------------------ */
+
+.methodology-equation {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin: 28px 0;
+  padding: 20px 25px;
+
+  background: var(--mist);
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 500;
+  line-height: 1.5;
+
+  color: var(--ink);
+
+  font-variant-numeric: tabular-nums;
+}
+
+.methodology-equation sub {
+  font-size: .65em;
+}
+
+.methodology-fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+  line-height: 1.3;
+}
+
+.methodology-fraction > span:first-child {
+  padding: 0 8px 5px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.methodology-fraction > span:last-child {
+  padding-top: 5px;
+}
+
+
+/* ------------------------------------------------------------
+   CHAPTER SUBSECTIONS
+   ------------------------------------------------------------ */
+
+.methodology-chapter {
+  margin-top: 45px;
+  padding-top: 25px;
+
+  border-top: 1px solid var(--line);
+}
+
+.methodology-chapter > .eyebrow {
+  margin: 0 0 12px;
+
+  color: var(--blue);
+}
+
+.methodology-chapter h3 {
+  margin-top: 0;
+}
+
+
+/* ------------------------------------------------------------
+   LINKS
+   ------------------------------------------------------------ */
+
+.methodology-external-link {
+  display: inline-block;
+
+  margin: 5px 0 15px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .08em;
+
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.methodology-inline-link {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.methodology-external-link:hover,
+.methodology-inline-link:hover {
+  text-decoration: underline;
+}
+
+.methodology-external-link:focus-visible,
+.methodology-inline-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
+
+/* ------------------------------------------------------------
+   REFERENCES
+   ------------------------------------------------------------ */
+
+.methodology-reference {
+  margin: 0 0 25px;
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.methodology-reference p {
+  margin-bottom: 10px;
+}
+
+
+/* ------------------------------------------------------------
+   RETURN NAVIGATION
+   ------------------------------------------------------------ */
+
+.methodology-return {
+  border-top: 2px solid var(--ink);
+  padding-top: 25px;
+}
+
+
+/* ------------------------------------------------------------
+   TABLET
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+
+  .methodology-main {
+    padding-top: 35px;
+    padding-bottom: 75px;
+  }
+
+  .methodology-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 50px;
+  }
+
+  .methodology-toc {
+    position: static;
+
+    display: grid;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    column-gap: 25px;
+  }
+
+  .methodology-toc .eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: 15px;
+  }
+
+  .methodology-intro {
+    padding: 55px 0 60px;
+  }
+
+  .methodology-section {
+    margin-bottom: 60px;
+  }
+
+}
+
+
+/* ------------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------------ */
+
+@media (max-width: 600px) {
+
+  .methodology-main {
+    padding-top: 25px;
+    padding-bottom: 60px;
+  }
+
+  .methodology-navigation {
+    font-size: 10px;
+    gap: 15px;
+  }
+
+  .methodology-intro {
+    padding: 45px 0 50px;
+  }
+
+  .methodology-intro h1 {
+    font-size: clamp(48px, 11vw, 68px);
+    margin: 20px 0 25px;
+  }
+
+  .methodology-description {
+    font-size: 17px;
+  }
+
+  .methodology-layout {
+    gap: 40px;
+  }
+
+  .methodology-toc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .methodology-toc a {
+    padding: 8px 0;
+  }
+
+  .methodology-section {
+    padding-top: 20px;
+    margin-bottom: 50px;
+  }
+
+  .methodology-section h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+  }
+
+  .methodology-section h3 {
+    font-size: 24px;
+    margin-top: 30px;
+  }
+
+  .methodology-chapter h3 {
+    margin-top: 0;
+  }
+
+  .methodology-section p:not(.eyebrow),
+  .methodology-list {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .methodology-data-details {
+    grid-template-columns:
+      minmax(90px, 110px)
+      minmax(0, 1fr);
+
+    column-gap: 15px;
+  }
+
+  .methodology-data-details dt,
+  .methodology-data-details dd {
+    font-size: 13px;
+  }
+
+  .methodology-table {
+    font-size: 13px;
+  }
+
+  .methodology-table th,
+  .methodology-table td {
+    padding-right: 12px;
+  }
+
+  .methodology-equation {
+    padding: 18px 15px;
+    margin: 22px 0;
+    font-size: 18px;
+  }
+
+  .methodology-chapter {
+    margin-top: 35px;
+    padding-top: 20px;
+  }
+
+}
+
+
+/* FOOTER */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 2px solid var(--ink);
+  padding-block: 35px 50px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.footer-author {
+  color: inherit;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.footer-author:hover {
+  color: var(--blue);
+  
+}
+
+.footer-author:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
+/* TABLETS */
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    padding: 70px 0;
+  }
+
+  .hero-number {
+    font-size: clamp(170px, 43vw, 350px);
+  }
+
+  .hero-copy {
+    padding: 50px 0 0;
+  }
+
+  .hero {
+    min-height: unset;
+  }
+
+  .chapter-heading-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .chapter-aside {
+    max-width: 650px;
+  }
+
+  .exploration-header {
+    margin-bottom: 60px;
+  }
+
+  .accumulation-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .wrap {
+    width: calc(100% - 36px);
+  }
+
+  .masthead-right {
+    font-size: 9px;
+  }
+
+  .hero-index,
+  .hero-bottom,
+  .chapter-topline {
+    font-size: 9px;
+  }
+
+  .hero-number {
+    font-size: 46vw;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 11vw, 65px);
+  }
+
+  .hero-description {
+    font-size: 17px;
+  }
+
+  .chapter-one {
+    padding: 40px 0 75px;
+  }
+
+  .chapter-heading-grid {
+    padding: 65px 0;
+  }
+
+  .chapter h2 {
+    font-size: clamp(50px, 13vw, 80px);
+  }
+
+  .exploration-header {
+    display: block;
+    margin-bottom: 45px;
+  }
+
+  .country-picker {
+    margin-top: 45px;
+    max-width: 100%;
+  }
+
+  .chart-axis {
+    margin-left: 0;
+    font-size: 9px;
+  }
+
+  .time-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .time-bar {
+    height: 54px;
+  }
+
+  .time-row-label {
+    font-size: 16px;
+  }
+
+  .segment-hours-hover {
+    font-size: 10px;
+  }
+
+  .activity-tooltip {
+    width: 185px;
+    padding: 13px 15px;
+  }
+
+  .tooltip-difference {
+    font-size: 29px;
+  }
+
+  .legend {
+    padding-left: 0;
+    gap: 14px;
+  }
+
+.source-note,
+.chapter-one .source-note,
+.chapter-three .source-note {
+  margin: 45px 0 0;
+}
+
+  .chapter-two,
+  .chapter-four {
+  padding: 45px 0 85px;
+}
+
+  .accumulation-header {
+    margin-bottom: 65px;
+  }
+
+  .period-control {
+    margin-bottom: 75px;
+  }
+
+  .accumulation-chart {
+    gap: 40px;
+    margin-bottom: 70px;
+  }
+
+  .accumulation-track {
+    height: 35px;
+  }
+
+  .chapter-teaser {
+    grid-template-columns: 45px 1fr;
+    gap: 15px;
+    padding: 45px 0;
+  }
+
+  .teaser-number {
+    font-size: 29px;
+  }
+
+  .teaser-arrow {
+    display: none;
+  }
+
+  .chapter-teaser h2 {
+    font-size: 34px;
+  }
+
+  .footer {
+    flex-direction: column;
+    line-height: 1.6;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .time-segment,
+  .segment-hours-hover,
+  .activity-tooltip,
+  .accumulation-fill {
+    transition: none;
+  }
+}
+
+
+/* CHAPTER 2 — COMPACT EXPLORATION PANEL */
+
+/* Bring the title and country selector closer to the slider */
+.accumulation-header {
+  margin-bottom: 42px;
+}
+
+/* Reduce spacing within the projection period */
+.period-heading {
+  margin-bottom: 20px;
+}
+
+#period-value,
+#opportunity-share-value{
+  font-size: clamp(70px, 9vw, 115px);
+}
+
+.period-ticks {
+  margin-top: 14px;
+}
+
+.period-description {
+  margin-top: 14px;
+}
+
+/* Bring the cumulative bars closer to the slider */
+.period-control {
+  margin-bottom: 48px;
+}
+
+/* Keep both bars visually grouped */
+.accumulation-chart {
+  gap: 26px;
+  margin-bottom: 65px;
+}
+
+.accumulation-row-heading {
+  margin-bottom: 10px;
+}
+
+.accumulation-track {
+  height: 38px;
+}
+
+/* Responsive spacing */
+@media (max-width: 900px) {
+  .accumulation-header {
+    margin-bottom: 32px;
+    gap: 20px;
+  }
+
+  .period-control {
+    margin-bottom: 38px;
+  }
+
+  .accumulation-chart {
+    gap: 24px;
+    margin-bottom: 55px;
+  }
+}
+
+@media (max-width: 600px) {
+  #period-value,
+#opportunity-share-value {
+    font-size: 72px;
+  }
+
+  .accumulation-header {
+    margin-bottom: 28px;
+  }
+
+  .period-control {
+    margin-bottom: 32px;
+  }
+
+  .accumulation-chart {
+    gap: 22px;
+    margin-bottom: 45px;
+  }
+
+  .accumulation-track {
+    height: 32px;
+  }
+}
+
+
+
+/* CHAPTER 2 — TIME PERSPECTIVE */
+
+.time-perspective {
+  border-top: 1px solid var(--line);
+  padding: 28px 0 32px;
+  margin-bottom: 35px;
+}
+
+.time-perspective-label {
+  margin: 0 0 18px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+.time-perspective-title {
+  max-width: 1000px;
+  margin: 0 0 14px;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(25px, 3vw, 42px);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -.045em;
+
+  color: var(--ink);
+}
+
+.time-perspective-description {
+  max-width: 780px;
+  margin: 0;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(14px, 1.3vw, 17px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Keep the new comparison close to the bars */
+.accumulation-chart {
+  margin-bottom: 32px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .time-perspective {
+    padding: 24px 0 28px;
+    margin-bottom: 28px;
+  }
+
+  .time-perspective-title {
+    font-size: 27px;
+  }
+
+  .time-perspective-description {
+    font-size: 14px;
+  }
+
+  .accumulation-chart {
+    margin-bottom: 28px;
+  }
+}
+
+
+/* CHAPTER 2 — MERGED ACCUMULATED DIFFERENCE */
+
+/* Restore the original spacing below the bars */
+.accumulation-chart {
+  margin-bottom: 65px;
+}
+
+@media (max-width: 900px) {
+  .accumulation-chart {
+    margin-bottom: 55px;
+  }
+}
+
+@media (max-width: 600px) {
+  .accumulation-chart {
+    margin-bottom: 45px;
+  }
+
+}
+
+/* ============================================================
+   CHAPTER 3 — VALUATION
+   ============================================================ */
+
+.chapter-three {
+  background: var(--mist);
+  padding: 70px 0 65px;
+}
+
+.valuation,
+.opportunity {
+  border-top: 2px solid var(--ink);
+  padding-top: 40px;
+}
+
+/* Exploration introduction */
+
+.valuation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 35px;
+  margin-bottom: 42px;
+}
+
+.valuation h3,
+.opportunity h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(35px, 4.5vw, 66px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.065em;
+  margin: 0;
+}
+
+.valuation-context {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+
+/* ------------------------------------------------------------
+   CONTROLS
+
+   Chapter 1 uses:
+   label column = 110px
+   gap          = 20px
+
+   Total inset  = 130px
+   ------------------------------------------------------------ */
+
+.valuation-controls {
+  margin-left: 130px;
+  margin-bottom: 30px;
+}
+
+.valuation-control {
+  min-width: 0;
+  margin: 0 0 24px;
+  padding: 0;
+  border: 0;
+}
+
+.valuation-control legend {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 12px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+
+/* Occupational benchmark */
+
+.valuation-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.valuation-option {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.valuation-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.valuation-option span {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px 12px 0;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(13px, 1.4vw, 17px);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -.025em;
+  text-align: left;
+
+  color: var(--ink);
+  border-bottom: 3px solid #c7cbd3;
+
+  transition: color .18s ease,
+              border-color .18s ease;
+}
+
+.valuation-option:hover span {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+
+.valuation-option input:checked + span {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+
+.valuation-option input:focus-visible + span {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+
+/* Wage basis */
+
+.valuation-basis {
+  margin-bottom: 22px;
+}
+
+.valuation-basis-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 36px;
+}
+
+.valuation-basis-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.valuation-basis-option input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------
+   HOURLY WAGE DISPLAY
+   ------------------------------------------------------------ */
+
+.valuation-rate-display {
+  padding: 12px 0 0;
+}
+
+
+.valuation-rate-display [hidden] {
+  display: none !important;
+}
+
+.valuation-rate-label {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+.valuation-rate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.valuation-rate-column {
+  min-width: 0;
+}
+
+.valuation-rate-column strong,
+.valuation-single-rate strong {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.065em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+
+.valuation-single-rate {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+
+.valuation-rate-unit {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--muted);
+}
+
+
+.valuation-rate-accent {
+  width: 60px;
+  height: 3px;
+  margin-top: 12px;
+}
+
+.women-rate-accent {
+  background: var(--unpaid);
+}
+
+.men-rate-accent {
+  background: var(--blue);
+}
+
+.common-rate-accent {
+  background: #9ca0aa;
+}
+
+
+.valuation-status {
+  margin: 15px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.valuation-status[hidden] {
+  display: none;
+}
+
+.valuation-currency-note {
+  margin: 16px 0 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--muted);
+}
+/* ------------------------------------------------------------
+   VALUATION CHART
+
+   Identical desktop column structure to Chapter 1:
+   110px label + 20px gap + flexible bar area
+   ------------------------------------------------------------ */
+
+.valuation-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-bottom: 18px;
+}
+
+.valuation-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.valuation-row-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  color: var(--ink);
+}
+
+.valuation-bar-area {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 8px;
+}
+
+.valuation-bar-area strong {
+  align-self: flex-end;
+
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(23px, 2.8vw, 36px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.valuation-track {
+  width: 100%;
+  height: 38px;
+  background: #dfe1e7;
+}
+
+.valuation-fill {
+  width: 0;
+  height: 100%;
+  transition: width .35s ease;
+}
+
+.valuation-chart-note {
+  margin: 0 0 48px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+
+  color: var(--muted);
+}
+
+.chapter-three .valuation-chart-note {
+  margin-left: 130px;
+}
+
+
+
+/* ------------------------------------------------------------
+   TABLET
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .valuation-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 35px;
+  }
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME STACKED CHART LOGIC AS CHAPTER 1
+   ------------------------------------------------------------ */
+
+@media (max-width: 600px) {
+  .chapter-three {
+    padding: 45px 0 45px;
+  }
+
+.valuation,
+.opportunity {
+  padding-top: 35px;
+}
+
+  .valuation-header {
+    margin-bottom: 30px;
+  }
+
+.valuation h3,
+.opportunity h3 {
+  font-size: clamp(34px, 9vw, 48px);
+}
+
+  .valuation-controls {
+    margin-left: 0;
+    margin-bottom: 25px;
+  }
+
+  .valuation-control {
+    margin-bottom: 22px;
+  }
+
+
+.valuation-option span {
+  min-height: 48px;
+  padding: 8px 8px 10px 0;
+  font-size: 12px;
+}
+
+
+  .valuation-basis-options {
+    gap: 12px 24px;
+  }
+
+  .valuation-basis-option {
+    font-size: 13px;
+  }
+
+  .valuation-rate-grid {
+    gap: 18px;
+  }
+
+  .valuation-rate-column strong,
+  .valuation-single-rate strong {
+    font-size: clamp(32px, 8vw, 46px);
+  }
+
+  .valuation-chart {
+    gap: 25px;
+  }
+
+  .valuation-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .valuation-row-label {
+    font-size: 16px;
+  }
+
+  .valuation-bar-area strong {
+    font-size: 24px;
+  }
+
+  .valuation-track {
+    height: 32px;
+  }
+
+.valuation-chart-note,
+.chapter-three .valuation-chart-note {
+  margin: 0 0 40px;
+}
+
+}
+
+/* ------------------------------------------------------------
+   REDUCED MOTION
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .valuation-option span,
+  .valuation-fill {
+    transition: none;
+  }
+}
+
+
+
+/* ============================================================
+   SHARED CHART SYSTEM — CHAPTERS 1, 2 AND 3
+   ============================================================ */
+
+:root {
+  --chart-bar-height: 74px;
+  --chart-label-width: 110px;
+  --chart-label-gap: 20px;
+}
+
+/* Identical bar heights across all three chapters */
+.time-bar,
+.accumulation-track,
+.valuation-track {
+  height: var(--chart-bar-height);
+}
+
+/* ------------------------------------------------------------
+   CHAPTER 2 — ACCUMULATION
+   Keep the number above the bar.
+   Centre Women / Men against the bar itself.
+   ------------------------------------------------------------ */
+
+.accumulation-row {
+  display: grid;
+  grid-template-columns:
+    var(--chart-label-width) minmax(0, 1fr);
+  column-gap: var(--chart-label-gap);
+  row-gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.accumulation-row-heading {
+  display: contents;
+}
+
+.accumulation-row-heading span {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.accumulation-row-heading strong {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  text-align: right;
+  min-width: 0;
+}
+
+.accumulation-row > .accumulation-track {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------
+   CHAPTER 3 — VALUATION
+   Separate grid rows for monetary total and bar.
+   No absolute positioning.
+   ------------------------------------------------------------ */
+
+.valuation-row {
+  display: grid;
+  grid-template-columns:
+    var(--chart-label-width) minmax(0, 1fr);
+  column-gap: var(--chart-label-gap);
+  row-gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.valuation-row-label {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.valuation-bar-area {
+  display: contents;
+}
+
+.valuation-bar-area > strong {
+  position: static;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  align-self: end;
+
+  margin: 0;
+  min-width: 0;
+  text-align: right;
+  line-height: 1.1;
+}
+
+.valuation-bar-area > .valuation-track {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+}
+
+/* Consistent rate/unit layout */
+
+.valuation-rate-column .valuation-single-rate {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.valuation-rate-unit {
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME BAR HEIGHT AS CHAPTER 1
+   ------------------------------------------------------------ */
+
+@media (max-width: 600px) {
+  :root {
+    --chart-bar-height: 54px;
+  }
+
+  .time-bar,
+  .accumulation-track,
+  .valuation-track {
+    height: var(--chart-bar-height);
+  }
+
+  .accumulation-row,
+  .valuation-row {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+    row-gap: 8px;
+  }
+
+  .accumulation-row-heading span,
+  .valuation-row-label {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 16px;
+  }
+
+  .accumulation-row-heading strong,
+  .valuation-bar-area > strong {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .accumulation-row > .accumulation-track,
+  .valuation-bar-area > .valuation-track {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}

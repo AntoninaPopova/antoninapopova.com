@@ -1,0 +1,1471 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Data sources, analytical framework, calculation methods and limitations underlying The Economics of an Ordinary Day."
+  >
+
+  <meta name="author" content="Antonina Popova">
+
+  <title>
+    Data & Methodology — The Economics of an Ordinary Day
+  </title>
+
+  <!-- Typography -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Shared stylesheet -->
+
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+
+<body class="methodology-page">
+
+  <main class="methodology-main wrap">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER                                            -->
+    <!-- ================================================= -->
+
+    <header class="methodology-header">
+
+      <div class="methodology-navigation">
+
+        <a
+          href="./index.html"
+          class="footer-author"
+        >
+          ← BACK TO THE PROJECT
+        </a>
+
+        <span>RESEARCH NOTES</span>
+
+      </div>
+
+      <div class="methodology-intro">
+
+        <p class="eyebrow">
+          THE ECONOMICS OF AN ORDINARY DAY
+        </p>
+
+        <h1>
+          Data &amp;<br>
+          <span class="blue">methodology.</span>
+        </h1>
+
+        <p class="methodology-description">
+          Data sources, analytical framework,
+          calculation methods and limitations
+          underlying the interactive exploration
+          of unpaid work.
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <!-- ================================================= -->
+    <!-- PAGE LAYOUT                                       -->
+    <!-- ================================================= -->
+
+    <div class="methodology-layout">
+
+
+      <!-- TABLE OF CONTENTS -->
+
+      <nav
+        class="methodology-toc"
+        aria-label="Methodology contents"
+      >
+
+        <p class="eyebrow">CONTENTS</p>
+
+        <a href="#research-objective">
+          <span>01</span>
+          Research objective
+        </a>
+
+        <a href="#data-sources">
+          <span>02</span>
+          Data sources
+        </a>
+
+        <a href="#data-preparation">
+          <span>03</span>
+          Data preparation
+        </a>
+
+        <a href="#analytical-framework">
+          <span>04</span>
+          Analytical framework
+        </a>
+
+        <a href="#monetary-interpretation">
+          <span>05</span>
+          Monetary interpretation
+        </a>
+
+        <a href="#limitations">
+          <span>06</span>
+          Limitations
+        </a>
+
+        <a href="#references">
+          <span>07</span>
+          References
+        </a>
+
+      </nav>
+
+
+      <!-- RESEARCH CONTENT -->
+
+      <article class="methodology-content">
+
+
+        <!-- ============================================= -->
+        <!-- 01 — RESEARCH OBJECTIVE                       -->
+        <!-- ============================================= -->
+
+        <section
+          class="methodology-section"
+          id="research-objective"
+        >
+
+          <p class="eyebrow">
+            01 / RESEARCH OBJECTIVE
+          </p>
+
+          <h2>Research objective</h2>
+
+          <p>
+            The Economics of an Ordinary Day examines
+            the distribution of daily time between women
+            and men, with particular attention to unpaid
+            work and its economic implications.
+          </p>
+
+          <p>
+            The project explores how differences in
+            daily time allocation accumulate over longer
+            periods, how unpaid work can be expressed
+            in monetary terms, and what alternative
+            economic uses of this time might represent.
+          </p>
+
+          <p>
+            The analysis is organised around four
+            complementary perspectives:
+          </p>
+
+          <ol class="methodology-list">
+
+            <li>
+              <strong>Time allocation.</strong>
+              The composition of an average 24-hour day
+              and differences in unpaid-work time
+              between women and men.
+            </li>
+
+            <li>
+              <strong>Accumulation.</strong>
+              The cumulative magnitude of daily
+              differences over a selected period.
+            </li>
+
+            <li>
+              <strong>Valuation.</strong>
+              The estimated monetary value of unpaid
+              work using alternative occupational
+              wage benchmarks.
+            </li>
+
+            <li>
+              <strong>Opportunity cost.</strong>
+              Hypothetical additional earnings associated
+              with reallocating a share of unpaid-work
+              time to paid employment.
+            </li>
+
+          </ol>
+
+          <p>
+            The project is descriptive and exploratory.
+            It does not seek to establish causal
+            relationships or predict individual
+            labour-market outcomes.
+          </p>
+
+        </section>
+
+
+        <!-- ============================================= -->
+        <!-- 02 — DATA SOURCES                             -->
+        <!-- ============================================= -->
+
+        <section
+          class="methodology-section"
+          id="data-sources"
+        >
+
+          <p class="eyebrow">02 / DATA SOURCES</p>
+
+          <h2>Data sources</h2>
+
+          <p>
+            The analysis combines two international
+            statistical datasets: time-use observations
+            from the Organisation for Economic
+            Co-operation and Development (OECD) and
+            hourly earnings statistics from the
+            International Labour Organization (ILO).
+          </p>
+
+
+          <h3>Time-use statistics</h3>
+
+          <dl class="methodology-data-details">
+
+            <dt>Institution</dt>
+            <dd>OECD</dd>
+
+            <dt>Dataset</dt>
+            <dd>OECD Time Use Database</dd>
+
+            <dt>Original unit</dt>
+            <dd>Minutes per day</dd>
+
+            <dt>Reference period</dt>
+            <dd>
+              Latest available observation
+              for each country
+            </dd>
+
+            <dt>Database update</dt>
+            <dd>9 June 2026</dd>
+
+          </dl>
+
+          <p>
+            The dataset provides average daily time
+            allocated to five broad activity categories,
+            disaggregated by sex.
+          </p>
+
+          <div class="methodology-table-wrapper">
+
+            <table class="methodology-table">
+
+              <thead>
+                <tr>
+                  <th>Activity category</th>
+                  <th>General description</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>Paid work or study</td>
+                  <td>
+                    Employment, education and
+                    related activities.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Unpaid work</td>
+                  <td>
+                    Household production, domestic
+                    responsibilities, care and
+                    related unpaid activities.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Personal care</td>
+                  <td>
+                    Sleeping, eating, personal hygiene
+                    and other personal-care activities.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Leisure</td>
+                  <td>
+                    Recreational, social and
+                    leisure activities.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Other</td>
+                  <td>
+                    Activities included in the residual
+                    category of the source dataset.
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <p>
+            These descriptions summarise the broad
+            activity categories. The detailed
+            classification of individual activities
+            follows the original OECD dataset.
+          </p>
+
+          <a
+            href="https://www.oecd.org/en/data/datasets/time-use-database.html"
+            class="methodology-external-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            VIEW OECD TIME USE DATABASE ↗
+          </a>
+
+
+          <h3>Hourly earnings statistics</h3>
+
+          <dl class="methodology-data-details">
+
+            <dt>Institution</dt>
+            <dd>International Labour Organization</dd>
+
+            <dt>Database</dt>
+            <dd>ILOSTAT</dd>
+
+            <dt>Indicator</dt>
+            <dd>
+              Average hourly earnings of employees
+              by sex, occupation and currency — Annual
+            </dd>
+
+            <dt>Indicator code</dt>
+            <dd>EAR_EHRA_SEX_OCU_CUR_NB_A</dd>
+
+            <dt>Monetary unit</dt>
+            <dd>
+              2021 international dollars (PPP)
+              per hour
+            </dd>
+
+          </dl>
+
+          <p>
+            The earnings dataset provides average
+            hourly earnings of employees, disaggregated
+            by sex and occupation.
+          </p>
+
+          <p>
+            Three occupational categories were selected
+            directly from the source dataset:
+          </p>
+
+          <ul class="methodology-list">
+
+            <li>Elementary occupations</li>
+
+            <li>Service and sales workers</li>
+
+            <li>Professionals</li>
+
+          </ul>
+
+          <p>
+            These categories provide alternative
+            wage benchmarks for exploring the
+            sensitivity of monetary estimates to
+            different levels of hourly earnings.
+            They are not intended to establish a
+            direct occupational equivalent for
+            every unpaid activity.
+          </p>
+
+          <a
+            href="https://rshiny.ilo.org/dataexplorer15/?lang=en&amp;segment=indicator&amp;id=EAR_EHRA_SEX_OCU_CUR_NB_A&amp;channel=ilostat"
+            class="methodology-external-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            VIEW ILOSTAT EARNINGS DATA ↗
+          </a>
+
+        </section>
+
+
+        <!-- ============================================= -->
+        <!-- 03 — DATA PREPARATION                         -->
+        <!-- ============================================= -->
+
+        <section
+          class="methodology-section"
+          id="data-preparation"
+        >
+
+          <p class="eyebrow">03 / DATA PREPARATION</p>
+
+          <h2>From source to dataset</h2>
+
+          <p>
+            The original datasets were processed
+            and combined using Python and the
+            pandas library.
+          </p>
+
+
+          <h3>Selection of time-use observations</h3>
+
+          <p>
+            The latest available time-use observation
+            for each country was retained. Consequently,
+            the analysis does not represent a single
+            common survey year across all countries.
+          </p>
+
+          <p>
+            The original observations were expressed
+            in minutes per day and converted into hours
+            by dividing each value by 60.
+          </p>
+
+          <div class="methodology-equation">
+
+            <span>
+              Hours per day = Minutes per day / 60
+            </span>
+
+          </div>
+
+          <p>
+            The five activity categories already
+            summed to 24 hours in the retained
+            observations. No proportional adjustment
+            or additional normalisation was required.
+          </p>
+
+
+          <h3>Selection of earnings observations</h3>
+
+          <p>
+            Hourly earnings were selected for women
+            and men in each of the three occupational
+            categories.
+          </p>
+
+          <p>
+            Earnings were retained in 2021 international
+            dollars, adjusted for purchasing power
+            parity, as provided directly by ILOSTAT.
+            No additional currency conversion or
+            purchasing-power adjustment was applied.
+          </p>
+
+
+          <h3>Country coverage and missing observations</h3>
+
+          <p>
+            The two datasets were combined using
+            country and sex as matching dimensions.
+          </p>
+
+          <p>
+            The final analytical sample was restricted
+            to countries with the required observations
+            in both datasets. Countries with missing
+            time-use or required earnings data were
+            excluded.
+          </p>
+
+          <p>
+            No missing observations were imputed.
+            The geographical coverage of the project
+            therefore reflects data availability rather
+            than a predefined representative sample
+            of countries.
+          </p>
+
+
+          <h3>Calculation of a common hourly wage</h3>
+
+          <p>
+            For each country and occupational category,
+            a common hourly wage was calculated as
+            the simple arithmetic mean of female
+            and male hourly earnings.
+          </p>
+
+          <div class="methodology-equation">
+
+            <span>
+              W<sub>c</sub> =
+            </span>
+
+            <span class="methodology-fraction">
+
+              <span>
+                W<sub>w</sub> + W<sub>m</sub>
+              </span>
+
+              <span>2</span>
+
+            </span>
+
+          </div>
+
+          <p>
+            Here, W<sub>w</sub> and W<sub>m</sub>
+            represent female and male hourly earnings,
+            respectively, and W<sub>c</sub> represents
+            the common hourly wage.
+          </p>
+
+          <p>
+            This is an unweighted arithmetic mean,
+            not an employment-weighted estimate of
+            average earnings across the workforce.
+          </p>
+
+          <p>
+            Applying the same wage to both groups
+            allows the monetary effect of differences
+            in unpaid-work hours to be examined
+            independently of differences in the
+            selected hourly earnings benchmarks.
+          </p>
+
+        </section>
+
+
+        <!-- ============================================= -->
+        <!-- 04 — ANALYTICAL FRAMEWORK                     -->
+        <!-- ============================================= -->
+
+        <section
+          class="methodology-section"
+          id="analytical-framework"
+        >
+
+          <p class="eyebrow">
+            04 / ANALYTICAL FRAMEWORK
+          </p>
+
+          <h2>Analytical framework</h2>
+
+          <p>
+            The four chapters use a common set of
+            time-use observations and progressively
+            introduce additional analytical parameters.
+          </p>
+
+
+          <h3>Notation</h3>
+
+          <div class="methodology-table-wrapper">
+
+            <table class="methodology-table">
+
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Definition</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>g</td>
+                  <td>
+                    Population group: women or men
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>H<sub>g</sub></td>
+                  <td>
+                    Average daily unpaid-work hours
+                    for group g
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>W<sub>g</sub></td>
+                  <td>
+                    Selected hourly earnings benchmark
+                    for group g
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Y</td>
+                  <td>
+                    Projection period in years
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>s</td>
+                  <td>
+                    Share of unpaid-work time
+                    hypothetically reallocated to
+                    paid employment
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>w, m</td>
+                  <td>Women and men, respectively</td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+
+          <!-- CHAPTER 1 -->
+
+          <div class="methodology-chapter">
+
+            <p class="eyebrow">CHAPTER 01 / THE DAY</p>
+
+            <h3>Daily time allocation</h3>
+
+            <p>
+              The first chapter presents the composition
+              of an average 24-hour day for women and
+              men in the selected country.
+            </p>
+
+            <p>
+              The stacked bars represent the duration
+              of each activity category. They do not
+              represent a chronological schedule or
+              indicate when particular activities
+              occur during the day.
+            </p>
+
+            <p>
+              The daily unpaid-work gap is calculated
+              as the difference between female and
+              male average daily unpaid-work hours.
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                ΔH = H<sub>w</sub> − H<sub>m</sub>
+              </span>
+
+            </div>
+
+            <p>
+              A positive difference indicates that
+              women spend more time on unpaid work;
+              a negative difference indicates that
+              men spend more time on unpaid work.
+            </p>
+
+            <p>
+              The visualisation expresses the magnitude
+              of the difference in hours and minutes,
+              with its direction communicated through
+              the accompanying text.
+            </p>
+
+          </div>
+
+
+          <!-- CHAPTER 2 -->
+
+          <div class="methodology-chapter">
+
+            <p class="eyebrow">
+              CHAPTER 02 / ACCUMULATION
+            </p>
+
+            <h3>Accumulation over time</h3>
+
+            <p>
+              The second chapter examines how daily
+              unpaid-work hours accumulate over a
+              selected period of one to ten years.
+            </p>
+
+            <p>
+              Accumulated unpaid-work hours for each
+              group are calculated as:
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                A<sub>g</sub> =
+                H<sub>g</sub> × 365 × Y
+              </span>
+
+            </div>
+
+            <p>
+              The cumulative difference between women
+              and men is therefore:
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                ΔA = (H<sub>w</sub> − H<sub>m</sub>)
+                × 365 × Y
+              </span>
+
+            </div>
+
+            <p>
+              The calculation assumes 365 days per
+              year and constant average daily
+              unpaid-work hours throughout the
+              selected projection period.
+            </p>
+
+            <p>
+              Leap years, demographic changes and
+              changes in household responsibilities
+              or individual time-use patterns are
+              not modelled.
+            </p>
+
+            <h4>Illustrative time comparisons</h4>
+
+            <p>
+              To communicate the magnitude of
+              accumulated hours, the visualisation
+              relates selected results to familiar
+              activities, such as reading, personal
+              projects, academic studies and
+              professional experience.
+            </p>
+
+            <p>
+              These comparisons are based on
+              illustrative workload assumptions.
+              Educational comparisons are informed
+              by typical academic workload estimates.
+            </p>
+
+            <p>
+              They are intended as interpretive
+              devices rather than precise measures
+              of educational attainment, professional
+              experience or achievable individual
+              outcomes.
+            </p>
+
+          </div>
+
+
+          <!-- CHAPTER 3 -->
+
+          <div class="methodology-chapter">
+
+            <p class="eyebrow">
+              CHAPTER 03 / VALUATION
+            </p>
+
+            <h3>Monetary valuation of unpaid work</h3>
+
+            <p>
+              The third chapter applies an hourly
+              earnings benchmark to accumulated
+              unpaid-work hours in order to estimate
+              their monetary value.
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                V<sub>g</sub> =
+                H<sub>g</sub> × 365 × Y × W<sub>g</sub>
+              </span>
+
+            </div>
+
+            <p>
+              The reader can select one of three
+              occupational wage benchmarks and
+              choose between two wage assumptions.
+            </p>
+
+            <div class="methodology-table-wrapper">
+
+              <table class="methodology-table">
+
+                <thead>
+                  <tr>
+                    <th>Wage assumption</th>
+                    <th>Calculation</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr>
+                    <td>Gender-specific wages</td>
+                    <td>
+                      Female and male hourly earnings
+                      are applied separately to the
+                      corresponding unpaid-work hours.
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Common hourly wage</td>
+                    <td>
+                      The arithmetic mean of female
+                      and male hourly earnings is
+                      applied to both groups.
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <p>
+              The difference in estimated monetary
+              value is calculated as:
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                ΔV = V<sub>w</sub> − V<sub>m</sub>
+              </span>
+
+            </div>
+
+            <p>
+              Under the common-wage assumption,
+              the monetary difference reflects
+              differences in unpaid-work hours alone.
+            </p>
+
+            <p>
+              Under the gender-specific wage assumption,
+              the monetary difference reflects both
+              differences in unpaid-work hours and
+              differences in the selected hourly
+              earnings benchmarks.
+            </p>
+
+            <p>
+              The resulting values are imputed
+              monetary estimates. They do not
+              represent actual payments, observed
+              earnings or measured contributions
+              to gross domestic product.
+            </p>
+
+          </div>
+
+
+          <!-- CHAPTER 4 -->
+
+          <div class="methodology-chapter">
+
+            <p class="eyebrow">
+              CHAPTER 04 / OPPORTUNITY
+            </p>
+
+            <h3>Alternative uses of time</h3>
+
+            <p>
+              The fourth chapter explores the
+              potential additional earnings associated
+              with a hypothetical reallocation of
+              unpaid-work time to paid employment.
+            </p>
+
+            <p>
+              The reader selects a reallocation
+              percentage between 0% and 100%,
+              applied equally to the unpaid-work
+              hours of women and men.
+            </p>
+
+            <p>
+              Reallocated hours are calculated as:
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                R<sub>g</sub> =
+                H<sub>g</sub> × 365 × Y × s
+              </span>
+
+            </div>
+
+            <p>
+              Potential additional earnings are
+              calculated by applying the selected
+              hourly earnings benchmark to the
+              reallocated hours.
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                E<sub>g</sub> =
+                H<sub>g</sub> × 365 × Y
+                × s × W<sub>g</sub>
+              </span>
+
+            </div>
+
+            <p>
+              The difference in potential additional
+              earnings is:
+            </p>
+
+            <div class="methodology-equation">
+
+              <span>
+                ΔE = E<sub>w</sub> − E<sub>m</sub>
+              </span>
+
+            </div>
+
+            <p>
+              The country, projection period,
+              occupational benchmark and wage
+              assumption are inherited from the
+              preceding chapters.
+            </p>
+
+            <p>
+              The default reallocation share of 25%
+              is an illustrative starting point,
+              not an empirically estimated proportion
+              of unpaid work that could realistically
+              be reallocated.
+            </p>
+
+            <p>
+              A reallocation of 100% represents
+              a theoretical upper-bound scenario
+              within the selected model assumptions.
+              It does not imply that all unpaid
+              work can or should be eliminated.
+            </p>
+
+            <p>
+              The scenario assumes that reallocated
+              hours can be converted into paid
+              employment at the selected hourly
+              earnings benchmark. Employment
+              availability, taxation, replacement
+              care costs and other constraints
+              are not modelled.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- ============================================= -->
+        <!-- 05 — MONETARY INTERPRETATION                  -->
+        <!-- ============================================= -->
+
+        <section
+          class="methodology-section"
+          id="monetary-interpretation"
+        >
+
+          <p class="eyebrow">
+            05 / MONETARY INTERPRETATION
+          </p>
+
+          <h2>Interpreting monetary estimates</h2>
+
+
+          <h3>Purchasing power parity</h3>
+
+          <p>
+            All monetary values are expressed in
+            2021 international dollars, adjusted
+            for purchasing power parity (PPP).
+          </p>
+
+          <p>
+            Purchasing power parity accounts for
+            differences in price levels across
+            countries and provides a more comparable
+            monetary unit than conversion using
+            market exchange rates alone.
+          </p>
+
+          <p>
+            The dollar symbol used in the visualisation
+            therefore refers to international dollars
+            in PPP terms, not nominal US dollars
+            converted at market exchange rates.
+          </p>
+
+          <p>
+            The year 2021 identifies the purchasing
+            power reference of the monetary unit.
+            It should not be interpreted as the
+            reference year of every time-use
+            observation.
+          </p>
+
+
+          <h3>Choice of wage benchmark</h3>
+
+          <p>
+            There is no single universally applicable
+            market price for unpaid work.
+          </p>
+
+          <p>
+            Household production and care encompass
+            a wide range of activities that differ
+            in their nature, skill requirements
+            and possible market substitutes.
+          </p>
+
+          <p>
+            Rather than assign a definitive monetary
+            value to unpaid work, the project allows
+            readers to explore how estimates change
+            under alternative occupational wage
+            benchmarks.
+          </p>
+
+          <p>
+            The selected benchmarks are general
+            earnings proxies. They do not constitute
+            a task-specific replacement-cost
+            valuation of household production.
+          </p>
+
+
+          <h3>Valuation and opportunity cost</h3>
+
+          <p>
+            Chapters 3 and 4 apply the same underlying
+            hourly earnings benchmarks but address
+            different economic questions.
+          </p>
+
+          <p>
+            Chapter 3 asks what unpaid-work hours
+            might represent in monetary terms under
+            a selected valuation assumption.
+          </p>
+
+          <p>
+            Chapter 4 asks what a share of those
+            hours might represent in potential
+            additional earnings if it became
+            available for paid employment.
+          </p>
+
+          <p>
+            Because both calculations use the same
+            earnings benchmark, their results are
+            mathematically related:
+          </p>
+
+          <div class="methodology-equation">
+
+            <span>
+              E<sub>g</sub> = s × V<sub>g</sub>
+            </span>
+
+          </div>
+
+          <p>
+            At a hypothetical reallocation of 100%,
+            the numerical estimates in both chapters
+            are equal under identical assumptions.
+            Their economic interpretations, however,
+            remain distinct.
+          </p>
+
+          <p>
+            In economic theory, opportunity cost
+            refers to the value of the next-best
+            alternative forgone. Paid employment
+            represents only one possible alternative
+            use of time, alongside education, rest,
+            leisure and other activities.
+          </p>
+
+          <p>
+            The opportunity-cost exploration therefore
+            illustrates a specific potential earnings
+            scenario rather than measuring the full
+            economic opportunity cost of unpaid work.
+          </p>
+
+        </section>
+
+
+        <!-- ============================================= -->
+        <!-- 06 — LIMITATIONS                              -->
+        <!-- ============================================= -->
+
+        <section
+          class="methodology-section"
+          id="limitations"
+        >
+
+          <p class="eyebrow">06 / LIMITATIONS</p>
+
+          <h2>Assumptions and limitations</h2>
+
+
+          <h3>International comparability</h3>
+
+          <p>
+            Time-use statistics originate from
+            national surveys that may differ in
+            their reference periods, survey design,
+            population coverage and classification
+            of activities.
+          </p>
+
+          <p>
+            Although the OECD harmonises observations
+            into broad activity categories, differences
+            in national statistical methodologies
+            may affect international comparability.
+          </p>
+
+
+          <h3>Temporal comparability</h3>
+
+          <p>
+            The analysis uses the latest available
+            time-use observation for each country.
+            These observations may refer to different
+            survey years.
+          </p>
+
+          <p>
+            Time-use and earnings observations may
+            also refer to different periods. The
+            combined dataset should therefore not
+            be interpreted as a fully synchronised
+            cross-country snapshot.
+          </p>
+
+
+          <h3>Population averages</h3>
+
+          <p>
+            The analysis is based on aggregate
+            observations disaggregated by sex.
+          </p>
+
+          <p>
+            Average time-use patterns conceal
+            substantial variation across individuals
+            and households, including differences
+            associated with age, employment status,
+            income, household composition and
+            care responsibilities.
+          </p>
+
+          <p>
+            The results describe group-level averages
+            and should not be interpreted as the
+            experience of every individual woman
+            or man.
+          </p>
+
+
+          <h3>Differences in population coverage</h3>
+
+          <p>
+            The time-use and earnings datasets describe
+            different statistical populations.
+            Hourly earnings refer to employees,
+            whereas time-use averages may also
+            include individuals outside paid employment.
+          </p>
+
+          <p>
+            Applying employee earnings benchmarks
+            to population-level unpaid-work hours
+            is therefore a modelling assumption,
+            not a direct measurement of the earnings
+            available to each individual.
+          </p>
+
+
+          <h3>Projection assumptions</h3>
+
+          <p>
+            All multi-year calculations assume
+            constant daily unpaid-work hours and
+            constant hourly earnings benchmarks.
+          </p>
+
+          <p>
+            Wage growth, inflation dynamics, changes
+            in productivity, demographic changes
+            and behavioural responses are not
+            explicitly modelled.
+          </p>
+
+          <p>
+            Monetary values are accumulated without
+            discounting. They represent undiscounted
+            scenario totals rather than present-value
+            estimates.
+          </p>
+
+
+          <h3>Labour-market constraints</h3>
+
+          <p>
+            Additional time available for paid
+            employment does not necessarily translate
+            into additional earnings.
+          </p>
+
+          <p>
+            Employment opportunities, working-time
+            arrangements, qualifications, geographic
+            mobility and individual circumstances
+            influence the extent to which additional
+            hours can be converted into paid work.
+          </p>
+
+          <p>
+            The potential earnings scenarios do not
+            incorporate these constraints or the
+            possible costs of replacing unpaid
+            household and care activities.
+          </p>
+
+
+          <h3>Scope of monetary valuation</h3>
+
+          <p>
+            Monetary estimates do not capture the
+            full social, personal or economic
+            significance of unpaid work.
+          </p>
+
+          <p>
+            Care, household production and other
+            unpaid activities generate benefits
+            that cannot necessarily be represented
+            by a market wage.
+          </p>
+
+          <p>
+            The estimates should therefore be
+            interpreted as one analytical perspective
+            on unpaid work, rather than a comprehensive
+            measure of its value.
+          </p>
+
+
+          <h3>Statistical uncertainty</h3>
+
+          <p>
+            The visualisation uses published point
+            estimates. Sampling uncertainty,
+            confidence intervals and statistical
+            significance are not modelled.
+          </p>
+
+          <p>
+            Numerical differences should not be
+            interpreted as evidence of statistically
+            significant differences between countries
+            or population groups.
+          </p>
+
+        </section>
+
+
+        <!-- ============================================= -->
+        <!-- 07 — REFERENCES                               -->
+        <!-- ============================================= -->
+
+        <section
+          class="methodology-section"
+          id="references"
+        >
+
+          <p class="eyebrow">07 / REFERENCES</p>
+
+          <h2>References</h2>
+
+          <div class="methodology-reference">
+
+            <p>
+              <strong>
+                Organisation for Economic Co-operation
+                and Development (OECD).
+              </strong>
+              <em>OECD Time Use Database.</em>
+              Database update: 9 June 2026.
+            </p>
+
+            <a
+              href="https://www.oecd.org/en/data/datasets/time-use-database.html"
+              class="methodology-external-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ORIGINAL DATASET ↗
+            </a>
+
+          </div>
+
+          <div class="methodology-reference">
+
+            <p>
+              <strong>
+                International Labour Organization (ILO).
+              </strong>
+              ILOSTAT.
+              <em>
+                Average hourly earnings of employees
+                by sex, occupation and currency —
+                Annual.
+              </em>
+              Indicator: EAR_EHRA_SEX_OCU_CUR_NB_A.
+              Monetary unit: 2021 international
+              dollars (PPP).
+            </p>
+
+            <a
+              href="https://rshiny.ilo.org/dataexplorer15/?lang=en&amp;segment=indicator&amp;id=EAR_EHRA_SEX_OCU_CUR_NB_A&amp;channel=ilostat"
+              class="methodology-external-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ORIGINAL DATASET ↗
+            </a>
+
+          </div>
+
+
+          <h3>Research and implementation</h3>
+
+          <p>
+            Data preparation and transformation were
+            performed using Python and pandas.
+            The interactive visualisation was developed
+            using HTML, CSS and JavaScript.
+          </p>
+
+          <p>
+            Research, analytical framework,
+            data processing, information design
+            and visualisation:
+            <a
+              href="https://antoninapopova.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="methodology-inline-link"
+            >
+              Antonina Popova
+            </a>.
+          </p>
+
+        </section>
+
+
+        <!-- RETURN TO PROJECT -->
+
+        <div class="methodology-return">
+
+          <a
+            href="./index.html"
+            class="methodology-external-link"
+          >
+            ← RETURN TO THE INTERACTIVE PROJECT
+          </a>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </main>
+
+
+  <!-- =================================================== -->
+  <!-- FOOTER                                              -->
+  <!-- =================================================== -->
+
+  <footer class="footer wrap">
+
+    <a
+      href="./index.html"
+      class="footer-author"
+    >
+      THE ECONOMICS OF AN ORDINARY DAY
+    </a>
+
+    <span>
+      RESEARCH &amp; VISUALISATION /
+      <a
+        href="https://antoninapopova.com/"
+        class="footer-author"
+        target="_blank"
+        rel="noopener noreferrer"
+      >ANTONINA POPOVA</a>
+    </span>
+
+  </footer>
+
+</body>
+
+</html>

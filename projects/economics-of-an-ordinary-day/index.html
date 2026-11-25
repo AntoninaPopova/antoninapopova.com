@@ -1,0 +1,1141 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="An interactive exploration of time, work and value.">
+  <title>The Economics of an Ordinary Day</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#chapter-one">Skip to the exploration</a>
+
+  <header class="masthead wrap">
+    <span class="masthead-mark">ORDINARY / DAY</span>
+    <span class="masthead-right">
+      AN INTERACTIVE VISUAL STORY
+      <span aria-hidden="true">↘</span>
+    </span>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero wrap" aria-labelledby="page-title">
+      <div class="hero-index">
+        <span>TIME / WORK / VALUE</span>
+        <span>001—004</span>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-number" aria-hidden="true">
+          24<span class="hero-number-unit">HRS</span>
+        </div>
+
+        <div class="hero-copy">
+          <p class="eyebrow">AN ORDINARY DAY, EXAMINED</p>
+
+          <h1 id="page-title">
+            The Economics<br>
+            of an <em>Ordinary</em> Day
+          </h1>
+
+          <p class="hero-description">
+            How the hours we spend today accumulate into years
+            of work, leisure and invisible economic value.
+          </p>
+
+          <a class="text-link" href="#chapter-one">
+            START EXPLORING <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-bottom">
+        <span>ONE DAY. TWO ALLOCATIONS.</span>
+        <span>SCROLL TO EXPLORE ↓</span>
+      </div>
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- CHAPTER 1 — THE DAY                                   -->
+    <!-- ===================================================== -->
+
+    <section
+      class="chapter chapter-one"
+      id="chapter-one"
+      aria-labelledby="chapter-one-title"
+    >
+      <div class="wrap">
+
+        <div class="chapter-topline">
+          <span>01 / THE DAY</span>
+          <span>TIME-USE DATA / OECD</span>
+        </div>
+
+        <div class="chapter-heading-grid">
+          <h2 id="chapter-one-title">
+            We all have<br>
+            <span class="blue">24 hours.</span>
+          </h2>
+
+          <div class="chapter-aside">
+            <p>We don't spend them equally.</p>
+
+            <p>
+              Every day contains the same 1,440 minutes.
+              Yet how those minutes are distributed differs
+              between women and men. Some hours are paid.
+              Others sustain households and families without
+              appearing in earnings statistics.
+            </p>
+          </div>
+        </div>
+
+        <div class="exploration" aria-labelledby="exploration-title">
+
+          <div class="exploration-header">
+            <div>
+              <p class="eyebrow">COMPARE THE DAY</p>
+              <h3 id="exploration-title">
+                Same duration.<br>
+                Different composition.
+              </h3>
+            </div>
+
+            <div class="country-picker">
+              <label for="country-select">SELECT COUNTRY</label>
+              <select id="country-select" disabled>
+                <option>Loading countries…</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="chart-axis" aria-hidden="true">
+            <span>0h</span>
+            <span>6h</span>
+            <span>12h</span>
+            <span>18h</span>
+            <span>24h</span>
+          </div>
+
+          <!-- Chart and floating tooltip -->
+          <div class="time-chart-container">
+            <div id="time-chart" class="time-chart">
+              <p class="loading">Loading time-use data…</p>
+            </div>
+
+            <div
+              id="activity-tooltip"
+              class="activity-tooltip"
+              role="tooltip"
+              aria-hidden="true"
+            >
+              <div
+                id="tooltip-title"
+                class="activity-tooltip-title"
+              ></div>
+
+              <div class="tooltip-comparison">
+                WOMEN − MEN
+              </div>
+
+              <div
+                id="tooltip-difference"
+                class="tooltip-difference"
+              ></div>
+
+              <div class="tooltip-explanation">
+                Difference in average daily time
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="legend"
+            class="legend"
+            aria-label="Activity categories"
+          ></div>
+
+          <div
+            class="insight chapter-result"
+            id="insight"
+            aria-live="polite"
+          ></div>
+
+      <p class="source-note">
+        Source: OECD Time Use data. Figures represent average
+        daily time, with differences rounded to the nearest
+        minute. Each bar shows the composition of a 24-hour
+        day, not a chronological schedule. The ordering of
+        activities does not indicate when they occur.
+      </p>
+
+          <p
+            id="data-error"
+            class="error"
+            role="alert"
+            hidden
+          ></p>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- CHAPTER 2 — ACCUMULATION                              -->
+    <!-- ===================================================== -->
+
+    <section
+      class="chapter chapter-two"
+      id="chapter-two"
+      aria-labelledby="chapter-two-title"
+    >
+      <div class="wrap">
+
+        <div class="chapter-topline">
+          <span>02 / ACCUMULATION</span>
+          <span>FROM DAYS TO YEARS</span>
+        </div>
+
+        <div class="chapter-heading-grid">
+          <h2 id="chapter-two-title">
+            One day.<br>
+            <span class="blue">Repeated.</span>
+          </h2>
+
+          <div class="chapter-aside">
+            <p>What happens when a daily difference repeats?</p>
+
+            <p>
+              An hour may seem insignificant within a single day.
+              But time accumulates. Repeated over months and years,
+              even a small difference in unpaid work becomes substantial.
+            </p>
+          </div>
+        </div>
+
+        <div class="accumulation">
+
+          <div class="accumulation-header">
+            <div>
+              <p class="eyebrow">EXPLORE THE DIFFERENCE</p>
+              <h3>A daily difference,<br>multiplied.</h3>
+            </div>
+
+            <div class="accumulation-country">
+              <span>SELECTED COUNTRY</span>
+              <strong id="accumulation-country-name">—</strong>
+              <a href="#chapter-one" class="change-country">
+                CHANGE COUNTRY ↑
+              </a>
+            </div>
+          </div>
+
+          <div class="period-control">
+            <div class="period-heading">
+              <label for="period-slider">PROJECTION PERIOD</label>
+
+              <div class="period-value">
+                <span id="period-value">1</span>
+                <span id="period-unit">YEAR</span>
+              </div>
+            </div>
+
+            <input
+              type="range"
+              id="period-slider"
+              min="1"
+              max="10"
+              value="1"
+              step="1"
+              aria-describedby="period-description"
+            >
+
+            <div class="period-ticks" aria-hidden="true">
+              <span>1 YEAR</span>
+              <span>5 YEARS</span>
+              <span>10 YEARS</span>
+            </div>
+
+            <p id="period-description" class="period-description">
+              Move the slider to explore how daily unpaid-work hours
+              accumulate over time.
+            </p>
+          </div>
+
+          <div class="accumulation-chart">
+
+            <div class="accumulation-row">
+              <div class="accumulation-row-heading">
+                <span>Women</span>
+                <strong id="women-total">—</strong>
+              </div>
+
+              <div class="accumulation-track">
+                <div
+                  id="women-accumulation-bar"
+                  class="accumulation-fill women-fill"
+                ></div>
+              </div>
+            </div>
+
+            <div class="accumulation-row">
+              <div class="accumulation-row-heading">
+                <span>Men</span>
+                <strong id="men-total">—</strong>
+              </div>
+
+              <div class="accumulation-track">
+                <div
+                  id="men-accumulation-bar"
+                  class="accumulation-fill men-fill"
+                ></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="accumulation-result chapter-result">
+
+            <span class="eyebrow result-label">
+              THE ACCUMULATED DIFFERENCE
+            </span>
+
+            <strong
+              id="difference-total"
+              class="result-value"
+            >—</strong>
+
+            <span class="result-unit">HOURS</span>
+
+            <p
+              id="perspective-note"
+              class="result-copy"
+              aria-live="polite"
+            ></p>
+          </div>
+
+          <p class="source-note">
+            Source: OECD Time Use Database. Projections assume
+            constant daily differences over 365 days per year.
+            Comparisons are illustrative, not observed individual outcomes.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+
+    
+<!-- ===================================================== -->
+<!-- CHAPTER 3 — VALUATION                                 -->
+<!-- ===================================================== -->
+
+<section
+  class="chapter chapter-three"
+  id="chapter-three"
+  aria-labelledby="chapter-three-title"
+>
+  <div class="wrap">
+
+    <div class="chapter-topline">
+      <span>03 / VALUATION</span>
+      <span>FROM TIME TO VALUE</span>
+    </div>
+
+    <div class="chapter-heading-grid">
+      <h2 id="chapter-three-title">
+        Time has a<br>
+        <span class="blue">price.</span>
+      </h2>
+
+      <div class="chapter-aside">
+        <p>What is unpaid work worth?</p>
+        <p>
+          Cooking, cleaning, caring for children and managing
+          a household all require time and effort. These
+          activities contribute to everyday life, even when
+          no payment is involved. Their estimated monetary
+          value depends on the wage we use to measure them.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="valuation"
+      aria-labelledby="valuation-exploration-title"
+    >
+
+      <div class="valuation-header">
+        <div>
+          <p class="eyebrow">EXPLORE THE VALUE</p>
+          <h3 id="valuation-exploration-title">
+            Same hours.<br>
+            Different values.
+          </h3>
+        </div>
+
+
+<div class="valuation-context">
+
+  <div class="accumulation-country valuation-country">
+    <span>SELECTED COUNTRY</span>
+    <strong id="valuation-country-name">—</strong>
+    <a href="#chapter-one" class="change-country">
+      CHANGE COUNTRY ↑
+    </a>
+  </div>
+
+  <div class="accumulation-country valuation-period">
+    <span>PROJECTION PERIOD</span>
+    <strong id="valuation-years">1 year</strong>
+    <a href="#chapter-two" class="change-country">
+      CHANGE PERIOD ↑
+    </a>
+  </div>
+
+</div>
+
+       
+      </div>
+
+      <!-- Indented controls, aligned to Chapter 1 bars -->
+      <div class="valuation-controls">
+
+        
+<fieldset class="valuation-control valuation-occupation">
+  <legend>HOURLY VALUATION BENCHMARK</legend>
+
+  <div class="valuation-options valuation-occupation-options">
+
+    <label class="valuation-option">
+      <input
+        type="radio"
+        name="valuation-occupation"
+        value="Elementary"
+      >
+      <span>Elementary occupations</span>
+    </label>
+
+    <label class="valuation-option">
+      <input
+        type="radio"
+        name="valuation-occupation"
+        value="Service"
+        checked
+      >
+      <span>Service occupations</span>
+    </label>
+
+    <label class="valuation-option">
+      <input
+        type="radio"
+        name="valuation-occupation"
+        value="Professional"
+      >
+      <span>Professional occupations</span>
+    </label>
+
+  </div>
+</fieldset>
+
+
+        <fieldset class="valuation-control valuation-basis">
+          <legend>WAGE BASIS</legend>
+
+          <div class="valuation-basis-options">
+            <label class="valuation-basis-option">
+              <input
+                type="radio"
+                name="valuation-basis"
+                value="gender"
+                checked
+              >
+              <span>Gender-specific wages</span>
+            </label>
+
+            <label class="valuation-basis-option">
+              <input
+                type="radio"
+                name="valuation-basis"
+                value="common"
+              >
+              <span>Common wage</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Selected hourly wage rates -->
+        
+<!-- Selected hourly wage rates -->
+<div class="valuation-rate-display" aria-live="polite">
+
+      <!-- Common wage -->
+
+    <div id="valuation-common-rate" hidden>
+
+      <span class="valuation-rate-label">
+        COMMON HOURLY WAGE
+      </span>
+
+      <div class="valuation-single-rate">
+        <strong id="valuation-common-amount">—</strong>
+        <span class="valuation-rate-unit">/ hour</span>
+      </div>
+
+      <div class="valuation-rate-accent common-rate-accent"></div>
+
+    </div>
+
+
+      <!-- Gender-specific wages -->
+      <div id="valuation-gender-rates">
+        <div class="valuation-rate-grid">
+
+          <div class="valuation-rate-column">
+            <span class="valuation-rate-label">
+              WOMEN
+            </span>
+
+            <div class="valuation-single-rate">
+              <strong id="valuation-female-rate">—</strong>
+              <span class="valuation-rate-unit">/ hour</span>
+            </div>
+
+            <div class="valuation-rate-accent women-rate-accent"></div>
+          </div>
+
+          <div class="valuation-rate-column">
+            <span class="valuation-rate-label">
+              MEN
+            </span>
+
+            <div class="valuation-single-rate">
+              <strong id="valuation-male-rate">—</strong>
+              <span class="valuation-rate-unit">/ hour</span>
+            </div>
+
+            <div class="valuation-rate-accent men-rate-accent"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="valuation-currency-note">
+  Hourly wages in 2021 international dollars (PPP). </p>
+
+</div>
+
+
+        <p
+          id="valuation-status"
+          class="error valuation-status"
+          role="status"
+          hidden
+        ></p>
+
+      </div>
+
+      <!-- Chart aligned exactly like Chapter 1 -->
+      <div class="valuation-chart">
+
+        <div class="valuation-row">
+          <span class="valuation-row-label">Women</span>
+
+          <div class="valuation-bar-area">
+            <strong id="valuation-women-total">—</strong>
+
+            <div class="valuation-track">
+              <div
+                id="valuation-women-bar"
+                class="valuation-fill women-fill"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="valuation-row">
+          <span class="valuation-row-label">Men</span>
+
+          <div class="valuation-bar-area">
+            <strong id="valuation-men-total">—</strong>
+
+            <div class="valuation-track">
+              <div
+                id="valuation-men-bar"
+                class="valuation-fill men-fill"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="valuation-chart-note">
+        Estimated monetary value of unpaid work,
+        in 2021 international dollars (PPP).
+      </p>
+
+      
+      <!-- Main result -->
+      <div class="valuation-result chapter-result">
+
+        <span class="eyebrow result-label">
+          THE ESTIMATED VALUE DIFFERENCE
+        </span>
+
+        <strong
+          id="valuation-difference"
+          class="result-value"
+        >—</strong>
+
+        <span class="result-unit">
+          IN 2021 INTERNATIONAL DOLLARS (PPP)
+        </span>
+
+        <p
+          id="valuation-insight"
+          class="result-copy"
+          aria-live="polite"
+        ></p>
+
+      </div>
+
+    <!-- Methodology -->
+    <p class="source-note">
+      Methodology: Monetary values are expressed in 2021
+      international dollars (PPP) to allow comparisons across
+      countries. Estimates are calculated by multiplying average
+      daily unpaid-work hours by 365 days, the projection period
+      in years and the selected hourly wage. The common wage
+      is the arithmetic average of women's and men's hourly
+      wages in the selected occupation. Estimates represent
+      the imputed value of unpaid work, not actual payments
+      or lost earnings. Wage reference year:
+      <span id="valuation-year">—</span>.
+    </p>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- CHAPTER 4 — OPPORTUNITY                               -->
+<!-- ===================================================== -->
+
+<section
+  class="chapter chapter-four"
+  id="chapter-four"
+  aria-labelledby="chapter-four-title"
+>
+
+  <div class="wrap">
+
+    <div class="chapter-topline">
+      <span>04 / OPPORTUNITY</span>
+      <span>FROM TIME TO EARNINGS</span>
+    </div>
+
+    <!-- Chapter introduction -->
+
+    <div class="chapter-heading-grid">
+
+      <h2 id="chapter-four-title">
+        Time has<br>
+        <span class="blue">other uses.</span>
+      </h2>
+
+      <div class="chapter-aside">
+
+        <p>
+          What if some of this time could be paid?
+        </p>
+
+        <p>
+          Time spent on unpaid work leaves less time
+          available for other activities, including
+          paid employment. If some of these hours
+          became available for paid work, what might
+          they represent in potential earnings?
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- Interactive exploration -->
+
+    <div
+      class="opportunity"
+      aria-labelledby="opportunity-exploration-title"
+    >
+
+      <div class="valuation-header">
+
+        <div>
+
+          <p class="eyebrow">
+            EXPLORE THE POSSIBILITIES
+          </p>
+
+          <h3 id="opportunity-exploration-title">
+            The opportunity cost<br>
+            of unpaid work.
+          </h3>
+
+        </div>
+
+        <!-- Inherited parameters -->
+
+        <div class="valuation-context">
+
+          <div class="accumulation-country">
+
+            <span>SELECTED COUNTRY</span>
+
+            <strong id="opportunity-country-name">
+              —
+            </strong>
+
+            <a
+              href="#chapter-one"
+              class="change-country"
+            >
+              CHANGE COUNTRY ↑
+            </a>
+
+          </div>
+
+          <div class="accumulation-country">
+
+            <span>PROJECTION PERIOD</span>
+
+            <strong id="opportunity-years">
+              1 year
+            </strong>
+
+            <a
+              href="#chapter-two"
+              class="change-country"
+            >
+              CHANGE PERIOD ↑
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Hourly earnings assumption -->
+
+      <div class="opportunity-assumptions">
+
+        <p class="valuation-rate-label">
+          HOURLY EARNINGS ASSUMPTION
+        </p>
+
+        <div class="opportunity-wage-heading">
+
+          <div>
+
+            <h4 id="opportunity-occupation">—</h4>
+
+            <p id="opportunity-basis">—</p>
+
+          </div>
+
+          <a
+            href="#chapter-three"
+            class="change-country"
+          >
+            CHANGE WAGE ASSUMPTIONS ↑
+          </a>
+
+        </div>
+
+        <div class="valuation-rate-display">
+
+          <!-- Common wage -->
+
+          <div id="opportunity-common-rate" hidden>
+
+            <span class="valuation-rate-label">
+              COMMON HOURLY WAGE
+            </span>
+
+            <div class="valuation-single-rate">
+
+              <strong id="opportunity-common-amount">
+                —
+              </strong>
+
+              <span class="valuation-rate-unit">
+                / hour
+              </span>
+
+            </div>
+
+            <div
+              class="valuation-rate-accent common-rate-accent"
+              aria-hidden="true"
+            ></div>
+
+          </div>
+
+          <!-- Gender-specific wages -->
+
+          <div id="opportunity-gender-rates">
+
+            <div class="valuation-rate-grid">
+
+              <div class="valuation-rate-column">
+
+                <span class="valuation-rate-label">
+                  WOMEN
+                </span>
+
+                <div class="valuation-single-rate">
+
+                  <strong id="opportunity-female-rate">
+                    —
+                  </strong>
+
+                  <span class="valuation-rate-unit">
+                    / hour
+                  </span>
+
+                </div>
+
+                <div
+                  class="valuation-rate-accent women-rate-accent"
+                  aria-hidden="true"
+                ></div>
+
+              </div>
+
+              <div class="valuation-rate-column">
+
+                <span class="valuation-rate-label">
+                  MEN
+                </span>
+
+                <div class="valuation-single-rate">
+
+                  <strong id="opportunity-male-rate">
+                    —
+                  </strong>
+
+                  <span class="valuation-rate-unit">
+                    / hour
+                  </span>
+
+                </div>
+
+                <div
+                  class="valuation-rate-accent men-rate-accent"
+                  aria-hidden="true"
+                ></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <p class="valuation-currency-note">
+            Hourly wages in 2021 international dollars (PPP).
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- Reallocation slider -->
+
+      <div class="period-control">
+
+        <div class="period-heading">
+
+          <label for="opportunity-slider">
+            SHARE OF UNPAID-WORK TIME REALLOCATED
+          </label>
+
+          <div class="period-value">
+
+            <strong id="opportunity-share-value">
+              25%
+            </strong>
+
+          </div>
+
+        </div>
+
+        <input
+          type="range"
+          id="opportunity-slider"
+          min="0"
+          max="100"
+          step="5"
+          value="25"
+          aria-valuetext="25 percent"
+        >
+
+        <div class="period-ticks" aria-hidden="true">
+
+          <span>0%</span>
+          <span>20%</span>
+          <span>40%</span>
+          <span>60%</span>
+          <span>80%</span>
+          <span>100%</span>
+
+        </div>
+
+        <p class="period-description">
+          Explore how potential earnings change as a share
+          of unpaid-work time is hypothetically reallocated
+          to paid employment. A 100% reallocation represents
+          a theoretical upper-bound scenario.
+        </p>
+
+      </div>
+
+      <!-- Data availability message -->
+
+      <p
+        id="opportunity-status"
+        class="valuation-status"
+        role="status"
+        hidden
+      ></p>
+
+      <!-- Potential earnings chart -->
+
+      <div class="valuation-chart">
+
+        <div class="valuation-row">
+
+          <span class="valuation-row-label">
+            Women
+          </span>
+
+          <div class="valuation-bar-area">
+
+            <strong id="opportunity-women-total">
+              —
+            </strong>
+
+            <div class="valuation-track">
+
+              <div
+                id="opportunity-women-bar"
+                class="valuation-fill women-fill"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="valuation-row">
+
+          <span class="valuation-row-label">
+            Men
+          </span>
+
+          <div class="valuation-bar-area">
+
+            <strong id="opportunity-men-total">
+              —
+            </strong>
+
+            <div class="valuation-track">
+
+              <div
+                id="opportunity-men-bar"
+                class="valuation-fill men-fill"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <p class="valuation-chart-note">
+        Potential additional gross earnings,
+        in 2021 international dollars (PPP).
+      </p>
+
+      <!-- Main result -->
+
+      <div class="chapter-result">
+
+        <span class="eyebrow result-label">
+          THE POTENTIAL EARNINGS DIFFERENCE
+        </span>
+
+        <strong
+          id="opportunity-difference"
+          class="result-value"
+        >—</strong>
+
+        <span class="result-unit">
+          IN 2021 INTERNATIONAL DOLLARS (PPP)
+        </span>
+
+        <p
+          id="opportunity-insight"
+          class="result-copy"
+          aria-live="polite"
+        ></p>
+
+      </div>
+
+      <!-- Methodology -->
+
+      <p class="source-note">
+
+        Methodology: Potential additional gross earnings
+        are calculated by multiplying average daily
+        unpaid-work hours by the selected reallocation
+        share, 365 days, the projection period in years
+        and the selected hourly wage. The same
+        reallocation percentage is applied to women
+        and men. This hypothetical scenario assumes
+        that the reallocated hours can be converted
+        into paid employment. It does not account for
+        employment availability, taxes, replacement
+        care costs or other constraints. All monetary
+        values are expressed in 2021 international
+        dollars (PPP). Wage reference year:
+        <span id="opportunity-year">—</span>.
+        These estimates do not represent observed
+        or predicted lost income.
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>    
+
+
+<!-- ===================================================== -->
+<!-- FINAL REFLECTION                                      -->
+<!-- ===================================================== -->
+
+<section
+  class="chapter conclusion"
+  aria-labelledby="conclusion-title"
+>
+
+  <div class="wrap">
+
+    <div class="chapter-topline">
+      <span>FINAL REFLECTION</span>
+      <span>BEYOND THE NUMBERS</span>
+    </div>
+
+  <div class="conclusion-heading">
+
+    <h2 id="conclusion-title">
+      Equal time.<br>
+      <span class="blue">Unequal use.</span>
+    </h2>
+
+  </div>
+
+    <div class="conclusion-body">
+
+      <p class="conclusion-lead">
+        We all have the same number of hours in a day,
+        but we do not necessarily have the same freedom
+        to decide how to spend them.
+      </p>
+
+      <div class="conclusion-copy">
+
+        <p>
+          What appears to be a small difference in the
+          allocation of time can, when repeated over years,
+          become a substantial difference in economic
+          opportunities. It can influence the time available
+          for education, professional development, paid
+          employment, rest or personal interests.
+        </p>
+
+        <p>
+          Unpaid work is an essential part of the functioning
+          of our economies and societies. Yet much of it
+          remains outside conventional measures of economic
+          activity.
+        </p>
+
+        <p>
+          Putting a monetary value on this work does not
+          capture its full importance. Nor does it imply
+          that every unpaid hour should become a paid one.
+          But it offers another perspective on something
+          that is easily overlooked in everyday life:
+          the economic significance of how our time
+          is distributed.
+        </p>
+
+        <p>
+          The economics of an ordinary day extends
+          far beyond the day itself.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+  </main>
+
+  <footer class="footer wrap">
+
+  <span>
+    THE ECONOMICS OF AN ORDINARY DAY
+  </span>
+
+  <a
+    href="./methodology.html"
+    class="footer-author"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    DATA &amp; METHODOLOGY↗
+  </a>
+
+  <span>
+    RESEARCH &amp; VISUALISATION /
+    <a
+      href="https://antoninapopova.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="footer-author"
+    >ANTONINA POPOVA↗</a>
+  </span>
+
+</footer>
+
+</body>
+</html>
