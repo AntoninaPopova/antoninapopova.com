@@ -26,8 +26,8 @@
     <!-- HERO -->
     <section class="hero wrap" aria-labelledby="page-title">
       <div class="hero-index">
-        <span>TIME / WORK / VALUE</span>
-        <span>001—004</span>
+        <span>00 / INTRODUCTION</span>
+        <span>TIME, WORK AND ECONOMIC VALUE</span>
       </div>
 
       <div class="hero-grid">
@@ -48,15 +48,41 @@
             of work, leisure and invisible economic value.
           </p>
 
-          <a class="text-link" href="#chapter-one">
-            START EXPLORING <span aria-hidden="true">↓</span>
-          </a>
-        </div>
-      </div>
+         <details class="hero-contents">
 
-      <div class="hero-bottom">
-        <span>ONE DAY. TWO ALLOCATIONS.</span>
-        <span>SCROLL TO EXPLORE ↓</span>
+            <summary class="text-link contents-toggle">
+              CONTENTS <span class="contents-icon" aria-hidden="true"></span>
+            </summary>
+
+            <nav class="contents-menu" aria-label="Report contents">
+
+              <a href="#chapter-one">
+                <span>01 /</span> Distribution of time
+              </a>
+
+              <a href="#chapter-two">
+                <span>02 /</span> From days to years
+              </a>
+
+              <a href="#chapter-three">
+                <span>03 /</span> From time to value
+              </a>
+
+              <a href="#chapter-four">
+                <span>04 /</span> From time to earnings
+              </a>
+
+              <a href="#conclusion-title">
+                <span>05 /</span> Beyond the numbers
+              </a>
+
+            </nav>
+
+          </details>
+
+
+
+        </div>
       </div>
     </section>
 
@@ -74,7 +100,7 @@
 
         <div class="chapter-topline">
           <span>01 / THE DAY</span>
-          <span>TIME-USE DATA / OECD</span>
+          <span>DISTRIBUTION OF TIME</span>
         </div>
 
         <div class="chapter-heading-grid">
@@ -96,7 +122,9 @@
           </div>
         </div>
 
-        <div class="exploration" aria-labelledby="exploration-title">
+        <div class="exploration"
+          id="country-exploration"
+          aria-labelledby="exploration-title">
 
           <div class="exploration-header">
             <div>
@@ -168,11 +196,13 @@
           ></div>
 
       <p class="source-note">
-        Source: OECD Time Use data. Figures represent average
-        daily time, with differences rounded to the nearest
-        minute. Each bar shows the composition of a 24-hour
-        day, not a chronological schedule. The ordering of
-        activities does not indicate when they occur.
+        Source: OECD.<br>
+        <a
+          href="./methodology.html#time-allocation"
+          class="source-methodology"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Methodology &#x2197;&#xFE0E;</a>
       </p>
 
           <p
@@ -231,13 +261,13 @@
             <div class="accumulation-country">
               <span>SELECTED COUNTRY</span>
               <strong id="accumulation-country-name">—</strong>
-              <a href="#chapter-one" class="change-country">
+              <a href="#country-exploration" class="change-country">
                 CHANGE COUNTRY ↑
               </a>
             </div>
           </div>
 
-          <div class="period-control">
+          <div class="period-control" id="period-exploration">
             <div class="period-heading">
               <label for="period-slider">PROJECTION PERIOD</label>
 
@@ -321,11 +351,15 @@
             ></p>
           </div>
 
-          <p class="source-note">
-            Source: OECD Time Use Database. Projections assume
-            constant daily differences over 365 days per year.
-            Comparisons are illustrative, not observed individual outcomes.
-          </p>
+        <p class="source-note">
+          Source: OECD.<br>
+          <a
+            href="./methodology.html#accumulation"
+            class="source-methodology"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Methodology &#x2197;&#xFE0E;</a>
+        </p>
 
         </div>
       </div>
@@ -369,6 +403,7 @@
 
     <div
       class="valuation"
+      id="wage-exploration"
       aria-labelledby="valuation-exploration-title"
     >
 
@@ -387,7 +422,7 @@
   <div class="accumulation-country valuation-country">
     <span>SELECTED COUNTRY</span>
     <strong id="valuation-country-name">—</strong>
-    <a href="#chapter-one" class="change-country">
+    <a href="#country-exploration" class="change-country">
       CHANGE COUNTRY ↑
     </a>
   </div>
@@ -395,7 +430,7 @@
   <div class="accumulation-country valuation-period">
     <span>PROJECTION PERIOD</span>
     <strong id="valuation-years">1 year</strong>
-    <a href="#chapter-two" class="change-country">
+    <a href="#period-exploration" class="change-country">
       CHANGE PERIOD ↑
     </a>
   </div>
@@ -608,18 +643,15 @@
       </div>
 
     <!-- Methodology -->
-    <p class="source-note">
-      Methodology: Monetary values are expressed in 2021
-      international dollars (PPP) to allow comparisons across
-      countries. Estimates are calculated by multiplying average
-      daily unpaid-work hours by 365 days, the projection period
-      in years and the selected hourly wage. The common wage
-      is the arithmetic average of women's and men's hourly
-      wages in the selected occupation. Estimates represent
-      the imputed value of unpaid work, not actual payments
-      or lost earnings. Wage reference year:
-      <span id="valuation-year">—</span>.
-    </p>
+      <p class="source-note">
+        Sources: OECD and ILOSTAT.<br>
+        <a
+          href="./methodology.html#valuation"
+          class="source-methodology"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Methodology &#x2197;&#xFE0E;</a>
+      </p>
 
     </div>
   </div>
@@ -705,9 +737,7 @@
             </strong>
 
             <a
-              href="#chapter-one"
-              class="change-country"
-            >
+              href="#country-exploration" class="change-country">
               CHANGE COUNTRY ↑
             </a>
 
@@ -722,9 +752,7 @@
             </strong>
 
             <a
-              href="#chapter-two"
-              class="change-country"
-            >
+              href="#period-exploration"   class="change-country">
               CHANGE PERIOD ↑
             </a>
 
@@ -753,7 +781,7 @@
           </div>
 
           <a
-            href="#chapter-three"
+            href="#wage-exploration"
             class="change-country"
           >
             CHANGE WAGE ASSUMPTIONS ↑
@@ -1006,24 +1034,13 @@
       <!-- Methodology -->
 
       <p class="source-note">
-
-        Methodology: Potential additional gross earnings
-        are calculated by multiplying average daily
-        unpaid-work hours by the selected reallocation
-        share, 365 days, the projection period in years
-        and the selected hourly wage. The same
-        reallocation percentage is applied to women
-        and men. This hypothetical scenario assumes
-        that the reallocated hours can be converted
-        into paid employment. It does not account for
-        employment availability, taxes, replacement
-        care costs or other constraints. All monetary
-        values are expressed in 2021 international
-        dollars (PPP). Wage reference year:
-        <span id="opportunity-year">—</span>.
-        These estimates do not represent observed
-        or predicted lost income.
-
+        Sources: OECD and ILOSTAT.<br>
+        <a
+          href="./methodology.html#opportunity-cost"
+          class="source-methodology"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Methodology &#x2197;&#xFE0E;</a>
       </p>
 
     </div>
@@ -1122,7 +1139,7 @@
     target="_blank"
     rel="noopener noreferrer"
   >
-    DATA &amp; METHODOLOGY↗
+    DATA &amp; METHODOLOGY&#x2197;&#xFE0E;
   </a>
 
   <span>
@@ -1132,7 +1149,7 @@
       target="_blank"
       rel="noopener noreferrer"
       class="footer-author"
-    >ANTONINA POPOVA↗</a>
+    >ANTONINA POPOVA&#x2197;&#xFE0E;</a>
   </span>
 
 </footer>

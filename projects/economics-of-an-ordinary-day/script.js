@@ -639,14 +639,6 @@ function renderValuation(country, data) {
   document.getElementById('valuation-years')
   .textContent = `${years} ${years === 1 ? 'year' : 'years'}`;
 
-  // Display the wage reference year from the dataset.
-  const year = women.year && women.year === men.year
-    ? women.year
-    : (women.year || men.year || 'Not specified');
-
-  document.getElementById('valuation-year')
-    .textContent = year;
-
   // Choose the relevant wage columns.
   const femaleRate = common
     ? women[`${occupation}_common`]
@@ -899,22 +891,6 @@ function renderOpportunity(country, data) {
   document.getElementById(
     'opportunity-gender-rates'
   ).hidden = common;
-
-
-  // Wage reference year
-
-  const year =
-    women.year && women.year === men.year
-      ? women.year
-      : women.year && men.year
-        ? `${women.year} / ${men.year}`
-        : women.year || men.year || 'Not specified';
-
-  setText(
-    'opportunity-year',
-    year
-  );
-
 
   // ----------------------------------------------------------
   // SELECT HOURLY WAGES
@@ -1282,8 +1258,7 @@ async function init() {
     error.hidden = false;
 
     error.textContent =
-      `Unable to load the data: ${e.message} ` +
-      `Run the page through a local web server.`;
+      `Unable to initialise the visualisation: ${e.message}`;
 
     select.disabled = true;
   }
