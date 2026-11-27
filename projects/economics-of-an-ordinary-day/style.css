@@ -60,12 +60,14 @@ a {
 .masthead {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 20px;
   padding-block: 25px 18px;
   border-bottom: 2px solid var(--ink);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .08em;
+  line-height: 1.5;
 }
 
 .masthead-right {
@@ -851,7 +853,13 @@ h3 {
   margin: 0;
   appearance: none;
   -webkit-appearance: none;
-  background: #d7d9df;
+  background: linear-gradient(
+    to right,
+    var(--blue) 0%,
+    var(--blue) var(--slider-progress, 0%),
+    var(--line) var(--slider-progress, 0%),
+    var(--line) 100%
+  );
   cursor: pointer;
 }
 
@@ -1155,7 +1163,7 @@ h3 {
 }
 
 .methodology-main {
-  padding-top: 45px;
+  padding-top: 25px;
   padding-bottom: 100px;
 }
 
@@ -1167,16 +1175,16 @@ h3 {
 .methodology-navigation {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   gap: 20px;
 
-  padding-bottom: 20px;
+  padding-bottom: 18px;
 
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
   font-weight: 700;
   line-height: 1.5;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
 }
 
 .methodology-intro {
@@ -1241,7 +1249,7 @@ h3 {
   flex-direction: column;
 
   border-top: 2px solid var(--ink);
-  padding-top: 25px;
+  padding-top: 18px;
 }
 
 .methodology-toc .eyebrow {
@@ -1291,7 +1299,7 @@ h3 {
 .methodology-section {
   border-top: 2px solid var(--ink);
 
-  padding-top: 25px;
+  padding-top: 18px;
   margin-bottom: 70px;
 
   scroll-margin-top: 35px;
@@ -1525,7 +1533,7 @@ h3 {
 
 .methodology-chapter {
   margin-top: 45px;
-  padding-top: 25px;
+  padding-top: 18px;
   scroll-margin-top: 35px;
 
   border-top: 1px solid var(--line);
@@ -1600,7 +1608,11 @@ h3 {
 
 .methodology-return {
   border-top: 2px solid var(--ink);
-  padding-top: 25px;
+  padding-top: 18px;
+}
+
+.methodology-return .methodology-external-link {
+  margin-top: 0;
 }
 
 
@@ -1611,7 +1623,6 @@ h3 {
 @media (max-width: 900px) {
 
   .methodology-main {
-    padding-top: 35px;
     padding-bottom: 75px;
   }
 
@@ -1658,8 +1669,8 @@ h3 {
   }
 
   .methodology-navigation {
-    font-size: 10px;
-    gap: 15px;
+    font-size: 9px;
+    gap: 20px;
   }
 
   .methodology-intro {
@@ -1688,7 +1699,6 @@ h3 {
   }
 
   .methodology-section {
-    padding-top: 20px;
     margin-bottom: 50px;
   }
 
@@ -1742,7 +1752,6 @@ h3 {
 
   .methodology-chapter {
     margin-top: 35px;
-    padding-top: 20px;
   }
 
 }
@@ -1756,7 +1765,7 @@ h3 {
   gap: 20px;
   margin-top: 70px;
   border-top: 2px solid var(--ink);
-  padding-block: 35px 50px;
+  padding-block: 18px 50px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .1em;
@@ -1823,9 +1832,13 @@ h3 {
     width: calc(100% - 36px);
   }
 
-  .masthead-right {
-    font-size: 9px;
-  }
+.masthead {
+  font-size: 9px;
+}
+
+.masthead-right span {
+  font-size: 9px;
+}
 
   .hero-index,
   .hero-bottom,
@@ -2605,15 +2618,20 @@ h3 {
 
 :root {
   --chart-bar-height: 74px;
+  --comparison-bar-height: 42px;
   --chart-label-width: 110px;
   --chart-label-gap: 20px;
 }
 
-/* Identical bar heights across all three chapters */
-.time-bar,
+/* Composition chart — Chapter 1 */
+.time-bar {
+  height: var(--chart-bar-height);
+}
+
+/* Comparison charts — Chapters 2, 3 and 4 */
 .accumulation-track,
 .valuation-track {
-  height: var(--chart-bar-height);
+  height: var(--comparison-bar-height);
 }
 
 /* ------------------------------------------------------------
@@ -2737,9 +2755,10 @@ h3 {
    ------------------------------------------------------------ */
 
 @media (max-width: 600px) {
-  :root {
-    --chart-bar-height: 54px;
-  }
+:root {
+  --chart-bar-height: 54px;
+  --comparison-bar-height: 30px;
+}
 
   .time-bar,
   .accumulation-track,

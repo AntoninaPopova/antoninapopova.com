@@ -1265,3 +1265,30 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+/* ============================================================
+   SLIDER PROGRESS INDICATORS
+   ============================================================ */
+
+function updateSliderProgress(slider) {
+  const min = Number(slider.min);
+  const max = Number(slider.max);
+  const value = Number(slider.value);
+
+  const progress = ((value - min) / (max - min)) * 100;
+
+  slider.style.setProperty(
+    '--slider-progress',
+    `${progress}%`
+  );
+}
+
+document
+  .querySelectorAll('#period-slider, #opportunity-slider')
+  .forEach(slider => {
+    updateSliderProgress(slider);
+
+    slider.addEventListener('input', () => {
+      updateSliderProgress(slider);
+    });
+  });
