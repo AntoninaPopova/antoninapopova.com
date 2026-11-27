@@ -1164,7 +1164,7 @@ h3 {
 
 .methodology-main {
   padding-top: 25px;
-  padding-bottom: 100px;
+  padding-bottom: 25px;
 }
 
 
@@ -1612,7 +1612,7 @@ h3 {
 }
 
 .methodology-return .methodology-external-link {
-  margin-top: 0;
+  margin: 0;
 }
 
 
@@ -1963,11 +1963,12 @@ h3 {
     font-size: 34px;
   }
 
-  .footer {
-    flex-direction: column;
-    line-height: 1.6;
-    margin-top: 45px;
-  }
+.footer {
+  flex-direction: column;
+  line-height: 1.6;
+  margin-top: 45px;
+  padding-bottom: 25px;
+}
 }
 
 /* REDUCED MOTION */
@@ -2754,23 +2755,23 @@ h3 {
    MOBILE — SAME BAR HEIGHT AS CHAPTER 1
    ------------------------------------------------------------ */
 
-@media (max-width: 600px) {
-:root {
-  --chart-bar-height: 54px;
-  --comparison-bar-height: 30px;
-}
+/* ------------------------------------------------------------
+   MOBILE — COMPACT COMPARISON CHARTS
+   ------------------------------------------------------------ */
 
-  .time-bar,
-  .accumulation-track,
-  .valuation-track {
-    height: var(--chart-bar-height);
+@media (max-width: 600px) {
+
+  :root {
+    --chart-bar-height: 54px;
+    --comparison-bar-height: 30px;
   }
 
   .accumulation-row,
   .valuation-row {
-    grid-template-columns: minmax(0, 1fr);
-    column-gap: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
     row-gap: 8px;
+    align-items: baseline;
   }
 
   .accumulation-row-heading span,
@@ -2778,18 +2779,20 @@ h3 {
     grid-column: 1;
     grid-row: 1;
     font-size: 16px;
+    align-self: baseline;
   }
 
   .accumulation-row-heading strong,
   .valuation-bar-area > strong {
-    grid-column: 1;
-    grid-row: 2;
+    grid-column: 2;
+    grid-row: 1;
     justify-self: end;
+    align-self: baseline;
   }
 
   .accumulation-row > .accumulation-track,
   .valuation-bar-area > .valuation-track {
-    grid-column: 1;
-    grid-row: 3;
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }
